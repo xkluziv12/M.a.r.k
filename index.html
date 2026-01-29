@@ -619,6 +619,63 @@
             100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
         }
 
+        /* ===== REPORT CELEBRATION ===== */
+        .report-celebration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .report-spark {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: sparkBurst 1s ease-out forwards;
+        }
+        
+        @keyframes sparkBurst {
+            0% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% { 
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        .report-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            animation: ringExpand 0.8s ease-out forwards;
+        }
+        
+        @keyframes ringExpand {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(15); opacity: 0; }
+        }
+        
+        .success-flash {
+            animation: cardFlash 0.6s ease-out;
+        }
+        
+        @keyframes cardFlash {
+            0% { box-shadow: 0 0 0 0 rgba(201, 169, 98, 0.8); }
+            50% { box-shadow: 0 0 40px 20px rgba(201, 169, 98, 0.4); }
+            100% { box-shadow: 0 0 0 0 rgba(201, 169, 98, 0); }
+        }
+
         /* ===== SETUP SECTION ===== */
         .setup-section { 
             padding: 30px; 
@@ -1858,11 +1915,21 @@
         </div>
         
         <!-- PHASE 9: COMPLETION -->
-        <div class="card" style="text-align: center; padding: 40px;">
+        <div class="card" style="text-align: center; padding: 40px; position: relative; overflow: hidden;" id="completionCard">
             <h2 style="color:var(--accent); margin-bottom: 20px;">🎉 Part 4: Completion Report</h2>
             <p style="color:#64748b; margin-bottom:20px;">All phases finished. Generate your completion report.</p>
-            <button class="btn btn-accent btn-compile" onclick="generateReport(); animateButton(this, 'Exporting...', 'Log Exported');" style="font-size:16px; padding:12px 30px;">
+            <button class="btn btn-accent btn-compile" onclick="generateReportWithCelebration();" style="font-size:16px; padding:12px 30px;">
                 <i class="fas fa-clipboard-check"></i> Export Mission Log
+            </button>
+            
+            <!-- Celebration particles container -->
+            <div id="reportCelebration" class="report-celebration"></div>
+        </div>
+        
+        <!-- BOTTOM RESET -->
+        <div style="text-align: center; padding: 30px 0;">
+            <button class="btn btn-ghost" onclick="resetAll()" style="border-color: #ef4444;">
+                <span style="color:#ef4444;">⚠️</span> Reset System & Start New Page
             </button>
         </div>
 
@@ -4051,6 +4118,83 @@ Keep response TIGHT. Boxes only, no fluff.`;
             navigator.clipboard.writeText(report).then(() => {
                 showToast("Report copied!");
             });
+            
+            return report;
+        }
+        
+        function generateReportWithCelebration() {
+            const btn = event.target.closest('.btn');
+            
+            // Animate button
+            if(btn) {
+                btn.classList.add('processing');
+                btn.innerHTML = '<span style="opacity:0.8">◐</span> Exporting...';
+            }
+            
+            setTimeout(() => {
+                // Generate and copy report
+                generateReport();
+                
+                // Update button
+                if(btn) {
+                    btn.classList.remove('processing');
+                    btn.classList.add('success');
+                    btn.innerHTML = '<span>✓</span> Mission Complete';
+                }
+                
+                // Trigger celebration
+                triggerReportCelebration();
+                
+                // Reset button after delay
+                setTimeout(() => {
+                    if(btn) {
+                        btn.classList.remove('success');
+                        btn.innerHTML = '<i class="fas fa-clipboard-check"></i> Export Mission Log';
+                    }
+                }, 3000);
+            }, 600);
+        }
+        
+        function triggerReportCelebration() {
+            const card = document.getElementById('completionCard');
+            const container = document.getElementById('reportCelebration');
+            
+            // Flash the card
+            card.classList.add('success-flash');
+            setTimeout(() => card.classList.remove('success-flash'), 600);
+            
+            // Clear previous particles
+            container.innerHTML = '';
+            
+            // Add expanding ring
+            const ring = document.createElement('div');
+            ring.className = 'report-ring';
+            container.appendChild(ring);
+            
+            // Add spark particles
+            const colors = ['#c9a962', '#d4bc7d', '#1e3a5f', '#b8954d', '#2d4a6f', '#34d399'];
+            
+            for(let i = 0; i < 20; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'report-spark';
+                spark.style.background = colors[Math.floor(Math.random() * colors.length)];
+                spark.style.left = '50%';
+                spark.style.top = '50%';
+                
+                // Random direction
+                const angle = (Math.PI * 2 * i) / 20;
+                const distance = 80 + Math.random() * 60;
+                spark.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                spark.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                spark.style.animationDelay = (Math.random() * 0.2) + 's';
+                
+                container.appendChild(spark);
+            }
+            
+            // Cleanup after animation
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 1500);
         }
     </script>
 
