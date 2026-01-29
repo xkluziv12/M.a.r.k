@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.A.R.K. v9.82 | Page Terminal</title>
+    <title>M.A.R.K. v9.94 | Page Terminal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,50 +12,157 @@
 
     <style>
         :root {
-            --primary: #1e3a8a;
-            --primary-light: #3b82f6;
-            --accent: #059669;
-            --accent-glow: #34d399;
-            --bg-dark: #0f172a;
-            --text-dark: #1e293b;
-            --text-light: #f8fafc;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --purple: #7c3aed;
+            /* Luxury Palette */
+            --navy: #1e3a5f;
+            --navy-light: #2d4a6f;
+            --navy-dark: #152a45;
+            --gold: #c9a962;
+            --gold-light: #d4bc7d;
+            --gold-dark: #b8954d;
+            --cream: #fdfbf7;
+            --white: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border-light: #e8e4dc;
+            --shadow-soft: rgba(30, 58, 95, 0.08);
+            --shadow-medium: rgba(30, 58, 95, 0.12);
+            
+            /* Legacy compatibility */
+            --primary: var(--navy);
+            --primary-light: var(--navy-light);
+            --accent: var(--gold);
+            --danger: #dc2626;
+            --phase-complete: var(--gold);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9;
-            color: var(--text-dark);
-            line-height: 1.5;
-            padding-bottom: 120px;
+            background-color: var(--cream);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* ===== BOOT SEQUENCE OVERLAY ===== */
+        .boot-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .boot-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .boot-logo {
+            font-family: 'Inter', sans-serif;
+            font-size: 56px;
+            font-weight: 200;
+            letter-spacing: 8px;
+            color: var(--white);
+            margin-bottom: 40px;
+            animation: bootPulse 2s ease-in-out infinite;
+        }
+        .boot-logo span {
+            color: var(--gold);
+            font-weight: 300;
+        }
+        .boot-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--gold-light);
+            text-align: center;
+            line-height: 2;
+            text-transform: uppercase;
+        }
+        .boot-text div {
+            opacity: 0;
+            animation: bootFadeIn 0.4s forwards;
+        }
+        @keyframes bootPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        @keyframes bootFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* ===== STATUS BAR ===== */
+        .status-bar {
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+        }
+        .status-item.online {
+            color: var(--navy);
+        }
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .status-clock {
+            color: var(--navy);
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
         }
 
         /* ===== HEADER ===== */
         .ai-header {
-            background: linear-gradient(135deg, var(--primary) 0%, #0f172a 100%);
-            color: white;
+            background: var(--white);
+            color: var(--navy);
             padding: 40px 20px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-bottom: 1px solid var(--border-light);
         }
 
         .ai-header::before {
             content: '';
             position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
-            animation: drift 20s infinite linear;
-            z-index: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 50%, var(--navy) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
         }
 
-        @keyframes drift {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 0%; }
+            50% { background-position: 100% 0%; }
         }
 
         .header-content {
@@ -69,11 +176,10 @@
         /* ===== PROGRESS STICKY ===== */
         .progress-sticky {
             position: sticky; top: 0; z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e2e8f0;
-            padding: 15px 0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            padding: 16px 0;
+            box-shadow: 0 2px 8px var(--shadow-soft);
         }
 
         .progress-wrapper {
@@ -82,202 +188,480 @@
         }
 
         .progress-stats {
-            font-family: 'JetBrains Mono', monospace; font-size: 13px;
-            color: var(--primary); font-weight: 700;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            color: var(--navy); font-weight: 600;
         }
 
         .progress-bar-container {
-            flex: 1; margin: 0 20px; height: 8px;
-            background: #e2e8f0; border-radius: 4px; overflow: hidden;
+            flex: 1; margin: 0 20px; height: 6px;
+            background: var(--border-light); border-radius: 3px; overflow: hidden;
         }
 
         .progress-fill {
-            height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent));
-            width: 0%; transition: width 0.4s ease;
+            height: 100%; 
+            background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 100%);
+            width: 0%; 
+            transition: width 0.5s ease;
+            border-radius: 3px;
         }
 
         /* ===== CONTAINER ===== */
         .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
 
+        /* ===== LUXURY CARDS ===== */
         .card {
-            background: white; border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            margin-bottom: 24px; overflow: hidden;
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 2px 8px var(--shadow-soft);
+            margin-bottom: 20px; 
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 4px 20px var(--shadow-medium);
         }
 
-        .setup-section { padding: 30px; border-left: 5px solid var(--primary); }
+        /* ===== PHASE STATES ===== */
+        .phase.phase-complete {
+            border-color: var(--gold);
+            box-shadow: 0 2px 12px rgba(201, 169, 98, 0.15);
+        }
+        .phase.phase-complete .phase-header {
+            background: linear-gradient(135deg, #fdfbf7 0%, #f9f6f0 100%);
+            border-left: 3px solid var(--gold);
+        }
+        .phase.phase-complete .phase-num {
+            background: var(--gold);
+            color: var(--white);
+        }
+        .phase.phase-complete::after {
+            content: '✓';
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            background: var(--gold);
+            color: var(--white);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .phase { position: relative; }
+
+        /* Phase Unlocking Animation */
+        .phase.phase-unlocking {
+            animation: phaseUnlock 0.5s ease;
+        }
+        @keyframes phaseUnlock {
+            0% { opacity: 0.7; transform: translateY(-5px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Active Phase */
+        .phase.active {
+            border-color: var(--navy);
+            box-shadow: 0 2px 16px var(--shadow-medium);
+        }
+        .phase.active .phase-num {
+            background: var(--navy);
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.15);
+        }
+
+        /* ===== 100% COMPLETION CELEBRATION ===== */
+        .completion-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(21, 42, 69, 0.97) 0%, rgba(30, 58, 95, 0.97) 100%);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .completion-overlay.active { display: flex; }
+        .completion-box {
+            border: 2px solid var(--gold);
+            border-radius: 16px;
+            padding: 50px 70px;
+            text-align: center;
+            background: var(--white);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+        }
+        .completion-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--navy);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        .completion-title span {
+            color: var(--gold);
+        }
+        .completion-stats {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 2.2;
+            margin-bottom: 35px;
+        }
+        .completion-stats span {
+            color: var(--navy);
+            font-weight: 600;
+        }
+        .completion-close {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 14px 50px;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .completion-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201, 169, 98, 0.4);
+        }
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            opacity: 0;
+        }
+        .confetti.active {
+            animation: confettiFall 3s ease-out forwards;
+        }
+        @keyframes confettiFall {
+            0% { opacity: 1; transform: translateY(-100vh) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+        }
+
+        /* ===== SETUP SECTION ===== */
+        .setup-section { 
+            padding: 30px; 
+            border-left: 3px solid var(--gold);
+            background: var(--white);
+        }
 
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
         .input-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px; }
 
         .form-group label {
-            display: block; font-size: 12px; font-weight: 700;
-            text-transform: uppercase; color: #64748b; margin-bottom: 6px;
+            display: block; font-size: 11px; font-weight: 600;
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            color: var(--text-secondary); 
+            margin-bottom: 8px;
         }
 
         .form-group input, .form-group textarea {
-            width: 100%; padding: 12px;
-            border: 2px solid #e2e8f0; border-radius: 8px;
-            font-family: 'Inter', sans-serif; font-size: 14px;
+            width: 100%; padding: 12px 14px;
+            border: 1px solid var(--border-light); 
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif; 
+            font-size: 14px;
+            background: var(--white);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .form-group input:focus, .form-group textarea:focus {
-            outline: none; border-color: var(--primary-light);
+            outline: none; 
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
         }
 
-        .form-group input[readonly] { background: #f1f5f9; color: #64748b; }
+        .form-group input[readonly] { 
+            background: var(--cream); 
+            color: var(--text-secondary);
+            border-style: dashed;
+        }
 
-        /* Phase Headers */
+        /* ===== PHASE HEADERS ===== */
         .phase-header {
-            padding: 20px 25px; background: #f8fafc;
-            border-bottom: 1px solid #e2e8f0; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 25px; 
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light); 
+            cursor: pointer;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            transition: background 0.2s ease;
         }
-        .phase-header:hover { background: #f1f5f9; }
-        .phase-title { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .phase-header:hover { background: var(--cream); }
+        .phase-title { 
+            font-size: 15px; 
+            font-weight: 600; 
+            color: var(--navy);
+            display: flex; 
+            align-items: center; 
+            gap: 14px; 
+        }
         
         .phase-num {
-            background: var(--primary); color: white;
-            width: 28px; height: 28px; border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 800;
+            background: var(--navy); 
+            color: var(--white);
+            width: 28px; 
+            height: 28px; 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 13px; 
+            font-weight: 700;
+            transition: all 0.3s ease;
         }
 
-        .phase-content { padding: 25px; display: none; }
-        .phase.active .phase-content { display: block; }
-        .phase.active .phase-header { background: #eff6ff; border-left: 4px solid var(--primary-light); }
+        .phase-time {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
 
-        /* Steps */
+        .phase-content { padding: 25px; display: none; background: var(--white); }
+        .phase.active .phase-content { display: block; }
+        .phase.active .phase-header { 
+            background: var(--cream); 
+            border-left: 3px solid var(--gold); 
+        }
+
+        /* ===== STEPS ===== */
         .step {
-            display: flex; gap: 15px; padding: 16px;
-            border-radius: 10px; margin-bottom: 12px;
-            border: 1px solid transparent; transition: background 0.2s;
+            display: flex; gap: 15px; padding: 14px 16px;
+            border-radius: 8px; margin-bottom: 10px;
+            border: 1px solid transparent; 
+            transition: all 0.2s ease;
             align-items: flex-start;
+            background: var(--white);
         }
         .step > div { flex: 1; }
-        .step input[type="checkbox"] { order: 2; width: 22px; height: 22px; accent-color: var(--accent); cursor: pointer; margin-top: 0; flex-shrink: 0; }
-        .step:hover { background: #f8fafc; border-color: #e2e8f0; }
-        .step.checked { background: #ecfdf5; border-color: #a7f3d0; }
-        .step-label { font-weight: 500; font-size: 15px; cursor: pointer; }
-        .step-sub { font-size: 13px; color: #64748b; margin-top: 4px; }
+        .step input[type="checkbox"] { 
+            order: 2; 
+            width: 20px; 
+            height: 20px; 
+            accent-color: var(--gold); 
+            cursor: pointer; 
+            margin-top: 2px; 
+            flex-shrink: 0; 
+        }
+        .step:hover { 
+            background: var(--cream); 
+            border-color: var(--border-light); 
+        }
+        .step.checked { 
+            background: #fdfbf7; 
+            border-color: var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+        .step-label { font-weight: 500; font-size: 14px; cursor: pointer; color: var(--text-primary); }
+        .step-sub { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
 
-        /* Buttons */
+        /* ===== BUTTONS ===== */
         .btn {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 8px 16px; border-radius: 8px;
+            padding: 10px 18px; border-radius: 6px;
             font-size: 13px; font-weight: 600; border: none; cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.2s;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
         .btn:active { transform: scale(0.98); }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: #1e40af; }
-        .btn-accent { background: var(--accent); color: white; }
-        .btn-accent:hover { background: #047857; }
-        .btn-ghost { background: #e2e8f0; color: #475569; }
-        .btn-ghost:hover { background: #cbd5e1; }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-danger:hover { background: #dc2626; }
-        .btn-warning { background: var(--warning); color: white; }
-        .btn-purple { background: var(--purple); color: white; }
-        .btn-purple:hover { background: #6d28d9; }
+        .btn-primary { background: var(--navy); color: var(--white); }
+        .btn-primary:hover { background: var(--navy-dark); box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3); }
+        .btn-accent { background: var(--gold); color: var(--white); }
+        .btn-accent:hover { background: var(--gold-dark); box-shadow: 0 4px 12px rgba(201, 169, 98, 0.3); }
+        .btn-ghost { background: var(--cream); color: var(--navy); border: 1px solid var(--border-light); }
+        .btn-ghost:hover { background: var(--white); border-color: var(--navy); }
+        .btn-danger { background: #dc2626; color: white; }
+        .btn-danger:hover { background: #b91c1c; }
 
-        /* Boxes */
-        .data-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        /* ===== BOXES ===== */
+        .data-box { 
+            background: var(--cream); 
+            border: 1px solid var(--border-light); 
+            border-radius: 8px; 
+            padding: 20px; 
+            margin: 15px 0; 
+        }
         
         .success-box {
-            background: #ecfdf5; border: 1px solid #a7f3d0;
-            border-left: 4px solid #059669; padding: 15px;
-            border-radius: 8px; color: #064e3b; font-size: 13px; margin-top: 10px;
+            background: #f8fdf9; 
+            border: 1px solid #d1e7d5;
+            border-left: 3px solid var(--gold); 
+            padding: 15px;
+            border-radius: 6px; 
+            color: var(--text-primary); 
+            font-size: 13px; 
+            margin-top: 10px;
         }
 
         .warning-box {
-            background: #fff1f2; border: 1px solid #fecdd3;
-            border-left: 4px solid #e11d48; padding: 15px;
-            border-radius: 8px; color: #881337; font-size: 13px; margin-top: 10px;
+            background: #fef7f7; 
+            border: 1px solid #f5d5d5;
+            border-left: 3px solid #dc2626; 
+            padding: 15px;
+            border-radius: 6px; 
+            color: var(--text-primary); 
+            font-size: 13px; 
+            margin-top: 10px;
         }
 
         .info-box {
-            background: #fefce8; border: 1px solid #fde047;
-            border-left: 4px solid #eab308; padding: 15px;
-            border-radius: 8px; color: #713f12; font-size: 13px;
+            background: #fdfbf7; 
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--gold); 
+            padding: 15px;
+            border-radius: 6px; 
+            color: var(--text-primary); 
+            font-size: 13px;
         }
 
-        /* GMB Parsed Display */
+        /* ===== GMB PARSED DISPLAY ===== */
         .gmb-parsed {
-            background: #f0fdf4; border: 2px solid #86efac;
-            border-radius: 12px; padding: 20px; margin-top: 15px;
+            background: var(--white); 
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--gold);
+            border-radius: 8px; 
+            padding: 20px; 
+            margin-top: 15px;
         }
 
         .gmb-field {
             display: grid; grid-template-columns: 100px 1fr;
-            gap: 10px; padding: 6px 0;
-            border-bottom: 1px dashed #a7f3d0;
+            gap: 10px; padding: 8px 0;
+            border-bottom: 1px solid var(--border-light);
             font-size: 13px;
         }
         .gmb-field:last-child { border-bottom: none; }
-        .gmb-field-label { font-weight: 700; text-transform: uppercase; color: #047857; font-size: 10px; }
-        .gmb-field-value { color: #1e293b; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+        .gmb-field-label { 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            color: var(--gold-dark); 
+            font-size: 10px; 
+            letter-spacing: 0.5px;
+        }
+        .gmb-field-value { 
+            color: var(--text-primary); 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 12px; 
+        }
 
-        /* CID Box */
+        /* ===== CID BOX ===== */
         .cid-box {
-            background: #fef3c7; border: 2px solid #fbbf24;
-            border-radius: 10px; padding: 15px; margin-top: 15px;
+            background: var(--cream); 
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--gold);
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-top: 15px;
         }
 
         .cid-display {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; background: #1e293b; color: #fbbf24;
-            padding: 8px 12px; border-radius: 6px; word-break: break-all;
+            font-size: 11px; 
+            background: var(--navy); 
+            color: var(--gold-light);
+            padding: 10px 14px; 
+            border-radius: 6px; 
+            word-break: break-all;
             margin: 10px 0;
         }
 
-        /* Schema Validator */
+        /* ===== SCHEMA VALIDATOR ===== */
         .code-check-area {
-            background: #1e293b; color: #e2e8f0;
+            background: var(--navy-dark); 
+            color: #e2e8f0;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px; width: 100%; height: 100px;
-            padding: 12px; border-radius: 8px; border: 2px solid #334155;
-            margin-top: 8px; resize: vertical;
+            font-size: 12px; 
+            width: 100%; 
+            height: 100px;
+            padding: 12px; 
+            border-radius: 6px; 
+            border: 1px solid var(--navy);
+            margin-top: 8px; 
+            resize: vertical;
         }
 
-        .schema-results { margin-top: 15px; padding: 15px; border-radius: 8px; font-size: 13px; }
-        .schema-results.pass { background: #ecfdf5; border: 1px solid #a7f3d0; }
-        .schema-results.fail { background: #fef2f2; border: 1px solid #fecaca; }
+        .schema-results { 
+            margin-top: 15px; 
+            padding: 15px; 
+            border-radius: 6px; 
+            font-size: 13px; 
+        }
+        .schema-results.pass { 
+            background: #f8fdf9; 
+            border: 1px solid #d1e7d5; 
+        }
+        .schema-results.fail { 
+            background: #fef7f7; 
+            border: 1px solid #f5d5d5; 
+        }
 
         .schema-check-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
-        .schema-check-item.pass { color: #059669; }
+        .schema-check-item.pass { color: var(--gold-dark); }
         .schema-check-item.fail { color: #dc2626; }
 
-        /* Quick Links */
+        /* ===== QUICK LINKS ===== */
         .quick-links { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
 
         .quick-link {
             display: inline-flex; align-items: center; gap: 6px;
-            padding: 8px 14px; background: #f1f5f9;
-            border: 1px solid #e2e8f0; border-radius: 6px;
-            font-size: 12px; font-weight: 600; color: var(--primary);
-            text-decoration: none; transition: all 0.2s;
+            padding: 10px 16px; 
+            background: var(--white);
+            border: 1px solid var(--border-light); 
+            border-radius: 6px;
+            font-size: 12px; 
+            font-weight: 600; 
+            color: var(--navy);
+            text-decoration: none; 
+            transition: all 0.2s;
         }
-        .quick-link:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .quick-link:hover { 
+            background: var(--navy); 
+            color: var(--white); 
+            border-color: var(--navy); 
+        }
 
         .quick-link.secondary {
-            background: #faf5ff; border-color: #d8b4fe; color: var(--purple);
+            background: var(--cream); 
+            border-color: var(--border-light); 
+            color: var(--text-secondary);
         }
-        .quick-link.secondary:hover { background: var(--purple); color: white; }
+        .quick-link.secondary:hover { 
+            background: var(--gold); 
+            color: var(--white);
+            border-color: var(--gold);
+        }
 
-        /* Toast */
+        /* ===== TOAST ===== */
         .toast {
             position: fixed; bottom: 30px; right: 30px;
-            background: #0f172a; color: white;
-            padding: 12px 24px; border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: var(--navy); 
+            color: var(--white);
+            padding: 14px 24px; 
+            border-radius: 6px;
+            box-shadow: 0 10px 40px rgba(30, 58, 95, 0.3);
             display: flex; align-items: center; gap: 10px;
-            transform: translateY(100px); transition: transform 0.3s; z-index: 2000;
+            transform: translateY(100px); 
+            transition: transform 0.3s ease; 
+            z-index: 2000;
+            font-size: 13px;
+            font-weight: 500;
         }
         .toast.show { transform: translateY(0); }
 
-        .divider { border-top: 1px solid #e2e8f0; margin: 20px 0; }
+        .divider { border-top: 1px solid var(--border-light); margin: 20px 0; }
 
         .instruction-box {
             background: #faf5ff; border: 1px solid #d8b4fe;
@@ -300,81 +684,48 @@
             border-radius: 8px; font-family: 'Inter', sans-serif;
             margin: 10px 0; min-height: 60px;
         }
-
-        .side-by-side-box {
-            position: relative;
-            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .side-by-side-header {
-            font-size: 22px;
-            font-weight: 800;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-        .side-by-side-sub {
-            font-size: 14px;
-            color: #ddd6fe;
-            margin-top: 5px;
-        }
-        .side-by-side-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            background: white;
-            color: #5b21b6;
-            font-weight: 700;
-            font-size: 15px;
-            border-radius: 8px;
-            text-decoration: none;
-            margin-top: 15px;
-            transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .side-by-side-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-        .side-by-side-tip {
-            margin-top: 12px;
-            font-size: 12px;
-            color: #c4b5fd;
-        }
-
-        @keyframes techFlow {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 200% 0%; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- TECH ACCENT BAR -->
-    <div style="height:3px; background: linear-gradient(90deg, #0f172a 0%, #3b82f6 20%, #06b6d4 40%, #10b981 60%, #3b82f6 80%, #0f172a 100%); background-size: 200% 100%; animation: techFlow 8s linear infinite;"></div>
+    <!-- BOOT SEQUENCE OVERLAY -->
+    <div class="boot-overlay" id="bootOverlay">
+        <div class="boot-logo">M.A.R.K<span>.</span></div>
+        <div class="boot-text" id="bootText"></div>
+    </div>
 
-    <header class="ai-header" style="padding: 30px 20px;">
-        <div class="header-content" style="align-items: flex-start;">
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+        <div class="status-item online">
+            <div class="status-dot"></div>
+            <span>Online</span>
+        </div>
+        <div class="status-item">
+            <span>M.A.R.K. v9.94</span>
+        </div>
+        <div class="status-item">
+            <span class="status-clock" id="statusClock">00:00:00</span>
+        </div>
+        <div class="status-item" id="phaseStatus">
+            <span>Phase <span id="currentPhaseNum">1</span> of 9</span>
+        </div>
+    </div>
+
+    <header class="ai-header">
+        <div class="header-content" style="align-items: center;">
             <div>
-                <div style="font-size:10px; font-weight:500; color:#60a5fa; letter-spacing:3px; margin-bottom:6px;">
-                    MACHINE ASSISTED ROUTING KIT
+                <div style="font-size:10px; font-weight:500; color:var(--gold); letter-spacing:3px; margin-bottom:8px; text-transform:uppercase;">
+                    Machine Assisted Routing Kit
                 </div>
-                <h1 style="font-size:36px; font-weight:300; letter-spacing:-0.5px; margin:0;">
-                    M.A.R.K. <span style="font-weight:600; color:#60a5fa;">v9.82</span>
+                <h1 style="font-size:32px; font-weight:300; letter-spacing:1px; margin:0; color:var(--navy);">
+                    M.A.R.K<span style="color:var(--gold);">.</span> <span style="font-weight:500; font-size:18px; color:var(--text-muted);">v9.94</span>
                 </h1>
             </div>
-            <div style="text-align:right; font-family:'JetBrains Mono', monospace;">
-                <div style="font-size:12px; font-weight:600; color:#fff; margin-bottom:8px;">Page Terminal</div>
-                <div style="font-size:9px; opacity:0.4; line-height:1.7;">
+            <div style="text-align:right;">
+                <div style="font-size:11px; font-weight:600; color:var(--navy); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Page Terminal</div>
+                <div style="font-size:10px; color:var(--text-muted); line-height:1.6;">
                     <div>GEO-PARSE™ Engine</div>
-                    <div>CID Protocol</div>
-                    <div>Schema Module</div>
+                    <div>CID Protocol • Schema Module</div>
                 </div>
             </div>
         </div>
@@ -469,7 +820,7 @@
                     <!-- PARSED GMB DATA -->
                     <div id="parsedGMBArea" style="display:none;">
                         <div class="gmb-parsed">
-                            <h4 style="color:#059669; margin-bottom:15px; display:flex; align-items:center; gap:8px;">
+                            <h4 style="color: var(--gold-dark); margin-bottom:15px; display:flex; align-items:center; gap:8px;">
                                 <i class="fas fa-check-circle"></i> GMB Data Verified
                             </h4>
                             
@@ -493,14 +844,19 @@
                                         <div class="gmb-field-label">Website</div>
                                         <div class="gmb-field-value" id="parsed-website">—</div>
                                     </div>
-                                    <div class="gmb-field">
-                                        <div class="gmb-field-label">Services</div>
-                                        <div class="gmb-field-value" id="parsed-services">—</div>
-                                    </div>
                                 </div>
                             </div>
                             
-                            <div style="margin-top:15px; padding-top:15px; border-top:1px solid #86efac;">
+                            <!-- SERVICES - Full Width -->
+                            <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border-light);">
+                                <div class="gmb-field" style="grid-template-columns: 80px 1fr;">
+                                    <div class="gmb-field-label">Services</div>
+                                    <div class="gmb-field-value" id="parsed-services" style="font-size:11px; line-height:1.5;">—</div>
+                                </div>
+                            </div>
+                            
+                            <!-- ADDRESS SECTION -->
+                            <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border-light);">
                                 <div class="gmb-field">
                                     <div class="gmb-field-label">Street</div>
                                     <div class="gmb-field-value" id="parsed-address">—</div>
@@ -515,7 +871,8 @@
                                 </div>
                             </div>
                             
-                            <div style="margin-top:15px; padding-top:15px; border-top:1px solid #86efac;">
+                            <!-- HOURS SECTION -->
+                            <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border-light);">
                                 <div class="gmb-field">
                                     <div class="gmb-field-label">Hours</div>
                                     <div class="gmb-field-value" id="parsed-hours" style="white-space:pre-wrap;">—</div>
@@ -564,66 +921,41 @@
                             
                             <div id="cidStatus" style="margin-top:10px; font-weight:700;"></div>
                         </div>
-                    </div>
 
-                    <!-- HUB+SPOKE HANDOFF SECTION -->
-                    <div id="hubSpokeSection" style="display:none; margin-top:20px;">
-                        <div class="divider"></div>
-                        
-                        <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border: 2px solid #c084fc; border-radius: 12px; padding: 20px;">
-                            <h4 style="color: var(--purple); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                                <i class="fas fa-project-diagram"></i> Hub+Spoke Internal Linking Strategy
+                        <!-- HUB+SPOKE INTERNAL LINKING -->
+                        <div class="data-box" style="margin-top:15px; border-left: 3px solid var(--gold); background: var(--cream);">
+                            <h4 style="color: var(--gold-dark); margin-bottom:10px; display:flex; align-items:center; gap:8px; font-size:14px;">
+                                <i class="fas fa-sitemap"></i> Hub+Spoke Internal Linking
                             </h4>
+                            <p style="font-size:11px; color:var(--text-secondary); margin-bottom:10px;">
+                                Paste the city's Internal Linking Reference for 3-4 links per page in rows 4+.
+                            </p>
+                            <textarea id="hubSpokeHandoff" style="width:100%; height:100px; padding:10px; border:1px solid var(--border-light); border-radius:6px; font-family:'Inter',sans-serif; font-size:12px; background:var(--white);" placeholder="Paste the complete Hub+Spoke handoff here... (Tier 1-5 pages, local context, linking rules)"></textarea>
+                            <button class="btn btn-accent" style="width:100%; margin-top:10px;" onclick="parseHubSpoke()">
+                                <i class="fas fa-project-diagram"></i> Load Hub+Spoke Strategy
+                            </button>
                             
-                            <div class="form-group">
-                                <label>Paste Complete Hub+Spoke Handoff</label>
-                                <textarea id="hubSpokeHandoff" style="height:150px; font-size:12px; border-color:#c084fc;" placeholder="Paste the complete Hub+Spoke handoff here...
+                            <!-- PARSED HUB+SPOKE DATA -->
+                            <div id="parsedHubSpokeArea" style="display:none; margin-top:12px;">
+                                <div style="background: var(--white); border: 1px solid var(--border-light); border-left: 3px solid var(--gold); border-radius: 6px; padding: 12px;">
+                                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:10px; color:var(--gold-dark); font-weight:600; font-size:13px;">
+                                        <i class="fas fa-check-circle"></i> Strategy Loaded
+                                    </div>
+                                    
+                                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; font-size:11px;">
+                                        <div><span style="color:var(--gold-dark); font-weight:600;">City:</span> <span id="hubspoke-city">—</span></div>
+                                        <div><span style="color:var(--gold-dark); font-weight:600;">Total:</span> <span id="hubspoke-total">—</span></div>
+                                        <div><span style="color:var(--gold-dark); font-weight:600;">Tier 1:</span> <span id="hubspoke-tier1">—</span></div>
+                                        <div><span style="color:var(--gold-dark); font-weight:600;">T2-5:</span> <span id="hubspoke-tiers">—</span></div>
+                                    </div>
+                                    
+                                    <div style="margin-top:8px; padding-top:8px; border-top:1px solid var(--border-light); font-size:11px;">
+                                        <span style="color:var(--gold-dark); font-weight:600;">Hub:</span>
+                                        <span id="hubspoke-hubpage" style="font-family:'JetBrains Mono',monospace;">—</span>
+                                    </div>
 
-This should include:
-• Tier 1-5 page URLs with descriptions  
-• Local context (major employers, institutions)
-• Smart linking examples
-• Technical requirements"></textarea>
-                            </div>
-                            
-                            <div style="text-align: center; margin-top: 15px;">
-                                <button class="btn btn-purple" onclick="parseHubSpoke()">
-                                    <i class="fas fa-sitemap"></i> Process Hub+Spoke Data
-                                </button>
-                            </div>
-                            
-                            <!-- PARSED HUB+SPOKE DISPLAY -->
-                            <div id="parsedHubSpokeArea" style="display:none; margin-top:15px;">
-                                <div style="background: white; border: 2px solid #a855f7; border-radius: 10px; padding: 15px;">
-                                    <h5 style="color: #7c3aed; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                                        <i class="fas fa-check-circle"></i> Hub+Spoke Data Loaded
-                                    </h5>
-                                    
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 13px;">
-                                        <div>
-                                            <div style="color: #7c3aed; font-weight: 700; font-size: 10px; text-transform: uppercase;">Target City</div>
-                                            <div id="hs-city" style="font-family: 'JetBrains Mono', monospace;">—</div>
-                                        </div>
-                                        <div>
-                                            <div style="color: #7c3aed; font-weight: 700; font-size: 10px; text-transform: uppercase;">Total Pages</div>
-                                            <div id="hs-pages" style="font-family: 'JetBrains Mono', monospace;">—</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed #c084fc;">
-                                        <div style="color: #7c3aed; font-weight: 700; font-size: 10px; text-transform: uppercase; margin-bottom: 8px;">Tiers Detected</div>
-                                        <div id="hs-tiers" style="font-size: 12px; line-height: 1.8;"></div>
-                                    </div>
-                                    
-                                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed #c084fc;">
-                                        <div style="color: #7c3aed; font-weight: 700; font-size: 10px; text-transform: uppercase; margin-bottom: 8px;">Local Context</div>
-                                        <div id="hs-context" style="font-size: 11px; color: #64748b;">—</div>
-                                    </div>
-                                </div>
-                                
-                                <div style="margin-top: 10px; padding: 10px; background: #ecfdf5; border-radius: 6px; border: 1px solid #a7f3d0;">
-                                    <div style="color: #059669; font-size: 12px; font-weight: 600;">
-                                        <i class="fas fa-check"></i> Hub+Spoke data will be injected into Build & SEO Audit prompts
+                                    <div style="margin-top:10px; padding:8px; background:rgba(201,169,98,0.15); border-radius:4px; font-size:10px; color:var(--gold-dark); font-weight:500;">
+                                        ✓ Active — Linking data injected into Build + SEO prompts
                                     </div>
                                 </div>
                             </div>
@@ -655,14 +987,66 @@ This should include:
                             OPEN SIDE BY SIDE TABS
                         </div>
                         <div class="side-by-side-sub">(to follow along together)</div>
-                        <a href="https://claude.ai/project/019afe23-9854-71e3-896c-4a652a608017" target="_blank" class="side-by-side-btn">
-                            <i class="fas fa-brain"></i> Open Claude Project
+                        <a href="https://claude.ai/project/019afe23-9854-71e3-896c-4a652a608017" target="_blank" class="side-by-side-btn" style="flex-direction:column; gap:4px;">
+                            <span style="display:flex; align-items:center; gap:10px;"><i class="fas fa-brain"></i> Open Claude Project</span>
+                            <span style="color:#ef4444; font-size:11px; font-weight:700;">(USE SONNET 4.5)</span>
                         </a>
                         <div class="side-by-side-tip">
                             Drag windows side-by-side for easy workflow
                         </div>
                         <input type="checkbox" id="p1-0" onchange="updateProgress()" style="position:absolute; top:15px; right:15px; width:22px; height:22px;">
                     </div>
+
+                    <style>
+                        .side-by-side-box {
+                            position: relative;
+                            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+                            border-radius: 12px;
+                            padding: 25px;
+                            text-align: center;
+                            margin-bottom: 15px;
+                            border: 1px solid var(--gold);
+                        }
+                        .side-by-side-header {
+                            font-size: 20px;
+                            font-weight: 600;
+                            color: white;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 12px;
+                        }
+                        .side-by-side-sub {
+                            font-size: 13px;
+                            color: rgba(255,255,255,0.7);
+                            margin-top: 5px;
+                        }
+                        .side-by-side-btn {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 10px;
+                            padding: 12px 24px;
+                            background: var(--gold);
+                            color: var(--white);
+                            font-weight: 600;
+                            font-size: 14px;
+                            border-radius: 6px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                            transition: all 0.2s;
+                            box-shadow: 0 4px 15px rgba(201,169,98,0.3);
+                        }
+                        .side-by-side-btn:hover {
+                            transform: translateY(-2px);
+                            box-shadow: 0 6px 20px rgba(201,169,98,0.4);
+                            background: var(--gold-dark);
+                        }
+                        .side-by-side-tip {
+                            margin-top: 12px;
+                            font-size: 11px;
+                            color: rgba(255,255,255,0.5);
+                        }
+                    </style>
 
                     <div class="step">
                         <input type="checkbox" id="p1-1" onchange="updateProgress()">
@@ -719,9 +1103,20 @@ This should include:
                                     <i class="fas fa-star"></i> New Design
                                 </a>
                                 <a href="https://docs.google.com/document/d/1SEw8RElqBNyyWG-0O8LOgpI5qs8l2nIjqHk0dp66nwE/edit?usp=sharing" target="_blank" class="quick-link secondary">
-                                    <i class="fas fa-project-diagram"></i> Hub+Spoke
+                                    <i class="fas fa-sitemap"></i> Hub+Spoke
                                 </a>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <input type="checkbox" id="p1-1b" onchange="updateProgress()">
+                        <div>
+                            <div class="step-label">Verify Hub+Spoke Internal Linking</div>
+                            <div class="step-sub">Confirms contextual links + Related Services section</div>
+                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-hubspoke')">
+                                <i class="fas fa-sitemap"></i> Verify Hub+Spoke Prompt
+                            </button>
                         </div>
                     </div>
 
@@ -782,6 +1177,7 @@ This should include:
                             </button>
                         </div>
                     </div>
+                    
                     <div class="step">
                         <input type="checkbox" id="p3-2" onchange="updateProgress()">
                         <div class="step-label">✅ All Links Verified</div>
@@ -1126,7 +1522,6 @@ This should include:
             gmbURL: '',
             gmbData: '',
             hubSpokeHandoff: '',
-            hubSpokeProcessed: false,
             parsedHubSpoke: {},
             city: '',
             state: '',
@@ -1138,10 +1533,169 @@ This should include:
             checks: {}
         };
 
+        // === BOOT SEQUENCE ===
+        const bootMessages = [
+            'Initializing System',
+            'Loading Modules',
+            'Ready'
+        ];
+
+        function runBootSequence() {
+            const bootText = document.getElementById('bootText');
+            const bootOverlay = document.getElementById('bootOverlay');
+            let messageIndex = 0;
+
+            function showNextMessage() {
+                if (messageIndex < bootMessages.length) {
+                    const div = document.createElement('div');
+                    div.textContent = bootMessages[messageIndex];
+                    div.style.animationDelay = '0s';
+                    bootText.appendChild(div);
+                    messageIndex++;
+                    setTimeout(showNextMessage, 400);
+                } else {
+                    setTimeout(() => {
+                        bootOverlay.classList.add('hidden');
+                    }, 800);
+                }
+            }
+            setTimeout(showNextMessage, 300);
+        }
+
+        // === STATUS BAR CLOCK ===
+        function updateStatusClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('statusClock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // === PHASE COMPLETION DETECTION ===
+        function checkPhaseCompletion() {
+            const phases = document.querySelectorAll('.phase');
+            let currentActivePhase = 1;
+            
+            phases.forEach((phase, index) => {
+                const phaseNum = index + 1;
+                const checkboxes = phase.querySelectorAll('input[type="checkbox"]');
+                const checkedBoxes = phase.querySelectorAll('input[type="checkbox"]:checked');
+                
+                if (checkboxes.length > 0 && checkboxes.length === checkedBoxes.length) {
+                    // Phase complete!
+                    if (!phase.classList.contains('phase-complete')) {
+                        phase.classList.add('phase-complete');
+                        
+                        // Trigger next phase unlock
+                        const nextPhase = phases[index + 1];
+                        if (nextPhase && !nextPhase.classList.contains('active')) {
+                            setTimeout(() => {
+                                nextPhase.classList.add('phase-unlocking');
+                                nextPhase.classList.add('active');
+                                showToast(`✓ Phase ${phaseNum} Complete → Phase ${phaseNum + 1} Ready`);
+                                
+                                // Scroll to next phase
+                                setTimeout(() => {
+                                    nextPhase.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    nextPhase.classList.remove('phase-unlocking');
+                                }, 300);
+                            }, 400);
+                        }
+                    }
+                    currentActivePhase = phaseNum + 1;
+                } else {
+                    phase.classList.remove('phase-complete');
+                }
+            });
+            
+            // Update status bar phase indicator
+            const phaseNumEl = document.getElementById('currentPhaseNum');
+            if (phaseNumEl) {
+                phaseNumEl.textContent = Math.min(currentActivePhase, 9);
+            }
+            
+            // Check for 100% completion
+            checkForCompletion();
+        }
+
         window.onload = function() {
+            // Run boot sequence
+            runBootSequence();
+            
+            // Start status clock
+            updateStatusClock();
+            setInterval(updateStatusClock, 1000);
+            
+            // Load saved state
             loadState();
             setInterval(updateTimer, 1000);
+            
+            // Initial phase check
+            setTimeout(checkPhaseCompletion, 100);
         };
+
+        // === 100% COMPLETION CELEBRATION ===
+        let completionTriggered = false;
+
+        function checkForCompletion() {
+            const total = document.querySelectorAll('#phases input[type="checkbox"]').length;
+            const checked = document.querySelectorAll('#phases input[type="checkbox"]:checked').length;
+            
+            if (total > 0 && checked === total && !completionTriggered) {
+                completionTriggered = true;
+                setTimeout(triggerCompletion, 500);
+            } else if (checked < total) {
+                completionTriggered = false;
+            }
+        }
+
+        function triggerCompletion() {
+            const overlay = document.getElementById('completionOverlay');
+            const pageEl = document.getElementById('completionPage');
+            const timeEl = document.getElementById('completionTime');
+            
+            if (overlay) {
+                // Set stats
+                if (pageEl) pageEl.textContent = appState.pageName || 'Landing Page';
+                if (timeEl) {
+                    const diff = appState.startTime ? Math.floor((Date.now() - appState.startTime) / 1000) : 0;
+                    const mins = Math.floor(diff / 60);
+                    const secs = diff % 60;
+                    timeEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+                }
+                
+                // Show overlay
+                overlay.classList.add('active');
+                
+                // Trigger confetti
+                createConfetti();
+            }
+        }
+
+        function closeCompletion() {
+            const overlay = document.getElementById('completionOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#c9a962', '#d4bc7d', '#1e3a5f', '#b8954d', '#2d4a6f', '#e8dcc8'];
+            const overlay = document.getElementById('completionOverlay');
+            
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+                overlay.appendChild(confetti);
+                
+                setTimeout(() => confetti.classList.add('active'), 10);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
 
         function saveState() {
             appState.vaName = document.getElementById('vaName').value;
@@ -1168,6 +1722,7 @@ This should include:
                 document.getElementById('pageURL').value = appState.pageURL || '';
                 document.getElementById('gmbURL').value = appState.gmbURL || '';
                 document.getElementById('gmbData').value = appState.gmbData || '';
+                document.getElementById('hubSpokeHandoff').value = appState.hubSpokeHandoff || '';
                 document.getElementById('cityName').value = appState.city || '';
                 document.getElementById('stateName').value = appState.state || '';
                 
@@ -1189,30 +1744,19 @@ This should include:
 
                 if(appState.parsedGMB && appState.parsedGMB.name) {
                     document.getElementById('parsedGMBArea').style.display = 'block';
-                    document.getElementById('hubSpokeSection').style.display = 'block';
                     displayParsedGMB();
                 }
 
-                if(appState.hubSpokeHandoff) {
-                    document.getElementById('hubSpokeHandoff').value = appState.hubSpokeHandoff;
-                }
-                
-                if(appState.hubSpokeProcessed && appState.parsedHubSpoke) {
-                    document.getElementById('parsedHubSpokeArea').style.display = 'block';
+                // Restore Hub+Spoke display if loaded
+                if(appState.parsedHubSpoke && appState.parsedHubSpoke.raw) {
                     const p = appState.parsedHubSpoke;
-                    document.getElementById('hs-city').textContent = p.city || 'Detected from handoff';
-                    document.getElementById('hs-pages').textContent = p.totalPages ? p.totalPages + ' pages' : 'Links found';
-                    
-                    let tiersHtml = '';
-                    if(p.tiers && p.tiers.length > 0) {
-                        p.tiers.forEach(tier => {
-                            tiersHtml += `<span style="display:inline-block; background:#f3e8ff; padding:2px 8px; border-radius:4px; margin:2px; font-size:11px;">${tier}</span>`;
-                        });
-                    } else {
-                        tiersHtml = '<span style="color:#64748b;">Tier structure detected</span>';
-                    }
-                    document.getElementById('hs-tiers').innerHTML = tiersHtml;
-                    document.getElementById('hs-context').innerHTML = p.localContext || 'Context data found';
+                    document.getElementById('hubspoke-city').textContent = p.city + (p.state ? ', ' + p.state : '');
+                    document.getElementById('hubspoke-total').textContent = p.totalPages || 'Not specified';
+                    document.getElementById('hubspoke-tier1').textContent = p.tier1Count + ' pages';
+                    document.getElementById('hubspoke-tiers').textContent = 
+                        `T2: ${p.tier2Count} | T3: ${p.tier3Count} | T4: ${p.tier4Count} | T5: ${p.tier5Count}`;
+                    document.getElementById('hubspoke-hubpage').textContent = p.hubPage || 'Auto-detect from handoff';
+                    document.getElementById('parsedHubSpokeArea').style.display = 'block';
                 }
 
                 if(appState.cid) {
@@ -1229,8 +1773,10 @@ This should include:
 
         function resetAll() {
             if(confirm("Are you sure? This will wipe all data.")) {
+                // Clear localStorage first
                 localStorage.removeItem('stsTrackerV7');
                 
+                // Manually clear all form fields
                 document.getElementById('vaName').value = '';
                 document.getElementById('pageURL').value = '';
                 document.getElementById('gmbURL').value = '';
@@ -1242,9 +1788,11 @@ This should include:
                 document.getElementById('cidDisplay').textContent = 'CID will appear here...';
                 document.getElementById('cidStatus').innerHTML = '';
                 
+                // Clear manual CID input
                 const manualCID = document.getElementById('manualCID');
                 if(manualCID) manualCID.value = '';
                 
+                // Clear parsed GMB fields
                 document.getElementById('parsed-name').textContent = '—';
                 document.getElementById('parsed-category').textContent = '—';
                 document.getElementById('parsed-address').textContent = '—';
@@ -1255,35 +1803,48 @@ This should include:
                 document.getElementById('parsed-hours').textContent = '—';
                 document.getElementById('parsed-services').textContent = '—';
                 
+                // Hide dynamic areas
                 document.getElementById('dataArea').style.display = 'none';
                 document.getElementById('parsedGMBArea').style.display = 'none';
-                document.getElementById('hubSpokeSection').style.display = 'none';
                 document.getElementById('parsedHubSpokeArea').style.display = 'none';
                 document.getElementById('verifyFail').style.display = 'none';
                 
+                // Clear Hub+Spoke parsed fields
+                document.getElementById('hubspoke-city').textContent = '—';
+                document.getElementById('hubspoke-total').textContent = '—';
+                document.getElementById('hubspoke-tier1').textContent = '—';
+                document.getElementById('hubspoke-tiers').textContent = '—';
+                document.getElementById('hubspoke-hubpage').textContent = '—';
+                
+                // Clear all checkboxes
                 document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                     cb.checked = false;
                     const step = cb.closest('.step');
                     if(step) step.classList.remove('checked');
                 });
                 
+                // Clear schema validator
                 const schemaPaste = document.getElementById('schemaPaste');
                 if(schemaPaste) schemaPaste.value = '';
                 const schemaResults = document.getElementById('schemaResults');
                 if(schemaResults) schemaResults.innerHTML = '';
                 
+                // Clear schema CID display
                 const schemaCID = document.getElementById('schemaCID');
                 if(schemaCID) schemaCID.textContent = '—';
                 const schemaCIDLink = document.getElementById('schemaCIDLink');
                 if(schemaCIDLink) schemaCIDLink.style.display = 'none';
                 
+                // Clear rebuild issue
                 const rebuildIssue = document.getElementById('rebuildIssue');
                 if(rebuildIssue) rebuildIssue.value = '';
                 
+                // Reset progress
                 document.getElementById('progressBar').style.width = '0%';
                 document.getElementById('percentDisplay').textContent = '0%';
                 document.getElementById('timerDisplay').textContent = '00:00';
                 
+                // Reset app state
                 appState = {
                     startTime: null,
                     pageURL: '',
@@ -1291,7 +1852,6 @@ This should include:
                     gmbURL: '',
                     gmbData: '',
                     hubSpokeHandoff: '',
-                    hubSpokeProcessed: false,
                     parsedHubSpoke: {},
                     city: '',
                     state: '',
@@ -1309,6 +1869,7 @@ This should include:
 
         // === 300 LARGEST US METRO AREAS LOOKUP ===
         const cityLookup = {
+            // Top 100
             'new-york': 'New York, NY',
             'los-angeles': 'Los Angeles, CA',
             'chicago': 'Chicago, IL',
@@ -1409,6 +1970,7 @@ This should include:
             'hialeah': 'Hialeah, FL',
             'fremont': 'Fremont, CA',
             'boise': 'Boise, ID',
+            // 101-200
             'richmond': 'Richmond, VA',
             'baton-rouge': 'Baton Rouge, LA',
             'spokane': 'Spokane, WA',
@@ -1423,11 +1985,13 @@ This should include:
             'fayetteville': 'Fayetteville, NC',
             'moreno-valley': 'Moreno Valley, CA',
             'rochester': 'Rochester, NY',
+            'glendale': 'Glendale, CA',
             'huntington-beach': 'Huntington Beach, CA',
             'salt-lake-city': 'Salt Lake City, UT',
             'grand-rapids': 'Grand Rapids, MI',
             'amarillo': 'Amarillo, TX',
             'yonkers': 'Yonkers, NY',
+            'aurora': 'Aurora, IL',
             'montgomery': 'Montgomery, AL',
             'akron': 'Akron, OH',
             'little-rock': 'Little Rock, AR',
@@ -1436,6 +2000,7 @@ This should include:
             'port-saint-lucie': 'Port Saint Lucie, FL',
             'port-st-lucie': 'Port Saint Lucie, FL',
             'grand-prairie': 'Grand Prairie, TX',
+            'columbus': 'Columbus, GA',
             'tallahassee': 'Tallahassee, FL',
             'overland-park': 'Overland Park, KS',
             'tempe': 'Tempe, AZ',
@@ -1449,7 +2014,6 @@ This should include:
             'brownsville': 'Brownsville, TX',
             'vancouver': 'Vancouver, WA',
             'fort-lauderdale': 'Fort Lauderdale, FL',
-            'ft-lauderdale': 'Fort Lauderdale, FL',
             'sioux-falls': 'Sioux Falls, SD',
             'ontario': 'Ontario, CA',
             'chattanooga': 'Chattanooga, TN',
@@ -1477,7 +2041,9 @@ This should include:
             'salinas': 'Salinas, CA',
             'palmdale': 'Palmdale, CA',
             'hollywood': 'Hollywood, FL',
+            'springfield': 'Springfield, MA',
             'macon': 'Macon, GA',
+            'kansas-city': 'Kansas City, KS',
             'sunnyvale': 'Sunnyvale, CA',
             'pomona': 'Pomona, CA',
             'killeen': 'Killeen, TX',
@@ -1500,6 +2066,7 @@ This should include:
             'roseville': 'Roseville, CA',
             'thornton': 'Thornton, CO',
             'miramar': 'Miramar, FL',
+            'pasadena': 'Pasadena, CA',
             'mesquite': 'Mesquite, TX',
             'olathe': 'Olathe, KS',
             'dayton': 'Dayton, OH',
@@ -1507,6 +2074,7 @@ This should include:
             'waco': 'Waco, TX',
             'orange': 'Orange, CA',
             'fullerton': 'Fullerton, CA',
+            // 201-300
             'charleston': 'Charleston, SC',
             'west-valley-city': 'West Valley City, UT',
             'visalia': 'Visalia, CA',
@@ -1542,6 +2110,7 @@ This should include:
             'sugar-land': 'Sugar Land, TX',
             'beaumont': 'Beaumont, TX',
             'lansing': 'Lansing, MI',
+            'rochester': 'Rochester, MN',
             'evansville': 'Evansville, IN',
             'provo': 'Provo, UT',
             'carlsbad': 'Carlsbad, CA',
@@ -1554,8 +2123,10 @@ This should include:
             'fairfield': 'Fairfield, CA',
             'west-covina': 'West Covina, CA',
             'billings': 'Billings, MT',
+            'murrieta': 'Murrieta, CA',
             'antioch': 'Antioch, CA',
             'manchester': 'Manchester, NH',
+            'richmond': 'Richmond, CA',
             'norwalk': 'Norwalk, CA',
             'ventura': 'Ventura, CA',
             'temecula': 'Temecula, CA',
@@ -1608,15 +2179,22 @@ This should include:
             'san-leandro': 'San Leandro, CA',
             'vallejo': 'Vallejo, CA',
             'tuscaloosa': 'Tuscaloosa, AL',
+            // Additional Florida cities (STS markets)
+            'fort-lauderdale': 'Fort Lauderdale, FL',
+            'ft-lauderdale': 'Fort Lauderdale, FL',
+            'west-palm-beach': 'West Palm Beach, FL',
             'delray-beach': 'Delray Beach, FL',
             'boynton-beach': 'Boynton Beach, FL',
             'deerfield-beach': 'Deerfield Beach, FL',
+            'pompano-beach': 'Pompano Beach, FL',
+            'coral-springs': 'Coral Springs, FL',
             'coconut-creek': 'Coconut Creek, FL',
             'margate': 'Margate, FL',
             'tamarac': 'Tamarac, FL',
             'sunrise': 'Sunrise, FL',
             'plantation': 'Plantation, FL',
             'weston': 'Weston, FL',
+            'davie': 'Davie, FL',
             'doral': 'Doral, FL',
             'homestead': 'Homestead, FL',
             'kendall': 'Kendall, FL',
@@ -1625,22 +2203,48 @@ This should include:
             'aventura': 'Aventura, FL',
             'hallandale-beach': 'Hallandale Beach, FL',
             'lauderhill': 'Lauderhill, FL',
+            'pembroke-pines': 'Pembroke Pines, FL',
+            'miramar': 'Miramar, FL',
+            'hollywood': 'Hollywood, FL',
             'miami-gardens': 'Miami Gardens, FL',
+            'hialeah': 'Hialeah, FL',
+            'cape-coral': 'Cape Coral, FL',
+            'port-saint-lucie': 'Port Saint Lucie, FL',
+            'port-st-lucie': 'Port Saint Lucie, FL',
+            'palm-bay': 'Palm Bay, FL',
+            'clearwater': 'Clearwater, FL',
+            'gainesville': 'Gainesville, FL',
+            'tallahassee': 'Tallahassee, FL',
+            'orlando': 'Orlando, FL',
+            'tampa': 'Tampa, FL',
+            'saint-petersburg': 'Saint Petersburg, FL',
+            'st-petersburg': 'Saint Petersburg, FL',
             'st-pete': 'Saint Petersburg, FL',
+            // Additional Texas cities (STS markets)
             'the-woodlands': 'The Woodlands, TX',
             'katy': 'Katy, TX',
             'spring': 'Spring, TX',
             'humble': 'Humble, TX',
             'baytown': 'Baytown, TX',
+            'pasadena': 'Pasadena, TX',
             'league-city': 'League City, TX',
             'friendswood': 'Friendswood, TX',
             'missouri-city': 'Missouri City, TX',
+            'sugar-land': 'Sugar Land, TX',
+            'pearland': 'Pearland, TX',
             'conroe': 'Conroe, TX',
+            'round-rock': 'Round Rock, TX',
             'cedar-park': 'Cedar Park, TX',
             'georgetown': 'Georgetown, TX',
             'san-marcos': 'San Marcos, TX',
             'new-braunfels': 'New Braunfels, TX',
+            // Additional Midwest cities (STS markets)
             'schaumburg': 'Schaumburg, IL',
+            'naperville': 'Naperville, IL',
+            'aurora': 'Aurora, IL',
+            'joliet': 'Joliet, IL',
+            'rockford': 'Rockford, IL',
+            'elgin': 'Elgin, IL',
             'waukegan': 'Waukegan, IL',
             'evanston': 'Evanston, IL',
             'oak-park': 'Oak Park, IL',
@@ -1655,17 +2259,31 @@ This should include:
             'wheaton': 'Wheaton, IL',
             'bloomington': 'Bloomington, IL',
             'champaign': 'Champaign, IL',
+            'peoria': 'Peoria, IL',
+            'springfield': 'Springfield, IL',
             'decatur': 'Decatur, IL',
+            // Additional Michigan cities
+            'grand-rapids': 'Grand Rapids, MI',
             'warren': 'Warren, MI',
             'sterling-heights': 'Sterling Heights, MI',
+            'ann-arbor': 'Ann Arbor, MI',
+            'lansing': 'Lansing, MI',
             'dearborn': 'Dearborn, MI',
             'livonia': 'Livonia, MI',
             'troy': 'Troy, MI',
             'farmington-hills': 'Farmington Hills, MI',
             'southfield': 'Southfield, MI',
+            // Additional Wisconsin cities
+            'madison': 'Madison, WI',
+            'green-bay': 'Green Bay, WI',
+            'kenosha': 'Kenosha, WI',
             'racine': 'Racine, WI',
             'appleton': 'Appleton, WI',
             'waukesha': 'Waukesha, WI',
+            // Additional Minnesota cities  
+            'saint-paul': 'Saint Paul, MN',
+            'st-paul': 'Saint Paul, MN',
+            'rochester': 'Rochester, MN',
             'duluth': 'Duluth, MN',
             'bloomington-mn': 'Bloomington, MN',
             'brooklyn-park': 'Brooklyn Park, MN',
@@ -1673,10 +2291,19 @@ This should include:
             'woodbury': 'Woodbury, MN',
             'maple-grove': 'Maple Grove, MN',
             'eden-prairie': 'Eden Prairie, MN',
+            // Additional Ohio cities
+            'akron': 'Akron, OH',
+            'dayton': 'Dayton, OH',
+            'toledo': 'Toledo, OH',
             'parma': 'Parma, OH',
             'canton': 'Canton, OH',
             'youngstown': 'Youngstown, OH',
             'lorain': 'Lorain, OH',
+            // Additional Georgia cities
+            'savannah': 'Savannah, GA',
+            'augusta': 'Augusta, GA',
+            'macon': 'Macon, GA',
+            'sandy-springs': 'Sandy Springs, GA',
             'roswell': 'Roswell, GA',
             'johns-creek': 'Johns Creek, GA',
             'alpharetta': 'Alpharetta, GA',
@@ -1691,6 +2318,7 @@ This should include:
             const parts = url.replace(/\/$/, "").split('/');
             const slug = parts[parts.length - 1].toLowerCase();
             
+            // Official Page Name from URL (preserve original case)
             const slugOriginal = parts[parts.length - 1];
             const pageName = slugOriginal.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
             appState.pageName = pageName;
@@ -1699,6 +2327,8 @@ This should include:
             let city = '';
             let state = '';
 
+            // Strategy 1: Check metro area lookup table first
+            // Sort by key length (longest first) to match "saint-paul" before "paul"
             const sortedKeys = Object.keys(cityLookup).sort((a, b) => b.length - a.length);
             for(let key of sortedKeys) {
                 if(slug.includes(key)) {
@@ -1709,6 +2339,7 @@ This should include:
                 }
             }
 
+            // Strategy 2: If not found in lookup, use smart detection
             if(!city) {
                 const nonCities = [
                     'electronic', 'electronics', 'recycling', 'recyclers', 'disposal', 'services', 'service',
@@ -1722,6 +2353,7 @@ This should include:
                 
                 const slugWords = slug.split('-');
                 
+                // Look for pattern "in-[CITY]"
                 for(let i = 0; i < slugWords.length - 1; i++) {
                     if(slugWords[i].toLowerCase() === 'in') {
                         const potentialCity = slugWords[i + 1];
@@ -1732,6 +2364,7 @@ This should include:
                     }
                 }
                 
+                // Fallback: first word not in blacklist
                 if(!city) {
                     for(let word of slugWords) {
                         if(!nonCities.includes(word.toLowerCase()) && word.length > 2) {
@@ -1742,6 +2375,7 @@ This should include:
                 }
             }
 
+            // Check for state abbreviation at end of slug (e.g., -mn, -tx)
             if(!state) {
                 const stateAbbrevs = ['al','ak','az','ar','ca','co','ct','de','fl','ga','hi','id','il','in','ia','ks','ky','la','me','md','ma','mi','mn','ms','mo','mt','ne','nv','nh','nj','nm','ny','nc','nd','oh','ok','or','pa','ri','sc','sd','tn','tx','ut','vt','va','wa','wv','wi','wy','dc'];
                 const slugWords = slug.split('-');
@@ -1751,9 +2385,11 @@ This should include:
                 }
             }
 
-            let niche = 'Electronics Recycling';
-            const s = slug;
+            // Detect niche from URL keywords - COMPREHENSIVE (40+ service types)
+            let niche = 'Electronics Recycling'; // default
+            const s = slug; // shorthand
             
+            // GUIDES (check first - most specific)
             if(s.includes('healthcare-itad-guide') || s.includes('healthcare-itad-compliance')) {
                 niche = 'Healthcare ITAD Compliance Guide';
             } else if(s.includes('education-it-disposal-guide') || s.includes('ferpa-guide')) {
@@ -1768,7 +2404,9 @@ This should include:
                 niche = 'Government IT Procurement Guide';
             } else if(s.includes('military-electronics-disposal')) {
                 niche = 'Military Electronics Disposal Guide';
-            } else if(s.includes('healthcare-itad')) {
+            }
+            // INDUSTRY-SPECIFIC SERVICES
+            else if(s.includes('healthcare-itad')) {
                 niche = 'Healthcare ITAD';
             } else if(s.includes('education-it-disposal')) {
                 niche = 'Education IT Disposal';
@@ -1782,7 +2420,9 @@ This should include:
                 niche = 'School Electronics Recycling';
             } else if(s.includes('medical-equipment-recycling')) {
                 niche = 'Medical Equipment Recycling';
-            } else if(s.includes('hard-drive-shredding') || s.includes('hdd-shredding')) {
+            }
+            // EQUIPMENT-SPECIFIC
+            else if(s.includes('hard-drive-shredding') || s.includes('hdd-shredding')) {
                 niche = 'Hard Drive Shredding';
             } else if(s.includes('hard-drive-destruction')) {
                 niche = 'Hard Drive Destruction';
@@ -1806,7 +2446,9 @@ This should include:
                 niche = 'Networking Equipment Recycling';
             } else if(s.includes('it-equipment-recycling')) {
                 niche = 'IT Equipment Recycling';
-            } else if(s.includes('computer-liquidation') || s.includes('liquidation')) {
+            }
+            // CORE SERVICES
+            else if(s.includes('computer-liquidation') || s.includes('liquidation')) {
                 niche = 'Computer Liquidation';
             } else if(s.includes('asset-lifecycle') || s.includes('lifecycle-management')) {
                 niche = 'Asset Lifecycle Management';
@@ -1836,7 +2478,9 @@ This should include:
                 niche = 'Reverse Logistics';
             } else if(s.includes('data-center-decommission')) {
                 niche = 'Data Center Decommissioning';
-            } else if(s.includes('e-waste-pickup')) {
+            }
+            // RECYCLING TYPES
+            else if(s.includes('e-waste-pickup')) {
                 niche = 'E-Waste Pickup';
             } else if(s.includes('e-waste') || s.includes('ewaste')) {
                 niche = 'E-Waste Recycling';
@@ -1865,6 +2509,7 @@ This should include:
             showToast("Data Extracted! City: " + (city || 'Not detected') + (state ? ', ' + state : '') + " | Niche: " + niche);
         }
 
+        // === SEARCH GMB ===
         function searchGMB() {
             const city = document.getElementById('cityName').value.trim();
             const state = document.getElementById('stateName').value.trim();
@@ -1883,6 +2528,135 @@ This should include:
             showToast("Opening Google Maps...");
         }
 
+        // === PARSE HUB+SPOKE HANDOFF ===
+        function parseHubSpoke() {
+            const handoff = document.getElementById('hubSpokeHandoff').value.trim();
+            
+            if(!handoff) {
+                showToast("Paste Hub+Spoke handoff first!", true);
+                return;
+            }
+
+            // Parse handoff data
+            const parsed = {
+                city: '',
+                state: '',
+                totalPages: 0,
+                tier1Count: 0,
+                tier2Count: 0,
+                tier3Count: 0,
+                tier4Count: 0,
+                tier5Count: 0,
+                hubPage: '',
+                raw: handoff
+            };
+
+            // Extract city from title (e.g., "Minneapolis Minnesota - Internal Linking Reference")
+            const titleMatch = handoff.match(/^([A-Za-z\s]+?)\s*[-–—]\s*Internal Linking/im) || 
+                               handoff.match(/^([A-Za-z\s]+?)\s*[-–—]/m);
+            if(titleMatch) {
+                const cityState = titleMatch[1].trim();
+                const parts = cityState.split(/\s+/);
+                if(parts.length >= 2) {
+                    const stateNames = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+                    const lastPart = parts[parts.length - 1];
+                    if(stateNames.includes(lastPart)) {
+                        parsed.state = lastPart;
+                        parsed.city = parts.slice(0, -1).join(' ');
+                    } else {
+                        parsed.city = cityState;
+                    }
+                } else {
+                    parsed.city = cityState;
+                }
+            }
+
+            // Extract total pages
+            const totalMatch = handoff.match(/Total\s*Pages[:\s]*(\d+)/i);
+            if(totalMatch) {
+                parsed.totalPages = parseInt(totalMatch[1]);
+            }
+
+            // Split by tier sections and count URL slugs in each
+            // URL slugs look like: city-slug-name — Description
+            const urlPattern = /^[a-z]+-[a-z0-9-]+\s*[-–—]/gim;
+            
+            // Find tier sections
+            const sections = handoff.split(/\n(?=Tier\s*\d)/i);
+            
+            sections.forEach(section => {
+                const tierMatch = section.match(/^Tier\s*(\d)/i);
+                if(tierMatch) {
+                    const tierNum = parseInt(tierMatch[1]);
+                    const urls = section.match(urlPattern);
+                    const count = urls ? urls.length : 0;
+                    
+                    switch(tierNum) {
+                        case 1: parsed.tier1Count = count; break;
+                        case 2: parsed.tier2Count = count; break;
+                        case 3: parsed.tier3Count = count; break;
+                        case 4: parsed.tier4Count = count; break;
+                        case 5: parsed.tier5Count = count; break;
+                    }
+                }
+            });
+
+            // If no tiers found, count all URLs
+            if(parsed.tier1Count + parsed.tier2Count + parsed.tier3Count + parsed.tier4Count + parsed.tier5Count === 0) {
+                const allUrls = handoff.match(urlPattern);
+                parsed.totalPages = allUrls ? allUrls.length : parsed.totalPages;
+            }
+
+            // Find hub page (usually city-state like "minneapolis-mn" with "Hub" nearby)
+            const hubMatch = handoff.match(/([a-z]+-[a-z]{2})\s*[-–—]\s*Hub/i) ||
+                            handoff.match(/Hub.*?([a-z]+-[a-z]{2})\b/i);
+            if(hubMatch) {
+                parsed.hubPage = hubMatch[1];
+            } else {
+                // Try to find the main city page (city-state pattern)
+                const citySlug = parsed.city.toLowerCase().replace(/\s+/g, '-');
+                const stateAbbr = parsed.state ? getStateAbbr(parsed.state) : '';
+                if(stateAbbr) {
+                    parsed.hubPage = citySlug + '-' + stateAbbr.toLowerCase();
+                }
+            }
+
+            // Store parsed data
+            appState.parsedHubSpoke = parsed;
+            saveState();
+
+            // Update display
+            document.getElementById('hubspoke-city').textContent = parsed.city + (parsed.state ? ', ' + parsed.state : '') || 'Could not detect';
+            document.getElementById('hubspoke-total').textContent = parsed.totalPages || (parsed.tier1Count + parsed.tier2Count + parsed.tier3Count + parsed.tier4Count + parsed.tier5Count) || 'Not specified';
+            document.getElementById('hubspoke-tier1').textContent = parsed.tier1Count + ' pages';
+            document.getElementById('hubspoke-tiers').textContent = 
+                `T2: ${parsed.tier2Count} | T3: ${parsed.tier3Count} | T4: ${parsed.tier4Count} | T5: ${parsed.tier5Count}`;
+            document.getElementById('hubspoke-hubpage').textContent = parsed.hubPage || 'Auto-detect';
+
+            // Show parsed area
+            document.getElementById('parsedHubSpokeArea').style.display = 'block';
+            
+            showToast("Hub+Spoke Strategy Loaded! " + (parsed.tier1Count + parsed.tier2Count + parsed.tier3Count + parsed.tier4Count + parsed.tier5Count) + " URLs detected");
+        }
+        
+        // Helper: Get state abbreviation
+        function getStateAbbr(stateName) {
+            const states = {
+                'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+                'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+                'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA',
+                'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD',
+                'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO',
+                'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ',
+                'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH',
+                'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC',
+                'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT',
+                'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
+            };
+            return states[stateName] || '';
+        }
+
+        // === PARSE & VERIFY GMB ===
         function parseVerify() {
             const gmbData = document.getElementById('gmbData').value.trim();
             const gmbURL = document.getElementById('gmbURL').value.trim();
@@ -1892,16 +2666,23 @@ This should include:
                 return;
             }
 
+            // Parse GMB Data
             const parsed = parseGMBData(gmbData);
             appState.parsedGMB = parsed;
 
+            // Extract CID from URL - EXTRACTS SECOND HEX (true CID, not FID)
+            // Format: 0x[FID]:0x[CID] - we need the SECOND hex value converted to decimal
             let cid = "NOT FOUND";
             let cidSource = "";
             if(gmbURL) {
+                // Format: !1s0x88f50f2adabff44b:0xeec57509d117afea
                 const hexMatch = gmbURL.match(/!1s(0x[a-fA-F0-9]+):(0x[a-fA-F0-9]+)/);
                 if(hexMatch) {
-                    const secondHex = hexMatch[2].substring(2);
+                    // hexMatch[1] = FID (first hex) - NOT used for schema
+                    // hexMatch[2] = CID (second hex) - THIS is what schema needs
+                    const secondHex = hexMatch[2].substring(2); // Remove "0x" prefix
                     try {
+                        // Convert hex to decimal using BigInt for large numbers
                         cid = BigInt("0x" + secondHex).toString();
                         cidSource = "auto-extracted";
                     } catch(e) {
@@ -1909,6 +2690,7 @@ This should include:
                         cid = "CONVERSION ERROR";
                     }
                 } else if(gmbURL.includes("cid=")) {
+                    // Already decimal format
                     cid = gmbURL.split("cid=")[1].split("&")[0].split("#")[0];
                     cidSource = "from-url-param";
                 }
@@ -1916,6 +2698,7 @@ This should include:
             appState.cid = cid;
             appState.cidSource = cidSource;
 
+            // Extract State from parsed address
             if(parsed.address) {
                 const stateMatch = parsed.address.match(/,\s*([A-Z]{2})\s+\d{5}/);
                 if(stateMatch) {
@@ -1926,8 +2709,8 @@ This should include:
                 }
             }
 
+            // Display results
             document.getElementById('parsedGMBArea').style.display = 'block';
-            document.getElementById('hubSpokeSection').style.display = 'block';
             document.getElementById('cidDisplay').textContent = cid;
             displayParsedGMB();
             updateSchemaCIDDisplay();
@@ -1938,6 +2721,7 @@ This should include:
 
         function parseGMBData(raw) {
             const lines = raw.split('\n').map(l => l.trim()).filter(l => l);
+            const rawLower = raw.toLowerCase();
             
             let parsed = {
                 name: '',
@@ -1957,6 +2741,7 @@ This should include:
                 serviceOptions: ''
             };
 
+            // Find business name (STS Electronic Recycling)
             for(let line of lines) {
                 if(line.toLowerCase().includes('sts electronic') || line.toLowerCase().includes('sts recycling')) {
                     parsed.name = line;
@@ -1964,7 +2749,10 @@ This should include:
                 }
             }
 
+            // Find rating - IMPROVED: Look for rating+reviews pattern first (most reliable)
+            // Pattern: "4.9 (118)" or "4.9 ★★★★★ (118)" or "4.9(118)"
             for(let line of lines) {
+                // Best pattern: rating followed by review count in parentheses
                 const ratingReviewMatch = line.match(/(\d\.\d)\s*[★⭐]*\s*\((\d[\d,]*)\)/);
                 if(ratingReviewMatch) {
                     parsed.rating = ratingReviewMatch[1] + ' ★';
@@ -1974,6 +2762,7 @@ This should include:
                 }
             }
             
+            // Fallback: Look for "X stars" pattern if no rating found yet
             if(!parsed.rating) {
                 for(let line of lines) {
                     const starsMatch = line.match(/(\d\.?\d?)\s*stars?/i);
@@ -1984,6 +2773,7 @@ This should include:
                 }
             }
             
+            // Last resort: standalone rating at start of line (risky - might grab wrong number)
             if(!parsed.rating) {
                 for(let line of lines) {
                     const ratingMatch = line.match(/^(\d\.\d)\s*$/);
@@ -1994,6 +2784,7 @@ This should include:
                 }
             }
 
+            // Find reviews count if not already found with rating
             if(!parsed.reviews) {
                 for(let line of lines) {
                     const reviewMatch = line.match(/(\d[\d,]*)\s*reviews?/i);
@@ -2002,6 +2793,7 @@ This should include:
                         parsed.reviewCount = reviewMatch[1].replace(',', '');
                         break;
                     }
+                    // Check for (123) pattern 
                     const parenMatch = line.match(/\((\d[\d,]*)\)/);
                     if(parenMatch && !parsed.reviews && parseInt(parenMatch[1].replace(',','')) > 5) {
                         parsed.reviews = parenMatch[1].replace(',', '') + ' reviews';
@@ -2010,6 +2802,7 @@ This should include:
                 }
             }
 
+            // Find category (e.g., "Recycling center", "Electronics store")
             const categoryPatterns = ['recycling center', 'recycling drop-off', 'electronics store', 'computer service', 'data recovery', 'waste management'];
             for(let line of lines) {
                 for(let cat of categoryPatterns) {
@@ -2020,13 +2813,17 @@ This should include:
                 }
             }
 
+            // Find address - look for street number pattern and build full address
             let addressLines = [];
             for(let i = 0; i < lines.length; i++) {
                 const line = lines[i];
+                // Street address usually starts with number
                 if(/^\d+\s+[A-Za-z]/.test(line) && !line.includes('review') && !line.includes('star')) {
                     addressLines.push(line);
+                    // Check next lines for city, state, zip
                     for(let j = i + 1; j < Math.min(i + 3, lines.length); j++) {
                         const nextLine = lines[j];
+                        // City, State ZIP pattern
                         if(/[A-Z]{2}\s+\d{5}/.test(nextLine) || /^[A-Za-z\s]+,\s*[A-Z]{2}/.test(nextLine)) {
                             addressLines.push(nextLine);
                         }
@@ -2037,8 +2834,9 @@ This should include:
             
             if(addressLines.length > 0) {
                 parsed.fullAddress = addressLines.join(', ');
-                parsed.address = addressLines[0];
+                parsed.address = addressLines[0]; // Street only
                 
+                // Extract city, state, zip
                 const fullAddr = parsed.fullAddress;
                 const csMatch = fullAddr.match(/([A-Za-z\s]+),\s*([A-Z]{2})\s*(\d{5})?/);
                 if(csMatch) {
@@ -2047,6 +2845,7 @@ This should include:
                 }
             }
 
+            // Find phone number
             for(let line of lines) {
                 const phoneMatch = line.match(/\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/);
                 if(phoneMatch) {
@@ -2055,6 +2854,7 @@ This should include:
                 }
             }
 
+            // Find website
             for(let line of lines) {
                 if(line.includes('stselectronicrecycling') || line.includes('stsrecycle')) {
                     parsed.website = line;
@@ -2062,6 +2862,7 @@ This should include:
                 }
             }
 
+            // FORCE STANDARD BUSINESS HOURS (9-5 Mon-Fri for all STS locations)
             const standardHours = [
                 'Monday: 9 AM – 5 PM',
                 'Tuesday: 9 AM – 5 PM',
@@ -2074,6 +2875,7 @@ This should include:
             parsed.hoursDetail = standardHours;
             parsed.hours = 'Mon-Fri: 9 AM – 5 PM | Sat-Sun: Closed';
 
+            // Find Plus Code (if present)
             for(let line of lines) {
                 if(/^[A-Z0-9]{4}\+[A-Z0-9]{2,3}\s/.test(line)) {
                     parsed.plusCode = line;
@@ -2081,6 +2883,7 @@ This should include:
                 }
             }
 
+            // Find service options (e.g., "In-store pickup", "Delivery")
             const servicePatterns = ['in-store', 'pickup', 'delivery', 'drive-through', 'curbside', 'appointment'];
             let services = [];
             for(let line of lines) {
@@ -2109,6 +2912,7 @@ This should include:
             document.getElementById('parsed-website').textContent = p.website || '—';
             document.getElementById('parsed-services').textContent = p.serviceOptions || '—';
             
+            // Show detailed hours if available
             if(p.hoursDetail && p.hoursDetail.length > 0) {
                 document.getElementById('parsed-hours').textContent = p.hoursDetail.join('\n');
             } else {
@@ -2143,106 +2947,7 @@ SERVICES: ${p.serviceOptions || '—'}
             });
         }
 
-        // === PARSE HUB+SPOKE ===
-        function parseHubSpoke() {
-            const handoff = document.getElementById('hubSpokeHandoff').value.trim();
-            
-            if(!handoff) {
-                showToast("Paste Hub+Spoke handoff first!", true);
-                return;
-            }
-            
-            // Parse the handoff
-            const parsed = {
-                city: '',
-                totalPages: '',
-                tiers: [],
-                localContext: '',
-                raw: handoff
-            };
-            
-            // Extract city from first line (e.g., "Minneapolis Minnesota - Internal Linking Reference")
-            const firstLine = handoff.split('\n')[0];
-            const cityMatch = firstLine.match(/^([A-Za-z\s]+?)(?:\s+[\-–—]|$)/);
-            if(cityMatch) {
-                parsed.city = cityMatch[1].trim();
-            }
-            
-            // Extract total pages
-            const pagesMatch = handoff.match(/Total Pages:\s*(\d+)/i);
-            if(pagesMatch) {
-                parsed.totalPages = pagesMatch[1];
-            }
-            
-            // Count tiers and URLs
-            const tierPatterns = [
-                { name: 'Tier 1: Hub + Core', regex: /Tier 1[:\s]/i },
-                { name: 'Tier 2: Verticals + Equipment', regex: /Tier 2[:\s]/i },
-                { name: 'Tier 3: Methods', regex: /Tier 3[:\s]/i },
-                { name: 'Tier 4: Strategic', regex: /Tier 4[:\s]/i },
-                { name: 'Tier 5: Lead Gen Guides', regex: /Tier 5[:\s]/i }
-            ];
-            
-            tierPatterns.forEach(tier => {
-                if(tier.regex.test(handoff)) {
-                    // Count URLs in this section (look for slug patterns)
-                    const slugPattern = /^[a-z]+-[a-z0-9-]+\s+—/gm;
-                    parsed.tiers.push(tier.name);
-                }
-            });
-            
-            // Count total internal links (slug patterns)
-            const allSlugs = handoff.match(/^[a-z]+-[a-z0-9-]+\s+—/gm);
-            const linkCount = allSlugs ? allSlugs.length : 0;
-            
-            // Extract local context snippet
-            const contextMatch = handoff.match(/Local Context[\s\S]*?(Major Institutions|Fortune 500)/i);
-            if(contextMatch) {
-                parsed.localContext = 'Major institutions & Fortune 500 companies included';
-            } else if(handoff.toLowerCase().includes('local context')) {
-                parsed.localContext = 'Local context data included';
-            }
-            
-            // Check for key sections
-            const hasLinkingInstructions = /linking instructions/i.test(handoff);
-            const hasTechnicalReqs = /technical requirements/i.test(handoff);
-            const hasQualityChecklist = /quality checklist/i.test(handoff);
-            
-            // Store parsed data
-            appState.parsedHubSpoke = parsed;
-            appState.hubSpokeProcessed = true;
-            
-            // Display parsed data
-            document.getElementById('hs-city').textContent = parsed.city || 'Detected from handoff';
-            document.getElementById('hs-pages').textContent = parsed.totalPages ? parsed.totalPages + ' pages' : linkCount + ' links found';
-            
-            // Display tiers
-            let tiersHtml = '';
-            if(parsed.tiers.length > 0) {
-                parsed.tiers.forEach(tier => {
-                    tiersHtml += `<span style="display:inline-block; background:#f3e8ff; padding:2px 8px; border-radius:4px; margin:2px; font-size:11px;">${tier}</span>`;
-                });
-            } else {
-                tiersHtml = '<span style="color:#64748b;">Tier structure detected</span>';
-            }
-            document.getElementById('hs-tiers').innerHTML = tiersHtml;
-            
-            // Display context
-            let contextHtml = '';
-            if(parsed.localContext) {
-                contextHtml = `<i class="fas fa-check" style="color:#059669;"></i> ${parsed.localContext}`;
-            }
-            if(hasLinkingInstructions) contextHtml += ' • Linking instructions ✓';
-            if(hasTechnicalReqs) contextHtml += ' • Technical reqs ✓';
-            document.getElementById('hs-context').innerHTML = contextHtml || 'Context data found';
-            
-            // Show the parsed area
-            document.getElementById('parsedHubSpokeArea').style.display = 'block';
-            
-            saveState();
-            showToast("Hub+Spoke data processed! Ready for Build prompt.");
-        }
-
+        // === CID FUNCTIONS ===
         function testCID() {
             const cid = appState.cid;
             if(cid && cid !== "NOT FOUND") {
@@ -2288,6 +2993,7 @@ SERVICES: ${p.serviceOptions || '—'}
             showToast("Manual CID set! Now test it.");
         }
 
+        // === OPEN LIVE PAGE ===
         function openLivePage() {
             const url = document.getElementById('pageURL').value;
             if(url) {
@@ -2297,6 +3003,7 @@ SERVICES: ${p.serviceOptions || '—'}
             }
         }
 
+        // === SCHEMA VALIDATOR ===
         function validateSchema() {
             const code = document.getElementById('schemaPaste').value;
             const resultsDiv = document.getElementById('schemaResults');
@@ -2309,6 +3016,7 @@ SERVICES: ${p.serviceOptions || '—'}
             let checks = [];
             let hasErrors = false;
 
+            // Check 1: Script tags
             if(code.includes('<script') && code.includes('</' + 'script>')) {
                 checks.push({ pass: true, text: 'Script tags present' });
             } else {
@@ -2316,6 +3024,7 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
+            // Check 2: JSON-LD
             if(code.includes('application/ld+json')) {
                 checks.push({ pass: true, text: 'JSON-LD format' });
             } else {
@@ -2323,6 +3032,7 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
+            // Check 3: CID - CRITICAL
             if(appState.cid && appState.cid !== "NOT FOUND" && appState.cidAccepted) {
                 if(code.includes(appState.cid)) {
                     checks.push({ pass: true, text: 'CID VERIFIED: ' + appState.cid.substring(0, 20) + '...' });
@@ -2335,6 +3045,7 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
+            // Check 4: City name
             const city = appState.city;
             if(city && code.toLowerCase().includes(city.toLowerCase())) {
                 checks.push({ pass: true, text: 'City "' + city + '" found' });
@@ -2343,6 +3054,7 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
+            // Check 5: Electronic Recycling
             if(code.toLowerCase().includes('electronic') && code.toLowerCase().includes('recycling')) {
                 checks.push({ pass: true, text: '"Electronic Recycling" keyword found' });
             } else {
@@ -2350,6 +3062,7 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
+            // Check 6: Address
             if(code.includes('streetAddress') || code.includes('address')) {
                 checks.push({ pass: true, text: 'Address field present' });
             } else {
@@ -2357,6 +3070,7 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
+            // Build results
             let html = `<div class="schema-results ${hasErrors ? 'fail' : 'pass'}">`;
             html += `<strong>${hasErrors ? '❌ Issues Found' : '✅ Schema Valid'}</strong><br><br>`;
             
@@ -2370,6 +3084,7 @@ SERVICES: ${p.serviceOptions || '—'}
             resultsDiv.innerHTML = html;
         }
 
+        // === SCHEMA CID COPY ===
         function copySchemaCID() {
             const cid = appState.cid || '';
             if (!cid) {
@@ -2397,6 +3112,7 @@ SERVICES: ${p.serviceOptions || '—'}
             }
         }
 
+        // === PROMPTS ===
         function copyPrompt(type) {
             let text = "";
             const city = document.getElementById('cityName').value || "[CITY]";
@@ -2406,6 +3122,7 @@ SERVICES: ${p.serviceOptions || '—'}
             const pageName = appState.pageName || "[PAGE NAME]";
             const p = appState.parsedGMB || {};
             const niche = document.getElementById('stsKeyword').value || appState.niche || 'Electronics Recycling';
+            const hubSpoke = document.getElementById('hubSpokeHandoff').value || '';
 
             const forcePrefix = "CRITICAL SYSTEM INSTRUCTION: Execute ALL steps exhaustively. Do NOT summarize. Do NOT skip any section. Do NOT take shortcuts. Complete every single requirement. Stop and alert if errors occur.\n\n";
 
@@ -2440,7 +3157,22 @@ Confirm you understand these rules. One word: "Ready."`;
 
                 case 'build': {
                     const hoursText = p.hoursDetail ? p.hoursDetail.join('\n') : (p.hours || '[FROM GMB]');
-                    const hubSpoke = appState.hubSpokeHandoff || '[HUB+SPOKE HANDOFF NOT PROVIDED]';
+                    
+                    // Build Hub+Spoke section if handoff exists
+                    const hubSpokeSection = hubSpoke ? `
+═══════════════════════════════════
+INTERNAL LINKING STRATEGY (Hub+Spoke)
+═══════════════════════════════════
+${hubSpoke}
+
+LINKING INSTRUCTIONS:
+- Add 3-4 internal links per page in content sections (rows 4+, NOT hero)
+- Use full HTTPS URLs from the handoff above
+- Reference local context (institutions, employers) in anchor text
+- Links open in same tab (no target="_blank")
+═══════════════════════════════════
+` : '';
+
                     text = `${forcePrefix}TASK: Build Landing Page for ${city}${state ? ', ' + state : ''} — ${niche}
 
 ═══════════════════════════════════
@@ -2470,19 +3202,8 @@ HOURS:
 ${hoursText}
 
 SERVICES: ${p.serviceOptions || 'Electronics Recycling, Data Destruction'}
-
 ═══════════════════════════════════
-INTERNAL LINKING STRATEGY (Hub+Spoke)
-═══════════════════════════════════
-${hubSpoke}
-
-LINKING INSTRUCTIONS:
-- Add 3-4 internal links per page in content sections (rows 4+, NOT hero)
-- Use full HTTPS URLs from the handoff above
-- Reference local context (institutions, employers) in anchor text
-- Links open in same tab (no target="_blank")
-═══════════════════════════════════
-
+${hubSpokeSection}
 EXECUTION INSTRUCTIONS:
 1. Use Master Page Builder logic - follow EVERY step
 2. Apply Master Design Bible strictly - NO deviations
@@ -2492,7 +3213,7 @@ EXECUTION INSTRUCTIONS:
 6. Footer MUST have phone: ${p.phone || '[PHONE]'}
 7. Mobile responsive - images must NOT squeeze text
 8. Do NOT include Schema (Phase 5 task)
-9. Include 3-4 internal links from Hub+Spoke handoff in rows 4+
+${hubSpoke ? '9. Include 3-4 internal links from Hub+Spoke handoff in rows 4+ (NOT hero)' : ''}
 
 ⚠️ CRITICAL OUTPUT REQUIREMENT:
 CREATE AN ARTIFACT with the complete HTML code. Do NOT paste code in chat.
@@ -2538,8 +3259,76 @@ Scan the HTML and verify:
 List ANY issues. If clean: "All links verified."`;
                     break;
 
+                case 'verify-hubspoke':
+                    if(!hubSpoke) {
+                        showToast("No Hub+Spoke handoff loaded! Load it in Mission Control first.", true);
+                        return;
+                    }
+                    text = `${forcePrefix}TASK: VERIFY HUB+SPOKE INTERNAL LINKING
+
+═══════════════════════════════════
+HUB+SPOKE HANDOFF REFERENCE
+═══════════════════════════════════
+${hubSpoke}
+═══════════════════════════════════
+
+PART 1: CONTEXTUAL LINKS IN BODY
+═══════════════════════════════════
+Verify 3-4 internal links exist in content sections (rows 4+, NOT hero):
+
+☐ Full HTTPS URLs from handoff above
+☐ Links open in same tab (no target="_blank")
+☐ Local context referenced in anchor text where appropriate
+☐ Links are naturally woven into content, not forced
+
+If missing or incorrect → ADD or FIX them now.
+
+═══════════════════════════════════
+PART 2: "Related ${city} Services" SECTION
+═══════════════════════════════════
+This section appears ABOVE the final CTA row ("Ready to Get Started?").
+It has a 3-COLUMN layout with cards. Replace/verify links match the Hub+Spoke handoff:
+
+COLUMN 1 — "Core ITAD Services" (3-5 links)
+→ Pull from Tier 1 (Hub + Core Services)
+→ Example: ${city} Electronics Recycling Hub, ${city} ITAD Services, Hard Drive Shredding, Computer Liquidation
+
+COLUMN 2 — "Support Services" (3-5 links)
+→ Pull from Tier 2 (Equipment) + Tier 3 (Methods)
+→ Example: Certificate of Destruction, Reverse Logistics, Asset Tagging, Medical Equipment Recycling
+
+COLUMN 3 — "Industry Solutions" (3-5 links)
+→ Pull from Tier 4 (Strategic Verticals)
+→ Example: Healthcare ITAD, Education IT Disposal, Government Electronics, Financial Services IT
+
+═══════════════════════════════════
+PART 3: LEAD GEN GUIDE CTA BOX
+═══════════════════════════════════
+BELOW the 3-column section, add a prominent guide download CTA:
+
+☐ Heading: "📄 Free Download: [Guide Name]"
+☐ Brief description mentioning ${city} businesses
+☐ "Download Free Guide" button
+☐ Pull ONE featured guide from Tier 5 (Lead Gen Guides)
+
+═══════════════════════════════════
+VERIFICATION CHECKLIST
+═══════════════════════════════════
+☐ Section heading says "Related ${city} Services" (correct city)
+☐ Subheading mentions ${city} businesses
+☐ All 3 columns have 3-5 links each
+☐ All URLs are full HTTPS format from handoff
+☐ Guide CTA box features a Tier 5 guide
+☐ No placeholder or made-up URLs
+
+═══════════════════════════════════
+OUTPUT
+═══════════════════════════════════
+If fixes needed → Output corrected HTML
+If everything is clean → "✅ Hub+Spoke verified — all links correct"`;
+                    break;
+
                 case 'seo':
-                    const hubSpokeForSEO = appState.hubSpokeHandoff || '[HUB+SPOKE HANDOFF NOT PROVIDED]';
                     text = `${forcePrefix}TASK: FULL SEO AUDIT
 
 CRITICAL RULES:
@@ -2548,20 +3337,7 @@ CRITICAL RULES:
 - The first 2 rows (Hero section) = MINOR tweaks only, no major changes
 - STRIP/REMOVE all existing Schema (rebuilt separately)
 - Verify emails = mailto:recycle@stsrecycle.com
-
-═══════════════════════════════════
-INTERNAL LINKING VERIFICATION (Hub+Spoke)
-═══════════════════════════════════
-${hubSpokeForSEO}
-
-LINKING AUDIT CHECKLIST:
-☐ 3-4 internal links present in content sections (rows 4+)
-☐ NO internal links in hero section
-☐ All URLs match the Hub+Spoke handoff exactly
-☐ Links use full HTTPS format
-☐ Links open in same tab (no target="_blank")
-☐ Local context referenced in anchor text where appropriate
-═══════════════════════════════════
+${hubSpoke ? '- Verify 3-4 internal links exist in content sections (rows 4+, NOT hero)' : ''}
 
 Complete the ENTIRE audit. Do not stop early. Do not summarize.
 
@@ -2569,6 +3345,20 @@ Output the optimized HTML (without schema).`;
                     break;
 
                 case 'seo-verify':
+                    // Build Hub+Spoke verification section if handoff exists
+                    const hubSpokeVerifySection = hubSpoke ? `
+INTERNAL LINKING (Hub+Spoke):
+☐ 3-4 internal links present in content sections (rows 4+)
+☐ NO internal links in hero section
+☐ All URLs match the Hub+Spoke handoff exactly
+☐ Links use full HTTPS format
+☐ Links open in same tab (no target="_blank")
+☐ Local context referenced in anchor text where appropriate
+
+HUB+SPOKE REFERENCE:
+${hubSpoke}
+
+` : '';
                     text = `${forcePrefix}TASK: SEO VERIFICATION AUDIT
 
 This page has already gone through our Master SEO Audit.
@@ -2594,7 +3384,7 @@ LOCAL SEO:
 ☐ Phone number clickable (tel: link)
 ☐ Email is mailto:recycle@stsrecycle.com
 
-CLEANUP:
+${hubSpokeVerifySection}CLEANUP:
 ☐ Schema REMOVED (rebuilt in Phase 5)
 ☐ No broken/placeholder links
 ☐ No lorem ipsum or [PLACEHOLDER] text
@@ -2786,6 +3576,7 @@ Keep response TIGHT. Boxes only, no fluff.`;
             });
         }
 
+        // === UTILS ===
         function togglePhase(id) {
             document.getElementById(id).classList.toggle('active');
         }
@@ -2806,6 +3597,9 @@ Keep response TIGHT. Boxes only, no fluff.`;
                 }
             });
             saveState();
+            
+            // Check for phase completion
+            checkPhaseCompletion();
         }
 
         function updateProgressBar() {
@@ -2858,38 +3652,53 @@ Keep response TIGHT. Boxes only, no fluff.`;
 
     <!-- TECHNICAL DOCUMENTATION FOOTER -->
     <footer style="max-width:900px; margin:60px auto 40px; padding:0 20px;">
-        <div style="border-top:1px solid #e2e8f0; padding-top:30px;">
-            <div style="font-family:'JetBrains Mono', monospace; font-size:10px; color:#94a3b8; line-height:1.8;">
-                <div style="margin-bottom:15px; font-size:11px; color:#64748b; font-weight:600; letter-spacing:1px;">
-                    SYSTEM ARCHITECTURE & METHODOLOGY
+        <div style="border-top:1px solid var(--border-light); padding-top:30px;">
+            <div style="font-family:'Inter', sans-serif; font-size:11px; color:var(--text-secondary); line-height:1.9;">
+                <div style="margin-bottom:15px; font-size:10px; color:var(--gold); font-weight:600; letter-spacing:2px; text-transform:uppercase;">
+                    System Architecture
                 </div>
                 <p style="margin-bottom:12px;">
-                    <strong style="color:#64748b;">§1 The M.A.R.K. Algorithm:</strong> Machine Assisted Routing Kit (M.A.R.K.) is a deterministic workflow orchestration system designed to minimize human error variance in high-volume landing page deployment. The algorithm operates on a principle of <em>progressive data enrichment</em> — where each phase inherits validated outputs from preceding phases, creating an immutable chain of verified data states.
+                    <strong style="color:var(--navy);">The M.A.R.K. Algorithm:</strong> Machine Assisted Routing Kit is a deterministic workflow orchestration system designed to minimize human error variance in high-volume landing page deployment. The algorithm operates on a principle of progressive data enrichment — where each phase inherits validated outputs from preceding phases, creating an immutable chain of verified data states.
                 </p>
                 <p style="margin-bottom:12px;">
-                    <strong style="color:#64748b;">§2 GEO-PARSE™ Engine:</strong> City extraction utilizes a multi-tiered resolution cascade. Primary resolution queries a pre-indexed hashmap of 317 US metropolitan statistical areas (MSAs) sorted by descending key-length to prevent substring collision.
+                    <strong style="color:var(--navy);">GEO-PARSE™ Engine:</strong> City extraction utilizes a multi-tiered resolution cascade. Primary resolution queries a pre-indexed hashmap of 317 US metropolitan statistical areas sorted by descending key-length to prevent substring collision. Secondary resolution employs negative-space tokenization against a 47-term exclusion lexicon.
                 </p>
                 <p style="margin-bottom:12px;">
-                    <strong style="color:#64748b;">§3 CID Verification Protocol:</strong> Google Place Identifiers are extracted via dual-mode regex parsing for hexadecimal pair structures embedded in Google Maps canonical URLs.
+                    <strong style="color:var(--navy);">CID Verification Protocol:</strong> Google Place Identifiers are extracted via dual-mode regex parsing targeting hexadecimal pair structures embedded in Google Maps canonical URLs. Verification requires user-initiated confirmation via external redirect to prevent false-positive schema injection.
                 </p>
             </div>
             
-            <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #e2e8f0;">
-                <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#b0b8c4; line-height:1.7;">
-                    <strong style="color:#94a3b8;">DEVELOPMENT:</strong> v9.82 — Last updated: Jan 29, 2026
+            <!-- FORENSIC TIMELINE -->
+            <div style="margin-top:25px; padding-top:20px; border-top:1px solid var(--border-light);">
+                <div style="font-family:'Inter', sans-serif; font-size:10px; color:var(--text-muted); line-height:1.8;">
+                    <strong style="color:var(--text-secondary);">Development:</strong> v1.0–v6.x core parsing & UI scaffolding. v7.x 317-MSA city lookup, CID regex overhaul, 9-phase workflow. v9.94 Luxury UI redesign with refined boot sequence, elegant status bar, and sophisticated completion celebration. <strong style="color:var(--text-secondary);">42.0 man-hours</strong> | Jan 29, 2026
                 </div>
             </div>
             
-            <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-                <div style="font-size:9px; color:#cbd5e1; font-family:'JetBrains Mono', monospace;">
-                    M.A.R.K. v9.82 — Machine Assisted Routing Kit
+            <div style="margin-top:25px; padding-top:20px; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-size:11px; color:var(--text-muted);">
+                    M.A.R.K<span style="color:var(--gold);">.</span> v9.94
                 </div>
-                <div style="font-size:9px; color:#cbd5e1;">
+                <div style="font-size:10px; color:var(--text-muted);">
                     © 2026 STS Electronic Recycling Inc.
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- 100% COMPLETION CELEBRATION -->
+    <div class="completion-overlay" id="completionOverlay">
+        <div class="completion-box">
+            <div class="completion-title">Mission <span>Complete</span></div>
+            <div class="completion-stats">
+                <div>Page: <span id="completionPage">—</span></div>
+                <div>Time: <span id="completionTime">—</span></div>
+                <div>Phases: <span>9/9</span></div>
+                <div>Status: <span style="color: var(--gold);">Ready for Deployment</span></div>
+            </div>
+            <button class="completion-close" onclick="closeCompletion()">Continue</button>
+        </div>
+    </div>
 
 </body>
 </html>
