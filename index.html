@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.A.R.K. v9.68 | Page Terminal</title>
+    <title>M.A.R.K. v9.71 | Page Terminal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -153,12 +153,14 @@
             display: flex; gap: 15px; padding: 16px;
             border-radius: 10px; margin-bottom: 12px;
             border: 1px solid transparent; transition: background 0.2s;
+            align-items: flex-start;
         }
+        .step > div { flex: 1; }
+        .step input[type="checkbox"] { order: 2; width: 22px; height: 22px; accent-color: var(--accent); cursor: pointer; margin-top: 0; flex-shrink: 0; }
         .step:hover { background: #f8fafc; border-color: #e2e8f0; }
         .step.checked { background: #ecfdf5; border-color: #a7f3d0; }
         .step-label { font-weight: 500; font-size: 15px; cursor: pointer; }
         .step-sub { font-size: 13px; color: #64748b; margin-top: 4px; }
-        .step input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); cursor: pointer; margin-top: 3px; }
 
         /* Buttons */
         .btn {
@@ -319,7 +321,7 @@
                     MACHINE ASSISTED ROUTING KIT
                 </div>
                 <h1 style="font-size:36px; font-weight:300; letter-spacing:-0.5px; margin:0;">
-                    M.A.R.K. <span style="font-weight:600; color:#60a5fa;">v9.68</span>
+                    M.A.R.K. <span style="font-weight:600; color:#60a5fa;">v9.71</span>
                 </h1>
             </div>
             <div style="text-align:right; font-family:'JetBrains Mono', monospace;">
@@ -382,8 +384,8 @@
                             <input type="text" id="stateName" placeholder="Auto-detected from GMB" style="background: white;">
                         </div>
                         <div class="form-group">
-                            <label>STS Keyword (Fixed)</label>
-                            <input type="text" id="stsKeyword" value="Electronic Recycling" readonly>
+                            <label>Niche (from URL)</label>
+                            <input type="text" id="stsKeyword" value="Electronics Recycling">
                         </div>
                     </div>
                     
@@ -539,15 +541,80 @@
                 </div>
                 <div class="phase-content">
                     
-                    <div class="step">
-                        <input type="checkbox" id="p1-0" onchange="updateProgress()">
-                        <div>
-                            <div class="step-label">Open Claude Project Folder</div>
-                            <a href="https://claude.ai/project/019afe23-9854-71e3-896c-4a652a608017" target="_blank" class="btn btn-ghost" style="margin-top:5px;">
-                                <i class="fas fa-folder-open"></i> Open Project Folder
-                            </a>
+                    <!-- SIDE BY SIDE LAUNCHER -->
+                    <div class="side-by-side-box">
+                        <div class="side-by-side-header">
+                            <i class="fas fa-columns"></i>
+                            OPEN SIDE BY SIDE TABS
                         </div>
+                        <div class="side-by-side-sub">(to follow along together)</div>
+                        <a href="https://claude.ai/project/019afe23-9854-71e3-896c-4a652a608017" target="_blank" class="side-by-side-btn">
+                            <i class="fas fa-brain"></i> Open Claude Project
+                        </a>
+                        <div class="side-by-side-tip">
+                            <strong>Snap Windows:</strong> 
+                            <span class="kbd">Win</span> + <span class="kbd">←</span> / <span class="kbd">→</span>
+                        </div>
+                        <input type="checkbox" id="p1-0" onchange="updateProgress()" style="position:absolute; top:15px; right:15px; width:22px; height:22px;">
                     </div>
+
+                    <style>
+                        .side-by-side-box {
+                            position: relative;
+                            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+                            border-radius: 12px;
+                            padding: 25px;
+                            text-align: center;
+                            margin-bottom: 15px;
+                        }
+                        .side-by-side-header {
+                            font-size: 22px;
+                            font-weight: 800;
+                            color: white;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 12px;
+                        }
+                        .side-by-side-sub {
+                            font-size: 14px;
+                            color: #ddd6fe;
+                            margin-top: 5px;
+                        }
+                        .side-by-side-btn {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 10px;
+                            padding: 12px 24px;
+                            background: white;
+                            color: #5b21b6;
+                            font-weight: 700;
+                            font-size: 15px;
+                            border-radius: 8px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                            transition: all 0.2s;
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        }
+                        .side-by-side-btn:hover {
+                            transform: translateY(-2px);
+                            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+                        }
+                        .side-by-side-tip {
+                            margin-top: 12px;
+                            font-size: 12px;
+                            color: #c4b5fd;
+                        }
+                        .kbd {
+                            display: inline-block;
+                            padding: 2px 6px;
+                            background: rgba(255,255,255,0.2);
+                            border-radius: 4px;
+                            font-family: 'JetBrains Mono', monospace;
+                            font-size: 10px;
+                            color: white;
+                        }
+                    </style>
 
                     <div class="step">
                         <input type="checkbox" id="p1-1" onchange="updateProgress()">
@@ -563,12 +630,26 @@
                         </div>
                     </div>
 
-                    <div class="step">
-                        <input type="checkbox" id="p1-2" onchange="updateProgress()">
-                        <div>
-                            <div class="step-label">Download & Upload Required Files</div>
-                            <div class="step-sub">Primary files (must have):</div>
-                            <div class="quick-links" style="margin-top:8px;">
+                    <!-- EXECUTE BOX -->
+                    <div class="data-box" style="border-color: var(--primary); margin-top:15px;">
+                        <h4 style="color:var(--primary); margin-bottom:10px;">🚀 Execute Page Build</h4>
+                        <div style="font-size:12px; margin-bottom:15px; line-height:1.8; color:#475569;">
+                            <strong>ORDER OF OPERATIONS:</strong><br>
+                            1. Paste prompt in Claude chat<br>
+                            2. Wait for LLM to read all uploaded documents<br>
+                            3. LLM builds full HTML page with all sections<br>
+                            4. Type "Approved" at each gate check when prompted
+                        </div>
+                        <div style="font-size:11px; margin-bottom:12px; padding:10px; background:#f1f5f9; border-radius:6px; color:#64748b;">
+                            <strong>PROMPT INCLUDES:</strong> Target URL • Niche • Verified CID • GMB Data (Name, Address, Phone, Hours, Rating, Reviews) • Forced execution instructions
+                        </div>
+                        <button class="btn btn-accent" style="width:100%;" onclick="copyPrompt('build')">
+                            <i class="fas fa-terminal"></i> Copy Full Execution Prompt
+                        </button>
+                        
+                        <div style="margin-top:15px; padding-top:15px; border-top:1px dashed #cbd5e1;">
+                            <div class="step-sub" style="margin-bottom:8px;"><strong>Download & Upload Required Files:</strong></div>
+                            <div class="quick-links">
                                 <a href="https://docs.google.com/spreadsheets/d/1-5lrWau5auZLLK1TVljhiAUhPUvrzzQDx13S8Xj2Az4/edit?usp=sharing" target="_blank" class="quick-link">
                                     <i class="fas fa-table"></i> SEO Data 2026
                                 </a>
@@ -591,17 +672,8 @@
                         </div>
                     </div>
 
-                    <!-- EXECUTE BOX -->
-                    <div class="data-box" style="border-color: var(--primary); margin-top:20px;">
-                        <h4 style="color:var(--primary); margin-bottom:10px;">🚀 Execute Page Build</h4>
-                        <p style="font-size:12px; margin-bottom:15px;">This prompt includes: URL + CID + Parsed GMB Data + Forced Execution</p>
-                        <button class="btn btn-accent" style="width:100%;" onclick="copyPrompt('build')">
-                            <i class="fas fa-terminal"></i> Copy Full Execution Prompt
-                        </button>
-                    </div>
-
                     <div class="step">
-                        <input type="checkbox" id="p1-3" onchange="updateProgress()">
+                        <input type="checkbox" id="p1-2" onchange="updateProgress()">
                         <div class="step-label">Monitor Gate Checks (Type "Approved" when prompted)</div>
                     </div>
                 </div>
@@ -687,11 +759,6 @@
                     <div class="phase-time">5 min</div>
                 </div>
                 <div class="phase-content">
-                    <div class="quick-links" style="margin-bottom:15px;">
-                        <a href="https://docs.google.com/document/d/15CTAiHwxsHyAxO_EMlOpHEIic2Z89ftbpKGLUDvDHJQ/edit?usp=sharing" target="_blank" class="quick-link">
-                            <i class="fas fa-file-alt"></i> SEO Audit Doc
-                        </a>
-                    </div>
                     <div class="step">
                         <input type="checkbox" id="p4-1" onchange="updateProgress()">
                         <div>
@@ -700,6 +767,12 @@
                             <button class="btn btn-accent" style="margin-top:5px;" onclick="copyPrompt('seo')">
                                 <i class="fas fa-search"></i> Copy SEO Audit Prompt
                             </button>
+                            
+                            <div style="margin-top:12px;">
+                                <a href="https://docs.google.com/document/d/15CTAiHwxsHyAxO_EMlOpHEIic2Z89ftbpKGLUDvDHJQ/edit?usp=sharing" target="_blank" class="quick-link">
+                                    <i class="fas fa-file-alt"></i> SEO Audit Doc
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div class="step">
@@ -720,9 +793,19 @@
                         <i class="fas fa-exclamation-triangle"></i> <strong>CRITICAL:</strong> Phase 4 stripped the schema. Rebuild it now.
                     </div>
 
-                    <div class="quick-links" style="margin-bottom:15px;">
-                        <a href="https://docs.google.com/document/d/1labL6l4YBkop02jZhGEujg_OfAgKYElCwQ2hctGIXI8/edit?usp=sharing" target="_blank" class="quick-link">
-                            <i class="fas fa-file-code"></i> Schema Generator Doc
+                    <!-- CID QUICK ACCESS -->
+                    <div class="data-box" style="border-color: var(--accent); margin-bottom:15px; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);">
+                        <h4 style="font-size:13px; margin-bottom:10px; color:var(--accent);">
+                            <i class="fas fa-fingerprint"></i> CID for Schema
+                        </h4>
+                        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                            <code id="schemaCID" style="flex:1; padding:10px; background:#fff; border:2px solid var(--accent); border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:14px; min-width:200px;">—</code>
+                            <button class="btn btn-accent" onclick="copySchemaCID()" style="white-space:nowrap;">
+                                <i class="fas fa-copy"></i> Copy CID
+                            </button>
+                        </div>
+                        <a id="schemaCIDLink" href="#" target="_blank" style="display:inline-block; margin-top:10px; font-size:12px; color:var(--accent);">
+                            <i class="fas fa-external-link-alt"></i> Open in Google Maps
                         </a>
                     </div>
 
@@ -733,6 +816,12 @@
                             <button class="btn btn-accent" style="margin-top:5px;" onclick="copyPrompt('schema')">
                                 <i class="fas fa-code"></i> Copy Schema Prompt
                             </button>
+                            
+                            <div style="margin-top:12px;">
+                                <a href="https://docs.google.com/document/d/1labL6l4YBkop02jZhGEujg_OfAgKYElCwQ2hctGIXI8/edit?usp=sharing" target="_blank" class="quick-link">
+                                    <i class="fas fa-file-code"></i> Schema Generator Doc
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -1002,6 +1091,7 @@
 
                 if(appState.cid) {
                     document.getElementById('cidDisplay').textContent = appState.cid;
+                    updateSchemaCIDDisplay();
                 }
 
                 if(appState.cidAccepted) {
@@ -1061,6 +1151,12 @@
                 if(schemaPaste) schemaPaste.value = '';
                 const schemaResults = document.getElementById('schemaResults');
                 if(schemaResults) schemaResults.innerHTML = '';
+                
+                // Clear schema CID display
+                const schemaCID = document.getElementById('schemaCID');
+                if(schemaCID) schemaCID.textContent = '—';
+                const schemaCIDLink = document.getElementById('schemaCIDLink');
+                if(schemaCIDLink) schemaCIDLink.style.display = 'none';
                 
                 // Clear rebuild issue
                 const rebuildIssue = document.getElementById('rebuildIssue');
@@ -1610,6 +1706,120 @@
                 }
             }
 
+            // Detect niche from URL keywords - COMPREHENSIVE (40+ service types)
+            let niche = 'Electronics Recycling'; // default
+            const s = slug; // shorthand
+            
+            // GUIDES (check first - most specific)
+            if(s.includes('healthcare-itad-guide') || s.includes('healthcare-itad-compliance')) {
+                niche = 'Healthcare ITAD Compliance Guide';
+            } else if(s.includes('education-it-disposal-guide') || s.includes('ferpa-guide')) {
+                niche = 'Education IT Disposal Guide';
+            } else if(s.includes('legal-data-destruction-guide')) {
+                niche = 'Legal Data Destruction Guide';
+            } else if(s.includes('financial-services-it-guide') || s.includes('financial-services-it-security')) {
+                niche = 'Financial Services IT Security Guide';
+            } else if(s.includes('it-asset-disposal-guide') || s.includes('asset-disposal-guide')) {
+                niche = 'IT Asset Disposal Guide';
+            } else if(s.includes('government-it-procurement-guide')) {
+                niche = 'Government IT Procurement Guide';
+            } else if(s.includes('military-electronics-disposal')) {
+                niche = 'Military Electronics Disposal Guide';
+            }
+            // INDUSTRY-SPECIFIC SERVICES
+            else if(s.includes('healthcare-itad')) {
+                niche = 'Healthcare ITAD';
+            } else if(s.includes('education-it-disposal')) {
+                niche = 'Education IT Disposal';
+            } else if(s.includes('government-electronics-recycling')) {
+                niche = 'Government Electronics Recycling';
+            } else if(s.includes('financial-services-it')) {
+                niche = 'Financial Services IT Recycling';
+            } else if(s.includes('law-firm-data-destruction') || s.includes('legal-firm-data-destruction') || s.includes('legal-data-destruction')) {
+                niche = 'Legal Data Destruction';
+            } else if(s.includes('school-electronics') || s.includes('school-recycling')) {
+                niche = 'School Electronics Recycling';
+            } else if(s.includes('medical-equipment-recycling')) {
+                niche = 'Medical Equipment Recycling';
+            }
+            // EQUIPMENT-SPECIFIC
+            else if(s.includes('hard-drive-shredding') || s.includes('hdd-shredding')) {
+                niche = 'Hard Drive Shredding';
+            } else if(s.includes('hard-drive-destruction')) {
+                niche = 'Hard Drive Destruction';
+            } else if(s.includes('hard-drive-wiping')) {
+                niche = 'Hard Drive Wiping';
+            } else if(s.includes('mobile-shredding')) {
+                niche = 'Mobile Shredding';
+            } else if(s.includes('server-recycling')) {
+                niche = 'Server Recycling';
+            } else if(s.includes('laptop-recycling')) {
+                niche = 'Laptop Recycling';
+            } else if(s.includes('monitor-recycling')) {
+                niche = 'Monitor Recycling';
+            } else if(s.includes('printer-recycling')) {
+                niche = 'Printer Recycling';
+            } else if(s.includes('cell-phone-recycling') || s.includes('cellphone-recycling')) {
+                niche = 'Cell Phone Recycling';
+            } else if(s.includes('tablet-recycling')) {
+                niche = 'Tablet Recycling';
+            } else if(s.includes('networking-equipment') || s.includes('network-equipment')) {
+                niche = 'Networking Equipment Recycling';
+            } else if(s.includes('it-equipment-recycling')) {
+                niche = 'IT Equipment Recycling';
+            }
+            // CORE SERVICES
+            else if(s.includes('computer-liquidation') || s.includes('liquidation')) {
+                niche = 'Computer Liquidation';
+            } else if(s.includes('asset-lifecycle') || s.includes('lifecycle-management')) {
+                niche = 'Asset Lifecycle Management';
+            } else if(s.includes('asset-recovery') || s.includes('reclaiming-your-assets')) {
+                niche = 'Asset Recovery';
+            } else if(s.includes('asset-tagging')) {
+                niche = 'Asset Tagging';
+            } else if(s.includes('certificate-of-destruction') || s.includes('certified-destruction')) {
+                niche = 'Certificate of Destruction';
+            } else if(s.includes('degaussing')) {
+                niche = 'Degaussing Services';
+            } else if(s.includes('data-destruction') || s.includes('secure-destruction')) {
+                niche = 'Data Destruction';
+            } else if(s.includes('it-asset-disposition') || s.includes('itad')) {
+                niche = 'IT Asset Disposition';
+            } else if(s.includes('it-asset-management') || s.includes('asset-management')) {
+                niche = 'IT Asset Management';
+            } else if(s.includes('lease-buyout') || s.includes('lease-buy-out')) {
+                niche = 'Lease Buyout Services';
+            } else if(s.includes('mail-in-recycling') || s.includes('mail-in')) {
+                niche = 'Mail-In Recycling';
+            } else if(s.includes('managed-service-provider') || s.includes('msp-services') || s.includes('-msp')) {
+                niche = 'Managed Service Provider';
+            } else if(s.includes('managed-it-services') || s.includes('managed-services')) {
+                niche = 'Managed IT Services';
+            } else if(s.includes('reverse-logistics')) {
+                niche = 'Reverse Logistics';
+            } else if(s.includes('data-center-decommission')) {
+                niche = 'Data Center Decommissioning';
+            }
+            // RECYCLING TYPES
+            else if(s.includes('e-waste-pickup')) {
+                niche = 'E-Waste Pickup';
+            } else if(s.includes('e-waste') || s.includes('ewaste')) {
+                niche = 'E-Waste Recycling';
+            } else if(s.includes('free-electronics-recycling') || s.includes('free-recycling')) {
+                niche = 'Free Electronics Recycling';
+            } else if(s.includes('free-pickup') || s.includes('pickup')) {
+                niche = 'Free Electronics Pickup';
+            } else if(s.includes('computer-recycling')) {
+                niche = 'Computer Recycling';
+            } else if(s.includes('electronic-recycling') || s.includes('electronics-recycling')) {
+                niche = 'Electronics Recycling';
+            } else if(s.includes('drop-off')) {
+                niche = 'Electronics Drop-Off';
+            }
+            
+            appState.niche = niche;
+            document.getElementById('stsKeyword').value = niche;
+
             document.getElementById('cityName').value = city || '';
             document.getElementById('stateName').value = state || '';
             document.getElementById('dataArea').style.display = 'block';
@@ -1617,7 +1827,7 @@
             if(!appState.startTime) appState.startTime = Date.now();
             
             saveState();
-            showToast("Data Extracted! City: " + (city || 'Not detected') + (state ? ', ' + state : ''));
+            showToast("Data Extracted! City: " + (city || 'Not detected') + (state ? ', ' + state : '') + " | Niche: " + niche);
         }
 
         // === SEARCH GMB ===
@@ -1681,6 +1891,7 @@
             document.getElementById('parsedGMBArea').style.display = 'block';
             document.getElementById('cidDisplay').textContent = cid;
             displayParsedGMB();
+            updateSchemaCIDDisplay();
 
             showToast("GMB Data Parsed!");
             saveState();
@@ -1942,6 +2153,7 @@ SERVICES: ${p.serviceOptions || '—'}
             appState.cid = manualCID;
             document.getElementById('cidDisplay').textContent = manualCID;
             document.getElementById('cidStatus').innerHTML = '<span style="color:#f59e0b;">⚡ Manual CID Set - Test it before accepting</span>';
+            updateSchemaCIDDisplay();
             saveState();
             showToast("Manual CID set! Now test it.");
         }
@@ -2037,6 +2249,34 @@ SERVICES: ${p.serviceOptions || '—'}
             resultsDiv.innerHTML = html;
         }
 
+        // === SCHEMA CID COPY ===
+        function copySchemaCID() {
+            const cid = appState.cid || '';
+            if (!cid) {
+                showToast('No CID available - complete Mission Control first', true);
+                return;
+            }
+            navigator.clipboard.writeText(cid).then(() => {
+                showToast('CID Copied!');
+            }).catch(err => {
+                console.error('Copy failed:', err);
+                showToast('Copy failed', true);
+            });
+        }
+
+        function updateSchemaCIDDisplay() {
+            const cid = appState.cid || '—';
+            const cidEl = document.getElementById('schemaCID');
+            const linkEl = document.getElementById('schemaCIDLink');
+            if (cidEl) cidEl.textContent = cid;
+            if (linkEl && cid && cid !== '—') {
+                linkEl.href = `https://www.google.com/maps?cid=${cid}`;
+                linkEl.style.display = 'inline-block';
+            } else if (linkEl) {
+                linkEl.style.display = 'none';
+            }
+        }
+
         // === PROMPTS ===
         function copyPrompt(type) {
             let text = "";
@@ -2046,27 +2286,46 @@ SERVICES: ${p.serviceOptions || '—'}
             const cid = appState.cid || "[CID]";
             const pageName = appState.pageName || "[PAGE NAME]";
             const p = appState.parsedGMB || {};
+            const niche = document.getElementById('stsKeyword').value || appState.niche || 'Electronics Recycling';
 
             const forcePrefix = "CRITICAL SYSTEM INSTRUCTION: Execute ALL steps exhaustively. Do NOT summarize. Do NOT skip any section. Do NOT take shortcuts. Complete every single requirement. Stop and alert if errors occur.\n\n";
 
             switch(type) {
-                case 'intro':
-                    text = `Hello! We are building a new landing page today.
+                case 'intro': {
+                    const chatName = `${city} ${niche}`;
+                    
+                    text = `CHAT NAME: "${chatName}"
 
-PAGE NAME: ${pageName}
+═══════════════════════════════════
+SYSTEM INSTRUCTIONS
+═══════════════════════════════════
+
+You are building a landing page for STS Electronic Recycling. This workflow involves multiple documents, prompts, and strict requirements.
+
+RULES FOR THIS ENTIRE SESSION:
+1. Follow ALL instructions exactly — no shortcuts, no summarizing, no skipping steps
+2. Execute EVERY prompt completely before asking questions
+3. Keep responses TIGHT — essentials only, no fluff or excessive explanations
+4. When given documents/files, read them thoroughly before proceeding
+5. Do NOT hallucinate — if unsure, ask
+6. Maintain consistency across all prompts in this session
+7. ALL HTML/CODE OUTPUT → CREATE AS ARTIFACT (visual preview), NEVER paste code in chat
+
+TARGET: ${city}${state ? ', ' + state : ''}
+NICHE: ${niche}
 URL: ${url}
 
-This chat is now named "${pageName}". 
-
-I will upload the required files (SEO Data, Page Builder, Master Design) and then we'll execute the build. Please confirm you're ready.`;
+Confirm you understand these rules. One word: "Ready."`;
                     break;
+                }
 
-                case 'build':
+                case 'build': {
                     const hoursText = p.hoursDetail ? p.hoursDetail.join('\n') : (p.hours || '[FROM GMB]');
-                    text = `${forcePrefix}TASK: Build Landing Page for ${city}${state ? ', ' + state : ''}
+                    text = `${forcePrefix}TASK: Build Landing Page for ${city}${state ? ', ' + state : ''} — ${niche}
 
 ═══════════════════════════════════
 TARGET URL: ${url}
+NICHE: ${niche}
 ═══════════════════════════════════
 
 GMB CID (VERIFIED): ${cid}
@@ -2099,17 +2358,21 @@ EXECUTION INSTRUCTIONS:
 1. Use Master Page Builder logic - follow EVERY step
 2. Apply Master Design Bible strictly - NO deviations
 3. Include ALL GMB data exactly as shown above
-4. Hero section MUST have city "${city}" in H1, form on RIGHT
+4. Hero section MUST have city "${city}" + niche "${niche}" in H1, form on RIGHT
 5. Footer MUST have exact address: ${p.fullAddress || '[ADDRESS]'}
 6. Footer MUST have phone: ${p.phone || '[PHONE]'}
 7. Mobile responsive - images must NOT squeeze text
 8. Do NOT include Schema (Phase 5 task)
-9. Output COMPLETE HTML code - no truncation
+
+⚠️ CRITICAL OUTPUT REQUIREMENT:
+CREATE AN ARTIFACT with the complete HTML code. Do NOT paste code in chat.
+The artifact must be viewable/previewable. Name it: "${city}-${niche.replace(/\s+/g, '-').toLowerCase()}.html"
 
 BEGIN BUILD NOW.`;
                     break;
+                }
 
-                case 'rebuild':
+                case 'rebuild': {
                     const issue = document.getElementById('rebuildIssue')?.value || 'Design Bible not followed';
                     text = `${forcePrefix}TASK: COMPLETE REBUILD REQUIRED
 
@@ -2122,10 +2385,14 @@ INSTRUCTIONS:
 4. Fix the specific issue mentioned above
 5. Ensure Hero has city in H1, form on RIGHT
 6. Ensure mobile view works - no image squeeze
-7. Output COMPLETE new HTML
+
+⚠️ CRITICAL OUTPUT REQUIREMENT:
+CREATE A NEW ARTIFACT with the complete rebuilt HTML code. Do NOT paste code in chat.
+The artifact must be viewable/previewable. Replace the previous artifact.
 
 DO NOT try to patch the old code. START FRESH.`;
                     break;
+                }
 
                 case 'verify-links':
                     text = `${forcePrefix}TASK: VERIFY ALL LINKS
@@ -2153,15 +2420,16 @@ CRITICAL RULES:
 
 Complete the ENTIRE audit. Do not stop early. Do not summarize.
 
-Output the fully optimized HTML (without schema).`;
+⚠️ CRITICAL OUTPUT REQUIREMENT:
+CREATE AN ARTIFACT with the fully optimized HTML (without schema). Do NOT paste code in chat.
+The artifact must be viewable/previewable. Name it with "-seo-optimized" suffix.`;
                     break;
 
-                case 'schema':
+                case 'schema': {
                     const schemaHours = p.hoursDetail ? p.hoursDetail.join('\n') : (p.hours || '[HOURS]');
                     text = `${forcePrefix}TASK: GENERATE SCHEMA (JSON-LD)
 
 City: ${city}
-CID (VERIFIED): ${cid}
 
 COMPLETE GMB DATA FOR SCHEMA:
 ═══════════════════════════════════
@@ -2186,13 +2454,16 @@ REQUIREMENTS:
 2. Include COMPLETE address with street, city, state, zip
 3. Include phone number exactly as shown
 4. Include ALL business hours
-5. Add CID to "sameAs" array: https://www.google.com/maps?cid=${cid}
+5. Add CID to "sameAs" array — USE THE CID PROVIDED SEPARATELY (copy from green box above)
 6. Include aggregateRating if rating/reviews available
 7. Include "Electronic Recycling" in name and description
 8. Wrap in <script type="application/ld+json"> tags
 
-Output ONLY the complete schema script block.`;
+⚠️ CRITICAL OUTPUT REQUIREMENT:
+CREATE AN ARTIFACT with the complete schema script block. Do NOT paste code in chat.
+The artifact must be viewable. Name it: "${city.toLowerCase()}-schema.json"`;
                     break;
+                }
 
                 case 'meta':
                     text = `Generate SEO meta data for: ${pageName}
@@ -2205,7 +2476,12 @@ Format for easy copy/paste.`;
                     break;
             }
 
-            navigator.clipboard.writeText(text).then(() => showToast("Prompt Copied!"));
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Prompt Copied!");
+            }).catch(err => {
+                console.error('Copy failed:', err);
+                showToast("Copy failed - try again", true);
+            });
         }
 
         // === UTILS ===
@@ -2260,7 +2536,7 @@ Format for easy copy/paste.`;
             const checked = document.querySelectorAll('#phases input[type="checkbox"]:checked').length;
             
             const report = `═══════════════════════════════════
-M.A.R.K. v9.68 — BUILD REPORT
+M.A.R.K. v9.71 — BUILD REPORT
 ═══════════════════════════════════
 VA: ${appState.vaName || 'N/A'}
 Date: ${new Date().toLocaleDateString()}
@@ -2312,13 +2588,13 @@ STATUS: ${checked === total ? '✅ COMPLETE' : '⚠️ INCOMPLETE'}
             <!-- FORENSIC TIMELINE -->
             <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #e2e8f0;">
                 <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#b0b8c4; line-height:1.7;">
-                    <strong style="color:#94a3b8;">DEVELOPMENT TIMELINE:</strong> Initial architecture conceived Jan 2026 as single-file HTML solution to replace multi-tool VA workflows. v1.0–v6.x addressed core parsing logic, UI scaffolding, and localStorage persistence. v7.x introduced 317-MSA city lookup (resolving multi-word city failures), CID regex overhaul (fixing truncation bug on hex-pair extraction), expanded GMB parsing (rating, reviews, hours, services), manual CID override pathway, and 8-phase Joomla workflow alignment. v9.68 represents current stable release with M.A.R.K. branding consolidation, technical documentation append, and UI refinements for production deployment. <strong style="color:#94a3b8;">TOTAL DEVELOPMENT: 32.7 man-hours</strong> | Last updated: Jan 28, 2026
+                    <strong style="color:#94a3b8;">DEVELOPMENT TIMELINE:</strong> Initial architecture conceived Jan 2026 as single-file HTML solution to replace multi-tool VA workflows. v1.0–v6.x addressed core parsing logic, UI scaffolding, and localStorage persistence. v7.x introduced 317-MSA city lookup (resolving multi-word city failures), CID regex overhaul (fixing truncation bug on hex-pair extraction), expanded GMB parsing (rating, reviews, hours, services), manual CID override pathway, and 8-phase Joomla workflow alignment. v9.71 represents current stable release with M.A.R.K. branding consolidation, artifact output enforcement, side-by-side workflow launcher, schema CID quick-copy box, and prompt-first UI restructure. <strong style="color:#94a3b8;">TOTAL DEVELOPMENT: 34.2 man-hours</strong> | Last updated: Jan 29, 2026
                 </div>
             </div>
             
             <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <div style="font-size:9px; color:#cbd5e1; font-family:'JetBrains Mono', monospace;">
-                    M.A.R.K. v9.68 — Machine Assisted Routing Kit
+                    M.A.R.K. v9.71 — Machine Assisted Routing Kit
                 </div>
                 <div style="font-size:9px; color:#cbd5e1;">
                     © 2026 STS Electronic Recycling Inc.
