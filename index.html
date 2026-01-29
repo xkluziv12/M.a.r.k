@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.A.R.K. v9.97 | Page Terminal</title>
+    <title>M.A.R.K. v9.99 | Page Terminal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -165,103 +165,241 @@
         .ai-header {
             background: linear-gradient(135deg, var(--white) 0%, var(--cream) 100%);
             color: var(--navy);
-            padding: 50px 20px;
+            padding: 50px 20px 60px;
             position: relative;
             overflow: hidden;
             border-bottom: 2px solid var(--gold);
+            animation: breathingBg 20s ease-in-out infinite;
+        }
+        
+        /* EFFECT 2: Breathing Gradient */
+        @keyframes breathingBg {
+            0%, 100% { background: linear-gradient(135deg, var(--white) 0%, var(--cream) 100%); }
+            50% { background: linear-gradient(135deg, var(--cream) 0%, #f5f3ef 100%); }
         }
 
-        /* Subtle animated shimmer */
+        /* EFFECT 3: Data Stream Lines */
         .ai-header::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(201,169,98,0.08) 50%, 
-                transparent 100%);
-            animation: headerShimmer 12s ease-in-out infinite;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 100px,
+                rgba(201,169,98,0.03) 100px,
+                rgba(201,169,98,0.03) 101px
+            );
+            animation: dataStream 30s linear infinite;
         }
         
-        @keyframes headerShimmer {
-            0% { left: -50%; }
-            100% { left: 150%; }
+        @keyframes dataStream {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(0px); }
         }
 
-        /* Gold accent line at bottom */
+        /* EFFECT 7: Wave Frequency at bottom */
         .ai-header::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
-            background-size: 200% 100%;
-            animation: goldFlow 8s ease-in-out infinite;
+            width: 200%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--gold-light), 
+                var(--gold), 
+                var(--gold-light), 
+                transparent,
+                var(--gold-light), 
+                var(--gold), 
+                var(--gold-light), 
+                transparent
+            );
+            animation: waveFlow 8s linear infinite;
         }
         
-        @keyframes goldFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        @keyframes waveFlow {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
         }
 
-        /* Floating gold particles - slower and more subtle */
-        .header-particles {
+        /* EFFECT 1: Neural Network Nodes */
+        .neural-network {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
+            pointer-events: none;
             overflow: hidden;
+        }
+        
+        .neural-node {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: neuralPulse 4s ease-in-out infinite;
+        }
+        
+        .neural-node:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .neural-node:nth-child(2) { top: 60%; left: 25%; animation-delay: 0.5s; }
+        .neural-node:nth-child(3) { top: 30%; left: 40%; animation-delay: 1s; }
+        .neural-node:nth-child(4) { top: 70%; left: 55%; animation-delay: 1.5s; }
+        .neural-node:nth-child(5) { top: 25%; left: 70%; animation-delay: 2s; }
+        .neural-node:nth-child(6) { top: 65%; left: 85%; animation-delay: 2.5s; }
+        .neural-node:nth-child(7) { top: 45%; left: 15%; animation-delay: 3s; }
+        .neural-node:nth-child(8) { top: 50%; left: 90%; animation-delay: 3.5s; }
+        
+        @keyframes neuralPulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.5); }
+        }
+        
+        /* Neural connections (SVG lines) */
+        .neural-connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
         }
         
-        .particle {
+        .neural-line {
+            stroke: var(--gold);
+            stroke-width: 1;
+            fill: none;
+            opacity: 0;
+            animation: lineFlash 8s ease-in-out infinite;
+        }
+        
+        .neural-line:nth-child(1) { animation-delay: 0s; }
+        .neural-line:nth-child(2) { animation-delay: 2s; }
+        .neural-line:nth-child(3) { animation-delay: 4s; }
+        .neural-line:nth-child(4) { animation-delay: 6s; }
+        
+        @keyframes lineFlash {
+            0%, 15%, 100% { opacity: 0; }
+            5%, 10% { opacity: 0.3; }
+        }
+
+        /* EFFECT 5: Constellation Drift */
+        .constellation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--navy);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: starDrift 25s ease-in-out infinite;
+        }
+        
+        .star:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; animation-duration: 20s; }
+        .star:nth-child(2) { top: 45%; left: 35%; animation-delay: 5s; animation-duration: 25s; }
+        .star:nth-child(3) { top: 25%; left: 60%; animation-delay: 10s; animation-duration: 22s; }
+        .star:nth-child(4) { top: 70%; left: 75%; animation-delay: 15s; animation-duration: 28s; }
+        .star:nth-child(5) { top: 55%; left: 45%; animation-delay: 8s; animation-duration: 24s; }
+        .star:nth-child(6) { top: 35%; left: 80%; animation-delay: 12s; animation-duration: 26s; }
+        
+        @keyframes starDrift {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(10px, -5px); }
+            50% { transform: translate(5px, 10px); }
+            75% { transform: translate(-5px, 5px); }
+        }
+
+        /* EFFECT 8: Circuit Traces */
+        .circuit-traces {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            height: 30px;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .circuit-path {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            animation: circuitPulse 5s ease-in-out infinite;
+        }
+        
+        .circuit-path:nth-child(1) { top: 5px; left: 5%; width: 15%; animation-delay: 0s; }
+        .circuit-path:nth-child(2) { top: 15px; left: 25%; width: 20%; animation-delay: 1s; }
+        .circuit-path:nth-child(3) { top: 10px; left: 50%; width: 12%; animation-delay: 2s; }
+        .circuit-path:nth-child(4) { top: 20px; left: 70%; width: 18%; animation-delay: 3s; }
+        .circuit-path:nth-child(5) { top: 8px; left: 85%; width: 10%; animation-delay: 4s; }
+        
+        .circuit-node {
             position: absolute;
             width: 3px;
             height: 3px;
             background: var(--gold);
             border-radius: 50%;
             opacity: 0;
-            animation: particleFloat 16s ease-in-out infinite;
+            animation: circuitNode 5s ease-in-out infinite;
         }
         
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 30%; animation-delay: 4s; }
-        .particle:nth-child(3) { left: 50%; animation-delay: 8s; }
-        .particle:nth-child(4) { left: 70%; animation-delay: 2s; }
-        .particle:nth-child(5) { left: 90%; animation-delay: 6s; }
-        .particle:nth-child(6) { left: 20%; animation-delay: 10s; }
-        .particle:nth-child(7) { left: 60%; animation-delay: 12s; }
-        .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+        .circuit-node:nth-child(6) { top: 4px; left: 20%; animation-delay: 0.2s; }
+        .circuit-node:nth-child(7) { top: 14px; left: 45%; animation-delay: 1.2s; }
+        .circuit-node:nth-child(8) { top: 9px; left: 62%; animation-delay: 2.2s; }
+        .circuit-node:nth-child(9) { top: 19px; left: 88%; animation-delay: 3.2s; }
         
-        @keyframes particleFloat {
-            0% { 
-                transform: translateY(60px) scale(0);
-                opacity: 0;
-            }
-            10% { 
-                opacity: 0.4;
-            }
-            90% {
-                opacity: 0.4;
-            }
-            100% { 
-                transform: translateY(-60px) scale(0.5);
-                opacity: 0;
-            }
+        @keyframes circuitPulse {
+            0%, 30%, 100% { opacity: 0; }
+            10%, 20% { opacity: 0.4; }
+        }
+        
+        @keyframes circuitNode {
+            0%, 30%, 100% { opacity: 0; transform: scale(0.5); }
+            10%, 20% { opacity: 0.6; transform: scale(1); }
         }
 
-        /* Soft glowing orbs */
+        /* EFFECT 6: Status Line */
+        .ai-status-line {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--gold);
+            opacity: 0.5;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .status-text {
+            display: inline-block;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Soft glowing orbs (kept from before) */
         .header-glow {
             position: absolute;
             border-radius: 50%;
             filter: blur(80px);
-            opacity: 0.15;
+            opacity: 0.12;
             animation: glowPulse 10s ease-in-out infinite;
         }
         
@@ -293,8 +431,8 @@
         }
         
         @keyframes glowPulse {
-            0%, 100% { opacity: 0.1; transform: scale(1); }
-            50% { opacity: 0.2; transform: scale(1.05); }
+            0%, 100% { opacity: 0.08; transform: scale(1); }
+            50% { opacity: 0.15; transform: scale(1.05); }
         }
 
         .header-content {
@@ -607,6 +745,8 @@
             transition: all 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
         }
         .btn:active { transform: scale(0.98); }
         .btn-primary { background: var(--navy); color: var(--white); }
@@ -617,6 +757,38 @@
         .btn-ghost:hover { background: var(--white); border-color: var(--navy); }
         .btn-danger { background: #dc2626; color: white; }
         .btn-danger:hover { background: #b91c1c; }
+        
+        /* AI Processing Animation */
+        .btn.processing {
+            pointer-events: none;
+            opacity: 0.9;
+        }
+        .btn.processing::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255,255,255,0.3) 50%, 
+                transparent 100%);
+            animation: btnSweep 0.6s ease-out forwards;
+        }
+        @keyframes btnSweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .btn.success {
+            background: var(--gold) !important;
+        }
+        
+        .btn-compile {
+            min-width: 180px;
+            justify-content: center;
+        }
 
         /* ===== BOXES ===== */
         .data-box { 
@@ -833,7 +1005,7 @@
             <span>Online</span>
         </div>
         <div class="status-item">
-            <span>M.A.R.K. v9.97</span>
+            <span>M.A.R.K. v9.99</span>
         </div>
         <div class="status-item">
             <span class="status-clock" id="statusClock">00:00:00</span>
@@ -844,19 +1016,55 @@
     </div>
 
     <header class="ai-header">
-        <!-- Animated background elements -->
+        <!-- EFFECT 1: Neural Network Nodes + Connections -->
+        <div class="neural-network">
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <svg class="neural-connections" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line class="neural-line" x1="10" y1="20" x2="40" y2="30"/>
+                <line class="neural-line" x1="25" y1="60" x2="55" y2="70"/>
+                <line class="neural-line" x1="40" y1="30" x2="70" y2="25"/>
+                <line class="neural-line" x1="55" y1="70" x2="85" y2="65"/>
+            </svg>
+        </div>
+        
+        <!-- EFFECT 5: Constellation Drift -->
+        <div class="constellation">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
+        
+        <!-- EFFECT 8: Circuit Traces -->
+        <div class="circuit-traces">
+            <div class="circuit-path"></div>
+            <div class="circuit-path"></div>
+            <div class="circuit-path"></div>
+            <div class="circuit-path"></div>
+            <div class="circuit-path"></div>
+            <div class="circuit-node"></div>
+            <div class="circuit-node"></div>
+            <div class="circuit-node"></div>
+            <div class="circuit-node"></div>
+        </div>
+        
+        <!-- Soft Glowing Orbs -->
         <div class="header-glow glow-1"></div>
         <div class="header-glow glow-2"></div>
         <div class="header-glow glow-3"></div>
-        <div class="header-particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
+        
+        <!-- EFFECT 6: Status Line -->
+        <div class="ai-status-line">
+            <span class="status-text" id="aiStatusText">● Neural Engine Active</span>
         </div>
         
         <div class="header-content" style="align-items: center;">
@@ -865,7 +1073,7 @@
                     Machine Assisted Routing Kit
                 </div>
                 <h1 style="font-size:32px; font-weight:300; letter-spacing:1px; margin:0; color:var(--navy);">
-                    M.A.R.K<span style="color:var(--gold);">.</span> <span style="font-weight:500; font-size:18px; color:var(--text-muted);">v9.97</span>
+                    M.A.R.K<span style="color:var(--gold);">.</span> <span style="font-weight:500; font-size:18px; color:var(--text-muted);">v9.99</span>
                 </h1>
             </div>
             <div style="text-align:right;">
@@ -960,7 +1168,7 @@
 
                     <div style="text-align: center; margin-top:15px;">
                         <button class="btn btn-accent" onclick="parseVerify()">
-                            <i class="fas fa-check-double"></i> Parse & Verify GMB Data
+                            <i class="fas fa-check-double"></i> Analyze GMB Profile
                         </button>
                     </div>
 
@@ -1045,13 +1253,13 @@
                             <div class="cid-display" id="cidDisplay">CID will appear here...</div>
                             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
                                 <button class="btn btn-primary" onclick="testCID()">
-                                    <i class="fas fa-external-link-alt"></i> Test CID Live
+                                    <i class="fas fa-external-link-alt"></i> Authenticate CID
                                 </button>
                                 <button class="btn btn-accent" onclick="acceptCID()">
-                                    <i class="fas fa-check"></i> CID Accepted ✓
+                                    <i class="fas fa-lock"></i> Lock CID
                                 </button>
                                 <button class="btn btn-danger" onclick="rejectCID()">
-                                    <i class="fas fa-times"></i> CID Wrong ✗
+                                    <i class="fas fa-times"></i> Reject & Retry
                                 </button>
                             </div>
                             
@@ -1200,8 +1408,8 @@
                         <div>
                             <div class="step-label">Start New Chat & Run Introduction</div>
                             <div class="step-sub">This names the chat and sets context</div>
-                            <button class="btn btn-primary" style="margin-top:8px;" onclick="copyPrompt('intro')">
-                                <i class="fas fa-play"></i> Copy Introduction Prompt
+                            <button class="btn btn-primary btn-compile" style="margin-top:8px;" onclick="copyPrompt('intro'); animateButton(this, 'Compiling...', 'Compiled');">
+                                <i class="fas fa-play"></i> Compile Intro Sequence
                             </button>
                             <div style="font-size:12px; color:#64748b; margin-top:5px;">
                                 Page Name: <strong id="displayPageName">—</strong>
@@ -1222,8 +1430,8 @@
                         <div style="font-size:11px; margin-bottom:12px; padding:10px; background:#f1f5f9; border-radius:6px; color:#64748b;">
                             <strong>PROMPT INCLUDES:</strong> Target URL • Niche • Verified CID • GMB Data (Name, Address, Phone, Hours) • Forced execution instructions
                         </div>
-                        <button class="btn btn-accent" style="width:100%;" onclick="copyPrompt('build')">
-                            <i class="fas fa-terminal"></i> Copy Full Execution Prompt
+                        <button class="btn btn-accent btn-compile" style="width:100%;" onclick="copyPrompt('build'); animateButton(this, 'Generating...', 'Sequence Ready');">
+                            <i class="fas fa-terminal"></i> Generate Build Sequence
                         </button>
                         
                         <div style="margin-top:15px; padding-top:15px; border-top:1px dashed #cbd5e1;">
@@ -1261,8 +1469,8 @@
                         <div>
                             <div class="step-label">Verify Hub+Spoke Internal Linking</div>
                             <div class="step-sub">Confirms contextual links + Related Services section</div>
-                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-hubspoke')">
-                                <i class="fas fa-sitemap"></i> Verify Hub+Spoke Prompt
+                            <button class="btn btn-compile" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-hubspoke'); animateButton(this, 'Validating...', 'Matrix Ready');">
+                                <i class="fas fa-sitemap"></i> Validate Link Matrix
                             </button>
                         </div>
                     </div>
@@ -1299,8 +1507,8 @@
                             <div class="step-label">Force Rebuild (if needed)</div>
                             <div class="step-sub">Describe the issue below:</div>
                             <textarea id="rebuildIssue" class="rebuild-input" placeholder="Example: Mobile view has images squeezing text in hero section. OR: LLM ignored Design Bible and made up its own layout."></textarea>
-                            <button class="btn btn-danger" style="margin-top:5px;" onclick="copyPrompt('rebuild')">
-                                <i class="fas fa-redo"></i> Generate Rebuild Prompt
+                            <button class="btn btn-danger btn-compile" style="margin-top:5px;" onclick="copyPrompt('rebuild'); animateButton(this, 'Compiling...', 'Protocol Ready');">
+                                <i class="fas fa-redo"></i> Compile Rebuild Protocol
                             </button>
                         </div>
                     </div>
@@ -1319,8 +1527,8 @@
                         <div>
                             <div class="step-label">Run Link Verification Audit</div>
                             <div class="step-sub">Checks emails, contact links, and catches LLM-invented URLs</div>
-                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-links')">
-                                <i class="fas fa-link"></i> Copy Link Verification Prompt
+                            <button class="btn btn-compile" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-links'); animateButton(this, 'Scanning...', 'Audit Ready');">
+                                <i class="fas fa-link"></i> Execute Link Audit
                             </button>
                         </div>
                     </div>
@@ -1344,8 +1552,8 @@
                         <div>
                             <div class="step-label">Upload SEO Audit File & Run Audit</div>
                             <div class="step-sub">This will STRIP Schema (rebuilt in Phase 5)</div>
-                            <button class="btn btn-accent" style="margin-top:5px;" onclick="copyPrompt('seo')">
-                                <i class="fas fa-search"></i> Copy SEO Audit Prompt
+                            <button class="btn btn-accent btn-compile" style="margin-top:5px;" onclick="copyPrompt('seo'); animateButton(this, 'Generating...', 'Protocol Ready');">
+                                <i class="fas fa-search"></i> Generate SEO Protocol
                             </button>
                             
                             <div style="margin-top:12px;">
@@ -1359,14 +1567,13 @@
                         </div>
                     </div>
                     
-                    <!-- SEO VERIFICATION -->
                     <div class="step">
                         <input type="checkbox" id="p4-2" onchange="updateProgress()">
                         <div>
                             <div class="step-label">Verify SEO Audit Completion</div>
                             <div class="step-sub">Confirms audit steps followed + checks modern SEO standards</div>
-                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('seo-verify')">
-                                <i class="fas fa-clipboard-check"></i> Copy SEO Verification Prompt
+                            <button class="btn btn-compile" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('seo-verify'); animateButton(this, 'Verifying...', 'Check Ready');">
+                                <i class="fas fa-clipboard-check"></i> Run SEO Verification
                             </button>
                         </div>
                     </div>
@@ -1409,8 +1616,8 @@
                         <input type="checkbox" id="p5-1" onchange="updateProgress()">
                         <div>
                             <div class="step-label">Upload Schema Generator & Run</div>
-                            <button class="btn btn-accent" style="margin-top:5px;" onclick="copyPrompt('schema')">
-                                <i class="fas fa-code"></i> Copy Schema Prompt
+                            <button class="btn btn-accent btn-compile" style="margin-top:5px;" onclick="copyPrompt('schema'); animateButton(this, 'Compiling...', 'Schema Ready');">
+                                <i class="fas fa-code"></i> Compile Schema Protocol
                             </button>
                             <div style="margin-top:8px; font-size:11px; color:#f97316;">
                                 <i class="fas fa-exclamation-circle"></i> Do NOT include aggregateRating/reviews in schema
@@ -1448,8 +1655,8 @@
                             Paste Schema code to verify CID, city, and structure.
                         </p>
                         <textarea id="schemaPaste" class="code-check-area" placeholder="Paste your JSON-LD schema code here..."></textarea>
-                        <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="validateSchema()">
-                            <i class="fas fa-check-circle"></i> Validate Schema
+                        <button class="btn btn-primary btn-compile" style="width:100%; margin-top:10px;" onclick="validateSchema(); animateButton(this, 'Analyzing...', 'Audit Complete');">
+                            <i class="fas fa-check-circle"></i> Execute Schema Audit
                         </button>
                         <div id="schemaResults"></div>
                     </div>
@@ -1537,8 +1744,8 @@
                         <div>
                             <div class="step-label">Run Final Link Audit Before Upload</div>
                             <div class="step-sub">Catches any issues from SEO/Schema edits</div>
-                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-links')">
-                                <i class="fas fa-link"></i> Copy Link Verification Prompt
+                            <button class="btn btn-compile" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-links'); animateButton(this, 'Scanning...', 'Audit Ready');">
+                                <i class="fas fa-link"></i> Execute Final Audit
                             </button>
                         </div>
                     </div>
@@ -1648,8 +1855,8 @@
         <div class="card" style="text-align: center; padding: 40px;">
             <h2 style="color:var(--accent); margin-bottom: 20px;">🎉 Part 4: Completion Report</h2>
             <p style="color:#64748b; margin-bottom:20px;">All phases finished. Generate your completion report.</p>
-            <button class="btn btn-accent" onclick="generateReport()" style="font-size:16px; padding:12px 30px;">
-                <i class="fas fa-clipboard-check"></i> Generate Report
+            <button class="btn btn-accent btn-compile" onclick="generateReport(); animateButton(this, 'Exporting...', 'Log Exported');" style="font-size:16px; padding:12px 30px;">
+                <i class="fas fa-clipboard-check"></i> Export Mission Log
             </button>
         </div>
 
@@ -1773,6 +1980,9 @@
             updateStatusClock();
             setInterval(updateStatusClock, 1000);
             
+            // Start AI status cycling
+            startStatusCycling();
+            
             // Load saved state
             loadState();
             setInterval(updateTimer, 1000);
@@ -1780,6 +1990,57 @@
             // Initial phase check
             setTimeout(checkPhaseCompletion, 100);
         };
+        
+        // === AI STATUS LINE CYCLING ===
+        const statusMessages = [
+            '● Neural Engine Active',
+            '● GEO-PARSE™ Ready',
+            '● CID Protocol Online',
+            '● Schema Module Loaded',
+            '● Workflow Synchronized',
+            '● Data Validators Ready',
+            '● Processing Pipeline Active',
+            '● Memory State Preserved'
+        ];
+        
+        let currentStatusIndex = 0;
+        
+        function startStatusCycling() {
+            setInterval(() => {
+                currentStatusIndex = (currentStatusIndex + 1) % statusMessages.length;
+                const statusEl = document.getElementById('aiStatusText');
+                if (statusEl) {
+                    statusEl.style.opacity = '0';
+                    setTimeout(() => {
+                        statusEl.textContent = statusMessages[currentStatusIndex];
+                        statusEl.style.opacity = '1';
+                    }, 300);
+                }
+            }, 3000);
+        }
+        
+        // === BUTTON PROCESSING ANIMATION ===
+        function animateButton(btn, processingText, successText, callback) {
+            const originalText = btn.innerHTML;
+            
+            // Phase 1: Processing
+            btn.classList.add('processing');
+            btn.innerHTML = `<span style="opacity:0.8">◐</span> ${processingText}`;
+            
+            // Phase 2: Execute callback and show success
+            setTimeout(() => {
+                if (callback) callback();
+                btn.classList.remove('processing');
+                btn.classList.add('success');
+                btn.innerHTML = `<span>✓</span> ${successText}`;
+                
+                // Phase 3: Return to original
+                setTimeout(() => {
+                    btn.classList.remove('success');
+                    btn.innerHTML = originalText;
+                }, 1200);
+            }, 600);
+        }
 
         // === 100% COMPLETION CELEBRATION ===
         let completionTriggered = false;
@@ -3826,13 +4087,13 @@ Keep response TIGHT. Boxes only, no fluff.`;
             <!-- FORENSIC TIMELINE -->
             <div style="margin-top:25px; padding-top:20px; border-top:1px solid var(--border-light);">
                 <div style="font-family:'Inter', sans-serif; font-size:10px; color:var(--text-muted); line-height:1.8;">
-                    <strong style="color:var(--text-secondary);">Development:</strong> v1.0–v6.x core parsing & UI scaffolding. v7.x 317-MSA city lookup, CID regex overhaul, 9-phase workflow. v9.97 Luxury UI redesign with refined boot sequence, elegant status bar, and sophisticated completion celebration. <strong style="color:var(--text-secondary);">42.0 man-hours</strong> | Jan 29, 2026
+                    <strong style="color:var(--text-secondary);">Development:</strong> v1.0–v6.x core parsing & UI scaffolding. v7.x 317-MSA city lookup, CID regex overhaul, 9-phase workflow. v9.99 Luxury UI with 7-layer AI animation engine (neural network, constellation drift, circuit traces, data streams, breathing gradient, wave frequency, status cycling) + intelligent button micro-animations. <strong style="color:var(--text-secondary);">44.5 man-hours</strong> | Jan 29, 2026
                 </div>
             </div>
             
             <div style="margin-top:25px; padding-top:20px; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
                 <div style="font-size:11px; color:var(--text-muted);">
-                    M.A.R.K<span style="color:var(--gold);">.</span> v9.97
+                    M.A.R.K<span style="color:var(--gold);">.</span> v9.99
                 </div>
                 <div style="font-size:10px; color:var(--text-muted);">
                     Page Terminal System
