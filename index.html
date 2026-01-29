@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.A.R.K. v9.71 | Page Terminal</title>
+    <title>M.A.R.K. v9.77 | Page Terminal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -321,7 +321,7 @@
                     MACHINE ASSISTED ROUTING KIT
                 </div>
                 <h1 style="font-size:36px; font-weight:300; letter-spacing:-0.5px; margin:0;">
-                    M.A.R.K. <span style="font-weight:600; color:#60a5fa;">v9.71</span>
+                    M.A.R.K. <span style="font-weight:600; color:#60a5fa;">v9.77</span>
                 </h1>
             </div>
             <div style="text-align:right; font-family:'JetBrains Mono', monospace;">
@@ -407,8 +407,8 @@
                     <div class="form-group" style="margin-top:15px;">
                         <label>GMB Raw Data (Copy entire page)</label>
                         <textarea id="gmbData" style="height:80px;" placeholder="Select all & copy the entire GMB listing page..."></textarea>
-                        <div style="color: red; font-size: 11px; font-weight: 700; margin-top: 5px;">
-                            <i class="fas fa-exclamation-circle"></i> IMPORTANT: Open "Hours" dropdown BEFORE copying!
+                        <div style="color: #059669; font-size: 11px; font-weight: 600; margin-top: 5px;">
+                            <i class="fas fa-clock"></i> Hours auto-set to: Mon-Fri 9 AM – 5 PM
                         </div>
                     </div>
 
@@ -492,9 +492,12 @@
 
                         <!-- CID VERIFICATION -->
                         <div class="cid-box">
-                            <h4 style="color:#92400e; margin-bottom:10px;">
-                                <i class="fas fa-fingerprint"></i> CID Verification Required
+                            <h4 style="color:#92400e; margin-bottom:5px;">
+                                <i class="fas fa-fingerprint"></i> Schema CID Verification
                             </h4>
+                            <div style="font-size:11px; color:#78716c; margin-bottom:10px;">
+                                Extracted from 2nd hex value (true CID, not FID) → Converted to decimal
+                            </div>
                             <div class="cid-display" id="cidDisplay">CID will appear here...</div>
                             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
                                 <button class="btn btn-primary" onclick="testCID()">
@@ -510,9 +513,9 @@
                             
                             <!-- Manual CID Input -->
                             <div style="margin-top:10px; padding-top:10px; border-top:1px dashed #fbbf24;">
-                                <label style="font-size:11px; font-weight:700; color:#92400e;">MANUAL CID (if auto-detect failed):</label>
+                                <label style="font-size:11px; font-weight:700; color:#92400e;">MANUAL CID (decimal format):</label>
                                 <div style="display:flex; gap:8px; margin-top:5px;">
-                                    <input type="text" id="manualCID" placeholder="Paste correct CID here..." style="flex:1; padding:8px; border:2px solid #fbbf24; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:11px;">
+                                    <input type="text" id="manualCID" placeholder="Paste decimal CID here (15-20 digits)..." style="flex:1; padding:8px; border:2px solid #fbbf24; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:11px;">
                                     <button class="btn btn-warning" onclick="useManualCID()">
                                         <i class="fas fa-save"></i> Use This CID
                                     </button>
@@ -552,8 +555,7 @@
                             <i class="fas fa-brain"></i> Open Claude Project
                         </a>
                         <div class="side-by-side-tip">
-                            <strong>Snap Windows:</strong> 
-                            <span class="kbd">Win</span> + <span class="kbd">←</span> / <span class="kbd">→</span>
+                            Drag windows side-by-side for easy workflow
                         </div>
                         <input type="checkbox" id="p1-0" onchange="updateProgress()" style="position:absolute; top:15px; right:15px; width:22px; height:22px;">
                     </div>
@@ -604,15 +606,6 @@
                             margin-top: 12px;
                             font-size: 12px;
                             color: #c4b5fd;
-                        }
-                        .kbd {
-                            display: inline-block;
-                            padding: 2px 6px;
-                            background: rgba(255,255,255,0.2);
-                            border-radius: 4px;
-                            font-family: 'JetBrains Mono', monospace;
-                            font-size: 10px;
-                            color: white;
                         }
                     </style>
 
@@ -716,38 +709,22 @@
             <div class="card phase" id="phase3">
                 <div class="phase-header" onclick="togglePhase('phase3')">
                     <div class="phase-title"><span class="phase-num">3</span> Verify All Links</div>
-                    <div class="phase-time">5 min</div>
+                    <div class="phase-time">2 min</div>
                 </div>
                 <div class="phase-content">
                     <div class="step">
                         <input type="checkbox" id="p3-1" onchange="updateProgress()">
                         <div>
-                            <div class="step-label">Verify ALL Email Links</div>
-                            <div class="step-sub">Must be: <code>mailto:recycle@stsrecycle.com</code></div>
+                            <div class="step-label">Run Link Verification Audit</div>
+                            <div class="step-sub">Checks emails, contact links, and catches LLM-invented URLs</div>
+                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-links')">
+                                <i class="fas fa-link"></i> Copy Link Verification Prompt
+                            </button>
                         </div>
                     </div>
                     <div class="step">
                         <input type="checkbox" id="p3-2" onchange="updateProgress()">
-                        <div>
-                            <div class="step-label">Verify Contact/Quote Links</div>
-                            <div class="step-sub">Must go to: <code>https://www.stselectronicrecyclinginc.com/CONTACT-STS-PAGE</code></div>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <input type="checkbox" id="p3-3" onchange="updateProgress()">
-                        <div>
-                            <div class="step-label">Check for Made-Up URLs</div>
-                            <div class="step-sub">LLM sometimes invents URLs!</div>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <input type="checkbox" id="p3-4" onchange="updateProgress()">
-                        <div>
-                            <div class="step-label">Run Full Link Audit</div>
-                            <button class="btn btn-accent" style="margin-top:5px;" onclick="copyPrompt('verify-links')">
-                                <i class="fas fa-link"></i> Copy Link Verification Prompt
-                            </button>
-                        </div>
+                        <div class="step-label">✅ All Links Verified</div>
                     </div>
                 </div>
             </div>
@@ -775,9 +752,22 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- SEO VERIFICATION -->
                     <div class="step">
                         <input type="checkbox" id="p4-2" onchange="updateProgress()">
-                        <div class="step-label">✅ SEO Audit Completed with NO ISSUES</div>
+                        <div>
+                            <div class="step-label">Verify SEO Audit Completion</div>
+                            <div class="step-sub">Confirms audit steps followed + checks modern SEO standards</div>
+                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('seo-verify')">
+                                <i class="fas fa-clipboard-check"></i> Copy SEO Verification Prompt
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <input type="checkbox" id="p4-3" onchange="updateProgress()">
+                        <div class="step-label">✅ SEO Verification PASSED — Ready for Schema</div>
                     </div>
                 </div>
             </div>
@@ -908,10 +898,37 @@
                 </div>
             </div>
 
-            <!-- PHASE 7: JOOMLA PART 2 - HTML & SCHEMA -->
+            <!-- PHASE 7: PRE-UPLOAD LINK AUDIT -->
             <div class="card phase" id="phase7">
                 <div class="phase-header" onclick="togglePhase('phase7')">
-                    <div class="phase-title"><span class="phase-num">7</span> Joomla Part 2: HTML & Schema</div>
+                    <div class="phase-title"><span class="phase-num">7</span> Pre-Upload Link Audit</div>
+                    <div class="phase-time">2 min</div>
+                </div>
+                <div class="phase-content">
+                    <div class="warning-box" style="margin-bottom:15px;">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>LAST CHECK:</strong> Verify all links before uploading to Joomla
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" id="p7-1" onchange="updateProgress()">
+                        <div>
+                            <div class="step-label">Run Final Link Audit Before Upload</div>
+                            <div class="step-sub">Catches any issues from SEO/Schema edits</div>
+                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-links')">
+                                <i class="fas fa-link"></i> Copy Link Verification Prompt
+                            </button>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <input type="checkbox" id="p7-2" onchange="updateProgress()">
+                        <div class="step-label">✅ All Links Verified — Ready for Joomla</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE 8: JOOMLA PART 2 - HTML & SCHEMA -->
+            <div class="card phase" id="phase8">
+                <div class="phase-header" onclick="togglePhase('phase8')">
+                    <div class="phase-title"><span class="phase-num">8</span> Joomla Part 2: HTML & Schema</div>
                     <div class="phase-time">5 min</div>
                 </div>
                 <div class="phase-content">
@@ -920,41 +937,41 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p7-1" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-1" onchange="updateProgress()">
                         <div class="step-label">Back to Details → Click "Edit Article"</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p7-2" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-2" onchange="updateProgress()">
                         <div class="step-label">Delete old HTML → Paste new HTML (Code View)</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p7-3" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-3" onchange="updateProgress()">
                         <div class="step-label">Verify: HTML ends with &lt;/body&gt; tag</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p7-4" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-4" onchange="updateProgress()">
                         <div class="step-label">Google Structured Data tab → Add Custom Code</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p7-5" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-5" onchange="updateProgress()">
                         <div class="step-label">Paste Schema → Verify script tags at top/bottom</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p7-6" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-6" onchange="updateProgress()">
                         <div class="step-label">Save & Close</div>
                     </div>
                 </div>
             </div>
 
-            <!-- PHASE 8: VERIFY & CACHE -->
-            <div class="card phase" id="phase8">
-                <div class="phase-header" onclick="togglePhase('phase8')">
-                    <div class="phase-title"><span class="phase-num">8</span> Part 3: Cache & Verify</div>
+            <!-- PHASE 9: VERIFY & CACHE -->
+            <div class="card phase" id="phase9">
+                <div class="phase-header" onclick="togglePhase('phase9')">
+                    <div class="phase-title"><span class="phase-num">9</span> Part 3: Cache & Verify</div>
                     <div class="phase-time">3 min</div>
                 </div>
                 <div class="phase-content">
@@ -969,14 +986,15 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-1" onchange="updateProgress()">
+                        <input type="checkbox" id="p9-1" onchange="updateProgress()">
                         <div class="step-label">Open Cache → Click "Delete All"</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-2" onchange="updateProgress()">
+                        <input type="checkbox" id="p9-2" onchange="updateProgress()">
                         <div>
-                            <div class="step-label">Open Live Page & Hard Refresh (Ctrl+Shift+R)</div>
+                            <div class="step-label">Open Live Page & Hard Refresh</div>
+                            <div class="step-sub">Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)</div>
                             <button class="btn btn-primary" style="margin-top:5px;" onclick="openLivePage()">
                                 <i class="fas fa-external-link-alt"></i> Open Live Page
                             </button>
@@ -984,17 +1002,17 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-3" onchange="updateProgress()">
-                        <div class="step-label">Verify: Email links work correctly</div>
+                        <input type="checkbox" id="p9-3" onchange="updateProgress()">
+                        <div class="step-label">Visual Check: Page looks correct</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-4" onchange="updateProgress()">
-                        <div class="step-label">Verify: All internal links work</div>
+                        <input type="checkbox" id="p9-4" onchange="updateProgress()">
+                        <div class="step-label">Mobile Check: Test on phone or responsive mode</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-5" onchange="updateProgress()">
+                        <input type="checkbox" id="p9-5" onchange="updateProgress()">
                         <div class="step-label">Verify: GMB data in footer matches</div>
                     </div>
                 </div>
@@ -1863,18 +1881,33 @@
             const parsed = parseGMBData(gmbData);
             appState.parsedGMB = parsed;
 
-            // Extract CID from URL - FIXED REGEX
+            // Extract CID from URL - EXTRACTS SECOND HEX (true CID, not FID)
+            // Format: 0x[FID]:0x[CID] - we need the SECOND hex value converted to decimal
             let cid = "NOT FOUND";
+            let cidSource = "";
             if(gmbURL) {
                 // Format: !1s0x88f50f2adabff44b:0xeec57509d117afea
-                const cidMatch = gmbURL.match(/!1s(0x[a-fA-F0-9]+:0x[a-fA-F0-9]+)/);
-                if(cidMatch) {
-                    cid = cidMatch[1];
+                const hexMatch = gmbURL.match(/!1s(0x[a-fA-F0-9]+):(0x[a-fA-F0-9]+)/);
+                if(hexMatch) {
+                    // hexMatch[1] = FID (first hex) - NOT used for schema
+                    // hexMatch[2] = CID (second hex) - THIS is what schema needs
+                    const secondHex = hexMatch[2].substring(2); // Remove "0x" prefix
+                    try {
+                        // Convert hex to decimal using BigInt for large numbers
+                        cid = BigInt("0x" + secondHex).toString();
+                        cidSource = "auto-extracted";
+                    } catch(e) {
+                        console.error("Hex conversion failed:", e);
+                        cid = "CONVERSION ERROR";
+                    }
                 } else if(gmbURL.includes("cid=")) {
+                    // Already decimal format
                     cid = gmbURL.split("cid=")[1].split("&")[0].split("#")[0];
+                    cidSource = "from-url-param";
                 }
             }
             appState.cid = cid;
+            appState.cidSource = cidSource;
 
             // Extract State from parsed address
             if(parsed.address) {
@@ -2017,24 +2050,18 @@
                 }
             }
 
-            // Find hours - collect all day entries
-            const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-            let hoursArray = [];
-            for(let line of lines) {
-                const lineLower = line.toLowerCase();
-                for(let day of days) {
-                    if(lineLower.includes(day)) {
-                        hoursArray.push(line);
-                        break;
-                    }
-                }
-            }
-            if(hoursArray.length > 0) {
-                parsed.hoursDetail = hoursArray;
-                // Create summary (show first 3 for display)
-                parsed.hours = hoursArray.slice(0, 3).join(' | ');
-                if(hoursArray.length > 3) parsed.hours += ' ...';
-            }
+            // FORCE STANDARD BUSINESS HOURS (9-5 Mon-Fri for all STS locations)
+            const standardHours = [
+                'Monday: 9 AM – 5 PM',
+                'Tuesday: 9 AM – 5 PM',
+                'Wednesday: 9 AM – 5 PM',
+                'Thursday: 9 AM – 5 PM',
+                'Friday: 9 AM – 5 PM',
+                'Saturday: Closed',
+                'Sunday: Closed'
+            ];
+            parsed.hoursDetail = standardHours;
+            parsed.hours = 'Mon-Fri: 9 AM – 5 PM | Sat-Sun: Closed';
 
             // Find Plus Code (if present)
             for(let line of lines) {
@@ -2425,11 +2452,82 @@ CREATE AN ARTIFACT with the fully optimized HTML (without schema). Do NOT paste 
 The artifact must be viewable/previewable. Name it with "-seo-optimized" suffix.`;
                     break;
 
+                case 'seo-verify':
+                    text = `${forcePrefix}TASK: SEO VERIFICATION AUDIT
+
+This page has already gone through our Master SEO Audit.
+Now verify compliance and check against modern standards.
+
+════════════════════════════════════════════════════════
+PART 1: MASTER SEO AUDIT COMPLIANCE CHECK
+════════════════════════════════════════════════════════
+
+Verify these items were executed from our SEO Audit:
+
+TECHNICAL:
+☐ Meta title: Present, 50-60 chars, includes city + niche
+☐ Meta description: Present, 150-160 chars, compelling CTA
+☐ H1: ONE only, contains city name
+☐ H2-H6: Logical hierarchy, no skipped levels
+☐ Image alt tags: All images have descriptive alts
+☐ Internal links: Functional, no placeholders
+
+LOCAL SEO:
+☐ NAP in footer matches GMB exactly
+☐ City mentioned in first 100 words
+☐ Phone number clickable (tel: link)
+☐ Email is mailto:recycle@stsrecycle.com
+
+CLEANUP:
+☐ Schema REMOVED (rebuilt in Phase 5)
+☐ No broken/placeholder links
+☐ No lorem ipsum or [PLACEHOLDER] text
+
+FLAG 1 - AUDIT COMPLIANCE:
+✓ ALL STEPS FOLLOWED — or —
+⚠️ INCOMPLETE — List what's missing
+
+════════════════════════════════════════════════════════
+PART 2: MODERN SEO STANDARDS (Web Search Required)
+════════════════════════════════════════════════════════
+
+Search the web for CURRENT (2025-2026) SEO best practices.
+
+SEARCH THESE SOURCES:
+• Google Search Central — latest algorithm updates
+• Reddit r/SEO, r/bigseo, r/localseo — current trends
+• AI SEO optimization techniques (2025+)
+• Local/Geo SEO innovations
+• E-E-A-T signals (Experience, Expertise, Authority, Trust)
+• Core Web Vitals considerations for landing pages
+
+Score this page against what you find.
+
+MODERN SEO SCORE: __/100
+
+QUICK WINS (max 3):
+• [Actionable improvement]
+• [Actionable improvement]
+• [Actionable improvement]
+
+FLAG 2 - MODERN COMPLIANCE:
+✓ UP TO DATE — Follows current best practices — or —
+⚠️ NEEDS ATTENTION — [Brief reason]
+
+════════════════════════════════════════════════════════
+FINAL VERDICT
+════════════════════════════════════════════════════════
+[One line summary: Ready to proceed / Has warnings]
+
+Keep report SHORT and SCANNABLE. No fluff.`;
+                    break;
+
                 case 'schema': {
                     const schemaHours = p.hoursDetail ? p.hoursDetail.join('\n') : (p.hours || '[HOURS]');
                     text = `${forcePrefix}TASK: GENERATE SCHEMA (JSON-LD)
 
 City: ${city}
+CID (VERIFIED - Decimal Format): ${cid}
 
 COMPLETE GMB DATA FOR SCHEMA:
 ═══════════════════════════════════
@@ -2454,7 +2552,7 @@ REQUIREMENTS:
 2. Include COMPLETE address with street, city, state, zip
 3. Include phone number exactly as shown
 4. Include ALL business hours
-5. Add CID to "sameAs" array — USE THE CID PROVIDED SEPARATELY (copy from green box above)
+5. Add CID to "sameAs" array: https://www.google.com/maps?cid=${cid}
 6. Include aggregateRating if rating/reviews available
 7. Include "Electronic Recycling" in name and description
 8. Wrap in <script type="application/ld+json"> tags
@@ -2468,11 +2566,34 @@ The artifact must be viewable. Name it: "${city.toLowerCase()}-schema.json"`;
                 case 'meta':
                     text = `Generate SEO meta data for: ${pageName}
 
-1. Browser Title (max 60 chars) - Include "${city} Electronic Recycling"
-2. Meta Description (max 160 chars) - Compelling, mentions ${city}
-3. 10 Focus Keywords for ${city} electronic recycling
+OUTPUT FORMAT — Copy/paste boxes ONLY, no explanations:
 
-Format for easy copy/paste.`;
+┌─────────────────────────────────────┐
+│ BROWSER TITLE (max 60 chars)        │
+├─────────────────────────────────────┤
+│ [title here]                        │
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
+│ META DESCRIPTION (max 160 chars)    │
+├─────────────────────────────────────┤
+│ [description here]                  │
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
+│ FOCUS KEYWORDS (comma separated)    │
+├─────────────────────────────────────┤
+│ [10 keywords here]                  │
+└─────────────────────────────────────┘
+
+Requirements:
+- Title must include "${city}" + "Electronic Recycling"
+- Description must be compelling with CTA
+- Keywords focused on ${city} local SEO
+
+ALSO: Re-display the HTML artifact and Schema artifact from this session so I have easy access to them.
+
+Keep response TIGHT. Boxes only, no fluff.`;
                     break;
             }
 
@@ -2534,26 +2655,20 @@ Format for easy copy/paste.`;
         function generateReport() {
             const total = document.querySelectorAll('#phases input[type="checkbox"]').length;
             const checked = document.querySelectorAll('#phases input[type="checkbox"]:checked').length;
+            const percent = Math.round((checked/total)*100);
+            const status = checked === total ? '✅ COMPLETE' : '⚠️ INCOMPLETE';
             
-            const report = `═══════════════════════════════════
-M.A.R.K. v9.71 — BUILD REPORT
-═══════════════════════════════════
-VA: ${appState.vaName || 'N/A'}
-Date: ${new Date().toLocaleDateString()}
-Time: ${document.getElementById('timerDisplay').textContent}
+            const report = `🤖 M.A.R.K. BUILD REPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📄 ${appState.pageName || 'N/A'}
+🔗 ${appState.pageURL || 'N/A'}
+📍 ${appState.city || 'N/A'}${appState.state ? ', ' + appState.state : ''}
 
-PAGE: ${appState.pageName}
-URL: ${appState.pageURL}
-City: ${appState.city}${appState.state ? ', ' + appState.state : ''}
-
-GMB DATA:
-- CID: ${appState.cid}
-- Address: ${appState.parsedGMB?.address || 'N/A'}
-- Phone: ${appState.parsedGMB?.phone || 'N/A'}
-
-COMPLETION: ${checked}/${total} (${Math.round((checked/total)*100)}%)
-STATUS: ${checked === total ? '✅ COMPLETE' : '⚠️ INCOMPLETE'}
-═══════════════════════════════════`;
+🆔 CID: ${appState.cid || 'N/A'}
+📞 ${appState.parsedGMB?.phone || 'N/A'}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👤 ${appState.vaName || 'N/A'} • ⏱️ ${document.getElementById('timerDisplay').textContent}
+📊 ${checked}/${total} (${percent}%) ${status}`;
 
             navigator.clipboard.writeText(report).then(() => {
                 showToast("Report copied!");
@@ -2588,13 +2703,13 @@ STATUS: ${checked === total ? '✅ COMPLETE' : '⚠️ INCOMPLETE'}
             <!-- FORENSIC TIMELINE -->
             <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #e2e8f0;">
                 <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#b0b8c4; line-height:1.7;">
-                    <strong style="color:#94a3b8;">DEVELOPMENT TIMELINE:</strong> Initial architecture conceived Jan 2026 as single-file HTML solution to replace multi-tool VA workflows. v1.0–v6.x addressed core parsing logic, UI scaffolding, and localStorage persistence. v7.x introduced 317-MSA city lookup (resolving multi-word city failures), CID regex overhaul (fixing truncation bug on hex-pair extraction), expanded GMB parsing (rating, reviews, hours, services), manual CID override pathway, and 8-phase Joomla workflow alignment. v9.71 represents current stable release with M.A.R.K. branding consolidation, artifact output enforcement, side-by-side workflow launcher, schema CID quick-copy box, and prompt-first UI restructure. <strong style="color:#94a3b8;">TOTAL DEVELOPMENT: 34.2 man-hours</strong> | Last updated: Jan 29, 2026
+                    <strong style="color:#94a3b8;">DEVELOPMENT TIMELINE:</strong> Initial architecture conceived Jan 2026 as single-file HTML solution to replace multi-tool VA workflows. v1.0–v6.x addressed core parsing logic, UI scaffolding, and localStorage persistence. v7.x introduced 317-MSA city lookup (resolving multi-word city failures), CID regex overhaul (fixing truncation bug on hex-pair extraction), expanded GMB parsing (rating, reviews, hours, services), manual CID override pathway, and 9-phase Joomla workflow alignment. v9.77 represents current stable release with streamlined link verification (Phase 3 + Phase 7 pre-upload audit), correct schema CID extraction (2nd hex → decimal), SEO verification audit, and prompt-first UI restructure. <strong style="color:#94a3b8;">TOTAL DEVELOPMENT: 36.2 man-hours</strong> | Last updated: Jan 29, 2026
                 </div>
             </div>
             
             <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <div style="font-size:9px; color:#cbd5e1; font-family:'JetBrains Mono', monospace;">
-                    M.A.R.K. v9.71 — Machine Assisted Routing Kit
+                    M.A.R.K. v9.77 — Machine Assisted Routing Kit
                 </div>
                 <div style="font-size:9px; color:#cbd5e1;">
                     © 2026 STS Electronic Recycling Inc.
