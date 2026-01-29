@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.A.R.K. v9.77 | Page Terminal</title>
+    <title>M.A.R.K. v9.82 | Page Terminal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -321,7 +321,7 @@
                     MACHINE ASSISTED ROUTING KIT
                 </div>
                 <h1 style="font-size:36px; font-weight:300; letter-spacing:-0.5px; margin:0;">
-                    M.A.R.K. <span style="font-weight:600; color:#60a5fa;">v9.77</span>
+                    M.A.R.K. <span style="font-weight:600; color:#60a5fa;">v9.82</span>
                 </h1>
             </div>
             <div style="text-align:right; font-family:'JetBrains Mono', monospace;">
@@ -351,7 +351,7 @@
         <div class="card setup-section">
             <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
                 <h2 style="color:var(--primary); font-size:18px;">⚙️ Mission Control</h2>
-                <button class="btn btn-ghost" onclick="resetAll()">🔄 Reset System</button>
+                <button class="btn btn-ghost" onclick="resetAll()" style="border-color: #ef4444;"><span style="color:#ef4444;">⚠️</span> Reset System</button>
             </div>
 
             <div class="input-grid">
@@ -396,6 +396,9 @@
                         <button class="btn btn-accent" onclick="searchGMB()">
                             <i class="fas fa-map-marked-alt"></i> Find GMB (Google Maps)
                         </button>
+                        <div style="color: #ef4444; font-size: 12px; font-weight: 600; margin-top: 8px;">
+                            <i class="fas fa-exclamation-triangle"></i> OPEN THE HOURS DROP-DOWN before copying!
+                        </div>
                     </div>
 
                     <!-- GMB URL (full width) -->
@@ -434,14 +437,6 @@
                                     <div class="gmb-field">
                                         <div class="gmb-field-label">Category</div>
                                         <div class="gmb-field-value" id="parsed-category">—</div>
-                                    </div>
-                                    <div class="gmb-field">
-                                        <div class="gmb-field-label">Rating</div>
-                                        <div class="gmb-field-value" id="parsed-rating">—</div>
-                                    </div>
-                                    <div class="gmb-field">
-                                        <div class="gmb-field-label">Reviews</div>
-                                        <div class="gmb-field-value" id="parsed-reviews">—</div>
                                     </div>
                                 </div>
                                 <div>
@@ -634,14 +629,16 @@
                             4. Type "Approved" at each gate check when prompted
                         </div>
                         <div style="font-size:11px; margin-bottom:12px; padding:10px; background:#f1f5f9; border-radius:6px; color:#64748b;">
-                            <strong>PROMPT INCLUDES:</strong> Target URL • Niche • Verified CID • GMB Data (Name, Address, Phone, Hours, Rating, Reviews) • Forced execution instructions
+                            <strong>PROMPT INCLUDES:</strong> Target URL • Niche • Verified CID • GMB Data (Name, Address, Phone, Hours) • Forced execution instructions
                         </div>
                         <button class="btn btn-accent" style="width:100%;" onclick="copyPrompt('build')">
                             <i class="fas fa-terminal"></i> Copy Full Execution Prompt
                         </button>
                         
                         <div style="margin-top:15px; padding-top:15px; border-top:1px dashed #cbd5e1;">
-                            <div class="step-sub" style="margin-bottom:8px;"><strong>Download & Upload Required Files:</strong></div>
+                            <div style="color: #ef4444; font-size: 12px; font-weight: 600; margin-bottom: 10px;">
+                                <i class="fas fa-arrow-down"></i> UPLOAD THESE FILES + PASTE PROMPT TO CLAUDE
+                            </div>
                             <div class="quick-links">
                                 <a href="https://docs.google.com/spreadsheets/d/1-5lrWau5auZLLK1TVljhiAUhPUvrzzQDx13S8Xj2Az4/edit?usp=sharing" target="_blank" class="quick-link">
                                     <i class="fas fa-table"></i> SEO Data 2026
@@ -746,6 +743,9 @@
                             </button>
                             
                             <div style="margin-top:12px;">
+                                <div style="color: #ef4444; font-size: 11px; font-weight: 600; margin-bottom: 6px;">
+                                    <i class="fas fa-arrow-down"></i> UPLOAD FILE + PASTE PROMPT
+                                </div>
                                 <a href="https://docs.google.com/document/d/15CTAiHwxsHyAxO_EMlOpHEIic2Z89ftbpKGLUDvDHJQ/edit?usp=sharing" target="_blank" class="quick-link">
                                     <i class="fas fa-file-alt"></i> SEO Audit Doc
                                 </a>
@@ -806,12 +806,30 @@
                             <button class="btn btn-accent" style="margin-top:5px;" onclick="copyPrompt('schema')">
                                 <i class="fas fa-code"></i> Copy Schema Prompt
                             </button>
+                            <div style="margin-top:8px; font-size:11px; color:#f97316;">
+                                <i class="fas fa-exclamation-circle"></i> Do NOT include aggregateRating/reviews in schema
+                            </div>
                             
                             <div style="margin-top:12px;">
+                                <div style="color: #ef4444; font-size: 11px; font-weight: 600; margin-bottom: 6px;">
+                                    <i class="fas fa-arrow-down"></i> UPLOAD FILE + PASTE PROMPT
+                                </div>
                                 <a href="https://docs.google.com/document/d/1labL6l4YBkop02jZhGEujg_OfAgKYElCwQ2hctGIXI8/edit?usp=sharing" target="_blank" class="quick-link">
                                     <i class="fas fa-file-code"></i> Schema Generator Doc
                                 </a>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- SCHEMA VERIFICATION AUDIT -->
+                    <div class="step" style="margin-top:15px;">
+                        <input type="checkbox" id="p5-verify" onchange="updateProgress()">
+                        <div>
+                            <div class="step-label">Run Schema Verification Audit</div>
+                            <div class="step-sub">Web search for current best practices</div>
+                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('schema-verify')">
+                                <i class="fas fa-search"></i> Copy Schema Verify Prompt
+                            </button>
                         </div>
                     </div>
 
@@ -832,7 +850,7 @@
 
                     <div class="step" style="margin-top:20px;">
                         <input type="checkbox" id="p5-2" onchange="updateProgress()">
-                        <div class="step-label">Verify: Schema has &lt;script&gt; at TOP and &lt;/script&gt; at BOTTOM</div>
+                        <div class="step-label">Verify: Schema has <span style="color:#ef4444; font-weight:600;">&lt;script&gt;</span> at TOP and <span style="color:#ef4444; font-weight:600;">&lt;/script&gt;</span> at BOTTOM</div>
                     </div>
                 </div>
             </div>
@@ -958,7 +976,7 @@
 
                     <div class="step">
                         <input type="checkbox" id="p8-5" onchange="updateProgress()">
-                        <div class="step-label">Paste Schema → Verify script tags at top/bottom</div>
+                        <div class="step-label">Paste Schema → Verify <span style="color:#ef4444; font-weight:600;">script tags</span> at top/bottom</div>
                     </div>
 
                     <div class="step">
@@ -1148,8 +1166,6 @@
                 document.getElementById('parsed-phone').textContent = '—';
                 document.getElementById('parsed-website').textContent = '—';
                 document.getElementById('parsed-hours').textContent = '—';
-                document.getElementById('parsed-rating').textContent = '—';
-                document.getElementById('parsed-reviews').textContent = '—';
                 document.getElementById('parsed-services').textContent = '—';
                 
                 // Hide dynamic areas
@@ -1960,33 +1976,56 @@
                 }
             }
 
-            // Find rating - look for pattern like "4.8" at start of line or "4.8 stars"
+            // Find rating - IMPROVED: Look for rating+reviews pattern first (most reliable)
+            // Pattern: "4.9 (118)" or "4.9 ★★★★★ (118)" or "4.9(118)"
             for(let line of lines) {
-                const ratingMatch = line.match(/^(\d\.\d)\s*(?:\(\d+\))?$/);
-                if(ratingMatch) {
-                    parsed.rating = ratingMatch[1] + ' ★';
-                    continue;
+                // Best pattern: rating followed by review count in parentheses
+                const ratingReviewMatch = line.match(/(\d\.\d)\s*[★⭐]*\s*\((\d[\d,]*)\)/);
+                if(ratingReviewMatch) {
+                    parsed.rating = ratingReviewMatch[1] + ' ★';
+                    parsed.reviews = ratingReviewMatch[2].replace(',', '') + ' reviews';
+                    parsed.reviewCount = ratingReviewMatch[2].replace(',', '');
+                    break;
                 }
-                // Also try "X stars" pattern
-                const starsMatch = line.match(/(\d\.?\d?)\s*stars?/i);
-                if(starsMatch && !parsed.rating) {
-                    parsed.rating = starsMatch[1] + ' ★';
+            }
+            
+            // Fallback: Look for "X stars" pattern if no rating found yet
+            if(!parsed.rating) {
+                for(let line of lines) {
+                    const starsMatch = line.match(/(\d\.?\d?)\s*stars?/i);
+                    if(starsMatch) {
+                        parsed.rating = starsMatch[1] + ' ★';
+                        break;
+                    }
+                }
+            }
+            
+            // Last resort: standalone rating at start of line (risky - might grab wrong number)
+            if(!parsed.rating) {
+                for(let line of lines) {
+                    const ratingMatch = line.match(/^(\d\.\d)\s*$/);
+                    if(ratingMatch && parseFloat(ratingMatch[1]) >= 1.0 && parseFloat(ratingMatch[1]) <= 5.0) {
+                        parsed.rating = ratingMatch[1] + ' ★';
+                        break;
+                    }
                 }
             }
 
-            // Find reviews count - "X reviews" or "(X)"
-            for(let line of lines) {
-                const reviewMatch = line.match(/(\d[\d,]*)\s*reviews?/i);
-                if(reviewMatch) {
-                    parsed.reviews = reviewMatch[1].replace(',', '') + ' reviews';
-                    parsed.reviewCount = reviewMatch[1].replace(',', '');
-                    break;
-                }
-                // Check for (123) pattern near rating
-                const parenMatch = line.match(/\((\d[\d,]*)\)/);
-                if(parenMatch && !parsed.reviews) {
-                    parsed.reviews = parenMatch[1].replace(',', '') + ' reviews';
-                    parsed.reviewCount = parenMatch[1].replace(',', '');
+            // Find reviews count if not already found with rating
+            if(!parsed.reviews) {
+                for(let line of lines) {
+                    const reviewMatch = line.match(/(\d[\d,]*)\s*reviews?/i);
+                    if(reviewMatch) {
+                        parsed.reviews = reviewMatch[1].replace(',', '') + ' reviews';
+                        parsed.reviewCount = reviewMatch[1].replace(',', '');
+                        break;
+                    }
+                    // Check for (123) pattern 
+                    const parenMatch = line.match(/\((\d[\d,]*)\)/);
+                    if(parenMatch && !parsed.reviews && parseInt(parenMatch[1].replace(',','')) > 5) {
+                        parsed.reviews = parenMatch[1].replace(',', '') + ' reviews';
+                        parsed.reviewCount = parenMatch[1].replace(',', '');
+                    }
                 }
             }
 
@@ -2098,8 +2137,6 @@
             document.getElementById('parsed-fulladdress').textContent = p.fullAddress || '—';
             document.getElementById('parsed-phone').textContent = p.phone || '—';
             document.getElementById('parsed-website').textContent = p.website || '—';
-            document.getElementById('parsed-rating').textContent = p.rating || '—';
-            document.getElementById('parsed-reviews').textContent = p.reviews || '—';
             document.getElementById('parsed-services').textContent = p.serviceOptions || '—';
             
             // Show detailed hours if available
@@ -2116,8 +2153,6 @@
 ═══════════════════════════════════
 Business: ${p.name || '—'}
 Category: ${p.category || '—'}
-Rating: ${p.rating || '—'}
-Reviews: ${p.reviews || '—'}
 
 ADDRESS:
 ${p.address || '—'}
@@ -2363,8 +2398,6 @@ COMPLETE GMB DATA:
 ═══════════════════════════════════
 Business Name: ${p.name || 'STS Electronic Recycling'}
 Category: ${p.category || 'Recycling Center'}
-Rating: ${p.rating || '—'}
-Reviews: ${p.reviews || '—'}
 
 FULL ADDRESS:
 ${p.address || '[STREET]'}
@@ -2447,9 +2480,7 @@ CRITICAL RULES:
 
 Complete the ENTIRE audit. Do not stop early. Do not summarize.
 
-⚠️ CRITICAL OUTPUT REQUIREMENT:
-CREATE AN ARTIFACT with the fully optimized HTML (without schema). Do NOT paste code in chat.
-The artifact must be viewable/previewable. Name it with "-seo-optimized" suffix.`;
+Output the optimized HTML (without schema).`;
                     break;
 
                 case 'seo-verify':
@@ -2540,8 +2571,6 @@ State: ${state || '[STATE]'}
 ZIP: ${p.zip || '[ZIP]'}
 Phone: ${p.phone || '[PHONE]'}
 Website: ${p.website || 'https://www.stselectronicrecyclinginc.com'}
-Rating: ${p.rating || '—'}
-Reviews: ${p.reviewCount || '—'}
 
 Hours:
 ${schemaHours}
@@ -2553,15 +2582,82 @@ REQUIREMENTS:
 3. Include phone number exactly as shown
 4. Include ALL business hours
 5. Add CID to "sameAs" array: https://www.google.com/maps?cid=${cid}
-6. Include aggregateRating if rating/reviews available
-7. Include "Electronic Recycling" in name and description
-8. Wrap in <script type="application/ld+json"> tags
+6. Include "Electronic Recycling" in name and description
+7. Wrap in <script type="application/ld+json"> tags
+8. Do NOT include aggregateRating/reviews
 
-⚠️ CRITICAL OUTPUT REQUIREMENT:
-CREATE AN ARTIFACT with the complete schema script block. Do NOT paste code in chat.
-The artifact must be viewable. Name it: "${city.toLowerCase()}-schema.json"`;
+Output the complete schema script block.`;
                     break;
                 }
+
+                case 'schema-verify':
+                    text = `${forcePrefix}TASK: SCHEMA VERIFICATION AUDIT
+
+This schema was just generated. Verify it against current best practices.
+
+════════════════════════════════════════════════════════
+PART 1: STRUCTURAL COMPLIANCE CHECK
+════════════════════════════════════════════════════════
+
+Verify these required elements:
+
+REQUIRED FIELDS:
+☐ @context: "https://schema.org"
+☐ @type: LocalBusiness (or valid subtype)
+☐ name: Present and accurate
+☐ address: Complete PostalAddress object
+☐ telephone: Present with proper format
+☐ url: Present and valid
+☐ openingHoursSpecification: All days included
+
+ADDRESS OBJECT:
+☐ @type: "PostalAddress"
+☐ streetAddress: Present
+☐ addressLocality: City present
+☐ addressRegion: State present
+☐ postalCode: ZIP present
+☐ addressCountry: "US"
+
+RECOMMENDED:
+☐ sameAs: Array with Google Maps CID link
+☐ geo: GeoCoordinates (if available)
+☐ areaServed: Defined service area
+☐ priceRange: Present
+☐ image: Business image URL
+
+MUST NOT HAVE:
+☐ NO aggregateRating (removed per policy)
+☐ NO review data
+☐ NO fake/placeholder data
+
+════════════════════════════════════════════════════════
+PART 2: WEB SEARCH — CURRENT BEST PRACTICES
+════════════════════════════════════════════════════════
+
+Search the web for:
+• "LocalBusiness schema best practices 2025"
+• "Google structured data requirements local business"
+• "JSON-LD local business schema updates"
+
+Check for:
+1. Any NEW required fields added recently
+2. Deprecated properties to avoid
+3. Google's current validation requirements
+4. Common errors that cause rich results rejection
+
+════════════════════════════════════════════════════════
+PART 3: RECOMMENDATIONS
+════════════════════════════════════════════════════════
+
+Based on your audit:
+1. List any CRITICAL issues (will fail validation)
+2. List any WARNINGS (may reduce effectiveness)
+3. List any ENHANCEMENTS (optional improvements)
+
+If schema passes all checks: "✅ SCHEMA VERIFIED — Ready for deployment"
+
+Keep response focused. No unnecessary explanations.`;
+                    break;
 
                 case 'meta':
                     text = `Generate SEO meta data for: ${pageName}
@@ -2591,7 +2687,7 @@ Requirements:
 - Description must be compelling with CTA
 - Keywords focused on ${city} local SEO
 
-ALSO: Re-display the HTML artifact and Schema artifact from this session so I have easy access to them.
+ALSO: Re-display the HTML artifact and Schema artifact from earlier in this chat (unchanged) so I can easily access them.
 
 Keep response TIGHT. Boxes only, no fluff.`;
                     break;
@@ -2703,13 +2799,13 @@ Keep response TIGHT. Boxes only, no fluff.`;
             <!-- FORENSIC TIMELINE -->
             <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #e2e8f0;">
                 <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#b0b8c4; line-height:1.7;">
-                    <strong style="color:#94a3b8;">DEVELOPMENT TIMELINE:</strong> Initial architecture conceived Jan 2026 as single-file HTML solution to replace multi-tool VA workflows. v1.0–v6.x addressed core parsing logic, UI scaffolding, and localStorage persistence. v7.x introduced 317-MSA city lookup (resolving multi-word city failures), CID regex overhaul (fixing truncation bug on hex-pair extraction), expanded GMB parsing (rating, reviews, hours, services), manual CID override pathway, and 9-phase Joomla workflow alignment. v9.77 represents current stable release with streamlined link verification (Phase 3 + Phase 7 pre-upload audit), correct schema CID extraction (2nd hex → decimal), SEO verification audit, and prompt-first UI restructure. <strong style="color:#94a3b8;">TOTAL DEVELOPMENT: 36.2 man-hours</strong> | Last updated: Jan 29, 2026
+                    <strong style="color:#94a3b8;">DEVELOPMENT TIMELINE:</strong> Initial architecture conceived Jan 2026 as single-file HTML solution to replace multi-tool VA workflows. v1.0–v6.x addressed core parsing logic, UI scaffolding, and localStorage persistence. v7.x introduced 317-MSA city lookup (resolving multi-word city failures), CID regex overhaul (fixing truncation bug on hex-pair extraction), expanded GMB parsing (hours, services), manual CID override pathway, and 9-phase Joomla workflow alignment. v9.82 represents current stable release with VA-friendly red helper text (GMB hours reminder, file+prompt pairing clarity), Schema Verification Audit, and reviews/ratings removed from schema. <strong style="color:#94a3b8;">TOTAL DEVELOPMENT: 37.1 man-hours</strong> | Last updated: Jan 29, 2026
                 </div>
             </div>
             
             <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <div style="font-size:9px; color:#cbd5e1; font-family:'JetBrains Mono', monospace;">
-                    M.A.R.K. v9.77 — Machine Assisted Routing Kit
+                    M.A.R.K. v9.82 — Machine Assisted Routing Kit
                 </div>
                 <div style="font-size:9px; color:#cbd5e1;">
                     © 2026 STS Electronic Recycling Inc.
