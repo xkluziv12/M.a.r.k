@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.A.R.K. v9.94 | Page Terminal</title>
+    <title>M.A.R.K. v9.97 | Page Terminal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,8 +99,10 @@
 
         /* ===== STATUS BAR ===== */
         .status-bar {
-            background: var(--white);
-            border-bottom: 1px solid var(--border-light);
+            background: linear-gradient(90deg, var(--navy-dark), var(--navy), var(--navy-dark));
+            background-size: 200% 100%;
+            animation: statusGradient 8s ease infinite;
+            border-bottom: 1px solid var(--gold);
             padding: 12px 20px;
             display: flex;
             justify-content: center;
@@ -110,15 +112,35 @@
             font-weight: 500;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        .status-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201,169,98,0.1), transparent);
+            animation: statusSweep 4s ease-in-out infinite;
+        }
+        @keyframes statusGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        @keyframes statusSweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         .status-item {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.6);
         }
         .status-item.online {
-            color: var(--navy);
+            color: var(--white);
         }
         .status-dot {
             width: 6px;
@@ -126,13 +148,14 @@
             border-radius: 50%;
             background: var(--gold);
             animation: statusPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 8px var(--gold);
         }
         @keyframes statusPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--gold); }
+            50% { opacity: 0.6; box-shadow: 0 0 4px var(--gold); }
         }
         .status-clock {
-            color: var(--navy);
+            color: var(--gold);
             font-weight: 600;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
@@ -140,29 +163,138 @@
 
         /* ===== HEADER ===== */
         .ai-header {
-            background: var(--white);
+            background: linear-gradient(135deg, var(--white) 0%, var(--cream) 100%);
             color: var(--navy);
-            padding: 40px 20px;
+            padding: 50px 20px;
             position: relative;
             overflow: hidden;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 2px solid var(--gold);
         }
 
+        /* Subtle animated shimmer */
         .ai-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(201,169,98,0.08) 50%, 
+                transparent 100%);
+            animation: headerShimmer 12s ease-in-out infinite;
+        }
+        
+        @keyframes headerShimmer {
+            0% { left: -50%; }
+            100% { left: 150%; }
+        }
+
+        /* Gold accent line at bottom */
+        .ai-header::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 50%, var(--navy) 100%);
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
             background-size: 200% 100%;
-            animation: shimmer 3s ease-in-out infinite;
+            animation: goldFlow 8s ease-in-out infinite;
+        }
+        
+        @keyframes goldFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        @keyframes shimmer {
-            0%, 100% { background-position: 0% 0%; }
-            50% { background-position: 100% 0%; }
+        /* Floating gold particles - slower and more subtle */
+        .header-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 16s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 30%; animation-delay: 4s; }
+        .particle:nth-child(3) { left: 50%; animation-delay: 8s; }
+        .particle:nth-child(4) { left: 70%; animation-delay: 2s; }
+        .particle:nth-child(5) { left: 90%; animation-delay: 6s; }
+        .particle:nth-child(6) { left: 20%; animation-delay: 10s; }
+        .particle:nth-child(7) { left: 60%; animation-delay: 12s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+        
+        @keyframes particleFloat {
+            0% { 
+                transform: translateY(60px) scale(0);
+                opacity: 0;
+            }
+            10% { 
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% { 
+                transform: translateY(-60px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Soft glowing orbs */
+        .header-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: glowPulse 10s ease-in-out infinite;
+        }
+        
+        .header-glow.glow-1 {
+            width: 250px;
+            height: 250px;
+            background: var(--gold);
+            top: -100px;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .header-glow.glow-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--navy-light);
+            bottom: -80px;
+            right: 10%;
+            animation-delay: 3s;
+        }
+        
+        .header-glow.glow-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--gold-light);
+            top: 30%;
+            right: 25%;
+            animation-delay: 6s;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.05); }
         }
 
         .header-content {
@@ -701,7 +833,7 @@
             <span>Online</span>
         </div>
         <div class="status-item">
-            <span>M.A.R.K. v9.94</span>
+            <span>M.A.R.K. v9.97</span>
         </div>
         <div class="status-item">
             <span class="status-clock" id="statusClock">00:00:00</span>
@@ -712,17 +844,32 @@
     </div>
 
     <header class="ai-header">
+        <!-- Animated background elements -->
+        <div class="header-glow glow-1"></div>
+        <div class="header-glow glow-2"></div>
+        <div class="header-glow glow-3"></div>
+        <div class="header-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
         <div class="header-content" style="align-items: center;">
             <div>
-                <div style="font-size:10px; font-weight:500; color:var(--gold); letter-spacing:3px; margin-bottom:8px; text-transform:uppercase;">
+                <div style="font-size:10px; font-weight:500; color:var(--gold-dark); letter-spacing:3px; margin-bottom:8px; text-transform:uppercase;">
                     Machine Assisted Routing Kit
                 </div>
                 <h1 style="font-size:32px; font-weight:300; letter-spacing:1px; margin:0; color:var(--navy);">
-                    M.A.R.K<span style="color:var(--gold);">.</span> <span style="font-weight:500; font-size:18px; color:var(--text-muted);">v9.94</span>
+                    M.A.R.K<span style="color:var(--gold);">.</span> <span style="font-weight:500; font-size:18px; color:var(--text-muted);">v9.97</span>
                 </h1>
             </div>
             <div style="text-align:right;">
-                <div style="font-size:11px; font-weight:600; color:var(--navy); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Page Terminal</div>
+                <div style="font-size:11px; font-weight:600; color:var(--gold-dark); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Page Terminal</div>
                 <div style="font-size:10px; color:var(--text-muted); line-height:1.6;">
                     <div>GEO-PARSE™ Engine</div>
                     <div>CID Protocol • Schema Module</div>
@@ -1862,6 +2009,14 @@
                     parsedGMB: {},
                     checks: {}
                 };
+                
+                // Collapse all phases
+                document.querySelectorAll('.phase').forEach(phase => {
+                    phase.classList.remove('active');
+                });
+                
+                // Reset phase status display
+                document.getElementById('currentPhaseNum').textContent = '1';
                 
                 showToast("System Reset Complete!");
             }
@@ -3671,16 +3826,16 @@ Keep response TIGHT. Boxes only, no fluff.`;
             <!-- FORENSIC TIMELINE -->
             <div style="margin-top:25px; padding-top:20px; border-top:1px solid var(--border-light);">
                 <div style="font-family:'Inter', sans-serif; font-size:10px; color:var(--text-muted); line-height:1.8;">
-                    <strong style="color:var(--text-secondary);">Development:</strong> v1.0–v6.x core parsing & UI scaffolding. v7.x 317-MSA city lookup, CID regex overhaul, 9-phase workflow. v9.94 Luxury UI redesign with refined boot sequence, elegant status bar, and sophisticated completion celebration. <strong style="color:var(--text-secondary);">42.0 man-hours</strong> | Jan 29, 2026
+                    <strong style="color:var(--text-secondary);">Development:</strong> v1.0–v6.x core parsing & UI scaffolding. v7.x 317-MSA city lookup, CID regex overhaul, 9-phase workflow. v9.97 Luxury UI redesign with refined boot sequence, elegant status bar, and sophisticated completion celebration. <strong style="color:var(--text-secondary);">42.0 man-hours</strong> | Jan 29, 2026
                 </div>
             </div>
             
             <div style="margin-top:25px; padding-top:20px; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
                 <div style="font-size:11px; color:var(--text-muted);">
-                    M.A.R.K<span style="color:var(--gold);">.</span> v9.94
+                    M.A.R.K<span style="color:var(--gold);">.</span> v9.97
                 </div>
                 <div style="font-size:10px; color:var(--text-muted);">
-                    © 2026 STS Electronic Recycling Inc.
+                    Page Terminal System
                 </div>
             </div>
         </div>
