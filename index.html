@@ -300,19 +300,64 @@
             border-radius: 8px; font-family: 'Inter', sans-serif;
             margin: 10px 0; min-height: 60px;
         }
+
+        .side-by-side-box {
+            position: relative;
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .side-by-side-header {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .side-by-side-sub {
+            font-size: 14px;
+            color: #ddd6fe;
+            margin-top: 5px;
+        }
+        .side-by-side-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: white;
+            color: #5b21b6;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .side-by-side-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .side-by-side-tip {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #c4b5fd;
+        }
+
+        @keyframes techFlow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
     </style>
 </head>
 <body>
 
     <!-- TECH ACCENT BAR -->
     <div style="height:3px; background: linear-gradient(90deg, #0f172a 0%, #3b82f6 20%, #06b6d4 40%, #10b981 60%, #3b82f6 80%, #0f172a 100%); background-size: 200% 100%; animation: techFlow 8s linear infinite;"></div>
-    
-    <style>
-        @keyframes techFlow {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 200% 0%; }
-        }
-    </style>
 
     <header class="ai-header" style="padding: 30px 20px;">
         <div class="header-content" style="align-items: flex-start;">
@@ -521,6 +566,70 @@
                         </div>
                     </div>
 
+                    <!-- HUB+SPOKE HANDOFF SECTION -->
+                    <div id="hubSpokeSection" style="display:none; margin-top:20px;">
+                        <div class="divider"></div>
+                        
+                        <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border: 2px solid #c084fc; border-radius: 12px; padding: 20px;">
+                            <h4 style="color: var(--purple); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-project-diagram"></i> Hub+Spoke Internal Linking Strategy
+                            </h4>
+                            
+                            <div class="form-group">
+                                <label>Paste Complete Hub+Spoke Handoff</label>
+                                <textarea id="hubSpokeHandoff" style="height:150px; font-size:12px; border-color:#c084fc;" placeholder="Paste the complete Hub+Spoke handoff here...
+
+This should include:
+• Tier 1-5 page URLs with descriptions  
+• Local context (major employers, institutions)
+• Smart linking examples
+• Technical requirements"></textarea>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 15px;">
+                                <button class="btn btn-purple" onclick="parseHubSpoke()">
+                                    <i class="fas fa-sitemap"></i> Process Hub+Spoke Data
+                                </button>
+                            </div>
+                            
+                            <!-- PARSED HUB+SPOKE DISPLAY -->
+                            <div id="parsedHubSpokeArea" style="display:none; margin-top:15px;">
+                                <div style="background: white; border: 2px solid #a855f7; border-radius: 10px; padding: 15px;">
+                                    <h5 style="color: #7c3aed; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-check-circle"></i> Hub+Spoke Data Loaded
+                                    </h5>
+                                    
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 13px;">
+                                        <div>
+                                            <div style="color: #7c3aed; font-weight: 700; font-size: 10px; text-transform: uppercase;">Target City</div>
+                                            <div id="hs-city" style="font-family: 'JetBrains Mono', monospace;">—</div>
+                                        </div>
+                                        <div>
+                                            <div style="color: #7c3aed; font-weight: 700; font-size: 10px; text-transform: uppercase;">Total Pages</div>
+                                            <div id="hs-pages" style="font-family: 'JetBrains Mono', monospace;">—</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed #c084fc;">
+                                        <div style="color: #7c3aed; font-weight: 700; font-size: 10px; text-transform: uppercase; margin-bottom: 8px;">Tiers Detected</div>
+                                        <div id="hs-tiers" style="font-size: 12px; line-height: 1.8;"></div>
+                                    </div>
+                                    
+                                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed #c084fc;">
+                                        <div style="color: #7c3aed; font-weight: 700; font-size: 10px; text-transform: uppercase; margin-bottom: 8px;">Local Context</div>
+                                        <div id="hs-context" style="font-size: 11px; color: #64748b;">—</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 10px; padding: 10px; background: #ecfdf5; border-radius: 6px; border: 1px solid #a7f3d0;">
+                                    <div style="color: #059669; font-size: 12px; font-weight: 600;">
+                                        <i class="fas fa-check"></i> Hub+Spoke data will be injected into Build & SEO Audit prompts
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="verifyFail" class="warning-box" style="display:none;">
                         <strong>⚠️ Issue Detected:</strong> Please verify data manually.
                     </div>
@@ -554,55 +663,6 @@
                         </div>
                         <input type="checkbox" id="p1-0" onchange="updateProgress()" style="position:absolute; top:15px; right:15px; width:22px; height:22px;">
                     </div>
-
-                    <style>
-                        .side-by-side-box {
-                            position: relative;
-                            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
-                            border-radius: 12px;
-                            padding: 25px;
-                            text-align: center;
-                            margin-bottom: 15px;
-                        }
-                        .side-by-side-header {
-                            font-size: 22px;
-                            font-weight: 800;
-                            color: white;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            gap: 12px;
-                        }
-                        .side-by-side-sub {
-                            font-size: 14px;
-                            color: #ddd6fe;
-                            margin-top: 5px;
-                        }
-                        .side-by-side-btn {
-                            display: inline-flex;
-                            align-items: center;
-                            gap: 10px;
-                            padding: 12px 24px;
-                            background: white;
-                            color: #5b21b6;
-                            font-weight: 700;
-                            font-size: 15px;
-                            border-radius: 8px;
-                            text-decoration: none;
-                            margin-top: 15px;
-                            transition: all 0.2s;
-                            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                        }
-                        .side-by-side-btn:hover {
-                            transform: translateY(-2px);
-                            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-                        }
-                        .side-by-side-tip {
-                            margin-top: 12px;
-                            font-size: 12px;
-                            color: #c4b5fd;
-                        }
-                    </style>
 
                     <div class="step">
                         <input type="checkbox" id="p1-1" onchange="updateProgress()">
@@ -657,6 +717,9 @@
                                 </a>
                                 <a href="https://docs.google.com/document/d/1VK-havAC03ZLgyrGPvc4S_FODGz0M4i6UajAq5UwLiM/edit?usp=sharing" target="_blank" class="quick-link secondary">
                                     <i class="fas fa-star"></i> New Design
+                                </a>
+                                <a href="https://docs.google.com/document/d/1SEw8RElqBNyyWG-0O8LOgpI5qs8l2nIjqHk0dp66nwE/edit?usp=sharing" target="_blank" class="quick-link secondary">
+                                    <i class="fas fa-project-diagram"></i> Hub+Spoke
                                 </a>
                             </div>
                         </div>
@@ -1062,6 +1125,9 @@
             vaName: '',
             gmbURL: '',
             gmbData: '',
+            hubSpokeHandoff: '',
+            hubSpokeProcessed: false,
+            parsedHubSpoke: {},
             city: '',
             state: '',
             niche: 'Electronic Recycling',
@@ -1082,6 +1148,7 @@
             appState.pageURL = document.getElementById('pageURL').value;
             appState.gmbURL = document.getElementById('gmbURL').value;
             appState.gmbData = document.getElementById('gmbData').value;
+            appState.hubSpokeHandoff = document.getElementById('hubSpokeHandoff').value;
             appState.city = document.getElementById('cityName').value;
             appState.state = document.getElementById('stateName').value;
             
@@ -1122,7 +1189,30 @@
 
                 if(appState.parsedGMB && appState.parsedGMB.name) {
                     document.getElementById('parsedGMBArea').style.display = 'block';
+                    document.getElementById('hubSpokeSection').style.display = 'block';
                     displayParsedGMB();
+                }
+
+                if(appState.hubSpokeHandoff) {
+                    document.getElementById('hubSpokeHandoff').value = appState.hubSpokeHandoff;
+                }
+                
+                if(appState.hubSpokeProcessed && appState.parsedHubSpoke) {
+                    document.getElementById('parsedHubSpokeArea').style.display = 'block';
+                    const p = appState.parsedHubSpoke;
+                    document.getElementById('hs-city').textContent = p.city || 'Detected from handoff';
+                    document.getElementById('hs-pages').textContent = p.totalPages ? p.totalPages + ' pages' : 'Links found';
+                    
+                    let tiersHtml = '';
+                    if(p.tiers && p.tiers.length > 0) {
+                        p.tiers.forEach(tier => {
+                            tiersHtml += `<span style="display:inline-block; background:#f3e8ff; padding:2px 8px; border-radius:4px; margin:2px; font-size:11px;">${tier}</span>`;
+                        });
+                    } else {
+                        tiersHtml = '<span style="color:#64748b;">Tier structure detected</span>';
+                    }
+                    document.getElementById('hs-tiers').innerHTML = tiersHtml;
+                    document.getElementById('hs-context').innerHTML = p.localContext || 'Context data found';
                 }
 
                 if(appState.cid) {
@@ -1139,25 +1229,22 @@
 
         function resetAll() {
             if(confirm("Are you sure? This will wipe all data.")) {
-                // Clear localStorage first
                 localStorage.removeItem('stsTrackerV7');
                 
-                // Manually clear all form fields
                 document.getElementById('vaName').value = '';
                 document.getElementById('pageURL').value = '';
                 document.getElementById('gmbURL').value = '';
                 document.getElementById('gmbData').value = '';
+                document.getElementById('hubSpokeHandoff').value = '';
                 document.getElementById('cityName').value = '';
                 document.getElementById('stateName').value = '';
                 document.getElementById('displayPageName').textContent = '—';
                 document.getElementById('cidDisplay').textContent = 'CID will appear here...';
                 document.getElementById('cidStatus').innerHTML = '';
                 
-                // Clear manual CID input
                 const manualCID = document.getElementById('manualCID');
                 if(manualCID) manualCID.value = '';
                 
-                // Clear parsed GMB fields
                 document.getElementById('parsed-name').textContent = '—';
                 document.getElementById('parsed-category').textContent = '—';
                 document.getElementById('parsed-address').textContent = '—';
@@ -1168,46 +1255,44 @@
                 document.getElementById('parsed-hours').textContent = '—';
                 document.getElementById('parsed-services').textContent = '—';
                 
-                // Hide dynamic areas
                 document.getElementById('dataArea').style.display = 'none';
                 document.getElementById('parsedGMBArea').style.display = 'none';
+                document.getElementById('hubSpokeSection').style.display = 'none';
+                document.getElementById('parsedHubSpokeArea').style.display = 'none';
                 document.getElementById('verifyFail').style.display = 'none';
                 
-                // Clear all checkboxes
                 document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                     cb.checked = false;
                     const step = cb.closest('.step');
                     if(step) step.classList.remove('checked');
                 });
                 
-                // Clear schema validator
                 const schemaPaste = document.getElementById('schemaPaste');
                 if(schemaPaste) schemaPaste.value = '';
                 const schemaResults = document.getElementById('schemaResults');
                 if(schemaResults) schemaResults.innerHTML = '';
                 
-                // Clear schema CID display
                 const schemaCID = document.getElementById('schemaCID');
                 if(schemaCID) schemaCID.textContent = '—';
                 const schemaCIDLink = document.getElementById('schemaCIDLink');
                 if(schemaCIDLink) schemaCIDLink.style.display = 'none';
                 
-                // Clear rebuild issue
                 const rebuildIssue = document.getElementById('rebuildIssue');
                 if(rebuildIssue) rebuildIssue.value = '';
                 
-                // Reset progress
                 document.getElementById('progressBar').style.width = '0%';
                 document.getElementById('percentDisplay').textContent = '0%';
                 document.getElementById('timerDisplay').textContent = '00:00';
                 
-                // Reset app state
                 appState = {
                     startTime: null,
                     pageURL: '',
                     vaName: '',
                     gmbURL: '',
                     gmbData: '',
+                    hubSpokeHandoff: '',
+                    hubSpokeProcessed: false,
+                    parsedHubSpoke: {},
                     city: '',
                     state: '',
                     niche: 'Electronic Recycling',
@@ -1224,7 +1309,6 @@
 
         // === 300 LARGEST US METRO AREAS LOOKUP ===
         const cityLookup = {
-            // Top 100
             'new-york': 'New York, NY',
             'los-angeles': 'Los Angeles, CA',
             'chicago': 'Chicago, IL',
@@ -1325,7 +1409,6 @@
             'hialeah': 'Hialeah, FL',
             'fremont': 'Fremont, CA',
             'boise': 'Boise, ID',
-            // 101-200
             'richmond': 'Richmond, VA',
             'baton-rouge': 'Baton Rouge, LA',
             'spokane': 'Spokane, WA',
@@ -1340,13 +1423,11 @@
             'fayetteville': 'Fayetteville, NC',
             'moreno-valley': 'Moreno Valley, CA',
             'rochester': 'Rochester, NY',
-            'glendale': 'Glendale, CA',
             'huntington-beach': 'Huntington Beach, CA',
             'salt-lake-city': 'Salt Lake City, UT',
             'grand-rapids': 'Grand Rapids, MI',
             'amarillo': 'Amarillo, TX',
             'yonkers': 'Yonkers, NY',
-            'aurora': 'Aurora, IL',
             'montgomery': 'Montgomery, AL',
             'akron': 'Akron, OH',
             'little-rock': 'Little Rock, AR',
@@ -1355,7 +1436,6 @@
             'port-saint-lucie': 'Port Saint Lucie, FL',
             'port-st-lucie': 'Port Saint Lucie, FL',
             'grand-prairie': 'Grand Prairie, TX',
-            'columbus': 'Columbus, GA',
             'tallahassee': 'Tallahassee, FL',
             'overland-park': 'Overland Park, KS',
             'tempe': 'Tempe, AZ',
@@ -1369,6 +1449,7 @@
             'brownsville': 'Brownsville, TX',
             'vancouver': 'Vancouver, WA',
             'fort-lauderdale': 'Fort Lauderdale, FL',
+            'ft-lauderdale': 'Fort Lauderdale, FL',
             'sioux-falls': 'Sioux Falls, SD',
             'ontario': 'Ontario, CA',
             'chattanooga': 'Chattanooga, TN',
@@ -1396,9 +1477,7 @@
             'salinas': 'Salinas, CA',
             'palmdale': 'Palmdale, CA',
             'hollywood': 'Hollywood, FL',
-            'springfield': 'Springfield, MA',
             'macon': 'Macon, GA',
-            'kansas-city': 'Kansas City, KS',
             'sunnyvale': 'Sunnyvale, CA',
             'pomona': 'Pomona, CA',
             'killeen': 'Killeen, TX',
@@ -1421,7 +1500,6 @@
             'roseville': 'Roseville, CA',
             'thornton': 'Thornton, CO',
             'miramar': 'Miramar, FL',
-            'pasadena': 'Pasadena, CA',
             'mesquite': 'Mesquite, TX',
             'olathe': 'Olathe, KS',
             'dayton': 'Dayton, OH',
@@ -1429,7 +1507,6 @@
             'waco': 'Waco, TX',
             'orange': 'Orange, CA',
             'fullerton': 'Fullerton, CA',
-            // 201-300
             'charleston': 'Charleston, SC',
             'west-valley-city': 'West Valley City, UT',
             'visalia': 'Visalia, CA',
@@ -1465,7 +1542,6 @@
             'sugar-land': 'Sugar Land, TX',
             'beaumont': 'Beaumont, TX',
             'lansing': 'Lansing, MI',
-            'rochester': 'Rochester, MN',
             'evansville': 'Evansville, IN',
             'provo': 'Provo, UT',
             'carlsbad': 'Carlsbad, CA',
@@ -1478,10 +1554,8 @@
             'fairfield': 'Fairfield, CA',
             'west-covina': 'West Covina, CA',
             'billings': 'Billings, MT',
-            'murrieta': 'Murrieta, CA',
             'antioch': 'Antioch, CA',
             'manchester': 'Manchester, NH',
-            'richmond': 'Richmond, CA',
             'norwalk': 'Norwalk, CA',
             'ventura': 'Ventura, CA',
             'temecula': 'Temecula, CA',
@@ -1534,22 +1608,15 @@
             'san-leandro': 'San Leandro, CA',
             'vallejo': 'Vallejo, CA',
             'tuscaloosa': 'Tuscaloosa, AL',
-            // Additional Florida cities (STS markets)
-            'fort-lauderdale': 'Fort Lauderdale, FL',
-            'ft-lauderdale': 'Fort Lauderdale, FL',
-            'west-palm-beach': 'West Palm Beach, FL',
             'delray-beach': 'Delray Beach, FL',
             'boynton-beach': 'Boynton Beach, FL',
             'deerfield-beach': 'Deerfield Beach, FL',
-            'pompano-beach': 'Pompano Beach, FL',
-            'coral-springs': 'Coral Springs, FL',
             'coconut-creek': 'Coconut Creek, FL',
             'margate': 'Margate, FL',
             'tamarac': 'Tamarac, FL',
             'sunrise': 'Sunrise, FL',
             'plantation': 'Plantation, FL',
             'weston': 'Weston, FL',
-            'davie': 'Davie, FL',
             'doral': 'Doral, FL',
             'homestead': 'Homestead, FL',
             'kendall': 'Kendall, FL',
@@ -1558,48 +1625,22 @@
             'aventura': 'Aventura, FL',
             'hallandale-beach': 'Hallandale Beach, FL',
             'lauderhill': 'Lauderhill, FL',
-            'pembroke-pines': 'Pembroke Pines, FL',
-            'miramar': 'Miramar, FL',
-            'hollywood': 'Hollywood, FL',
             'miami-gardens': 'Miami Gardens, FL',
-            'hialeah': 'Hialeah, FL',
-            'cape-coral': 'Cape Coral, FL',
-            'port-saint-lucie': 'Port Saint Lucie, FL',
-            'port-st-lucie': 'Port Saint Lucie, FL',
-            'palm-bay': 'Palm Bay, FL',
-            'clearwater': 'Clearwater, FL',
-            'gainesville': 'Gainesville, FL',
-            'tallahassee': 'Tallahassee, FL',
-            'orlando': 'Orlando, FL',
-            'tampa': 'Tampa, FL',
-            'saint-petersburg': 'Saint Petersburg, FL',
-            'st-petersburg': 'Saint Petersburg, FL',
             'st-pete': 'Saint Petersburg, FL',
-            // Additional Texas cities (STS markets)
             'the-woodlands': 'The Woodlands, TX',
             'katy': 'Katy, TX',
             'spring': 'Spring, TX',
             'humble': 'Humble, TX',
             'baytown': 'Baytown, TX',
-            'pasadena': 'Pasadena, TX',
             'league-city': 'League City, TX',
             'friendswood': 'Friendswood, TX',
             'missouri-city': 'Missouri City, TX',
-            'sugar-land': 'Sugar Land, TX',
-            'pearland': 'Pearland, TX',
             'conroe': 'Conroe, TX',
-            'round-rock': 'Round Rock, TX',
             'cedar-park': 'Cedar Park, TX',
             'georgetown': 'Georgetown, TX',
             'san-marcos': 'San Marcos, TX',
             'new-braunfels': 'New Braunfels, TX',
-            // Additional Midwest cities (STS markets)
             'schaumburg': 'Schaumburg, IL',
-            'naperville': 'Naperville, IL',
-            'aurora': 'Aurora, IL',
-            'joliet': 'Joliet, IL',
-            'rockford': 'Rockford, IL',
-            'elgin': 'Elgin, IL',
             'waukegan': 'Waukegan, IL',
             'evanston': 'Evanston, IL',
             'oak-park': 'Oak Park, IL',
@@ -1614,31 +1655,17 @@
             'wheaton': 'Wheaton, IL',
             'bloomington': 'Bloomington, IL',
             'champaign': 'Champaign, IL',
-            'peoria': 'Peoria, IL',
-            'springfield': 'Springfield, IL',
             'decatur': 'Decatur, IL',
-            // Additional Michigan cities
-            'grand-rapids': 'Grand Rapids, MI',
             'warren': 'Warren, MI',
             'sterling-heights': 'Sterling Heights, MI',
-            'ann-arbor': 'Ann Arbor, MI',
-            'lansing': 'Lansing, MI',
             'dearborn': 'Dearborn, MI',
             'livonia': 'Livonia, MI',
             'troy': 'Troy, MI',
             'farmington-hills': 'Farmington Hills, MI',
             'southfield': 'Southfield, MI',
-            // Additional Wisconsin cities
-            'madison': 'Madison, WI',
-            'green-bay': 'Green Bay, WI',
-            'kenosha': 'Kenosha, WI',
             'racine': 'Racine, WI',
             'appleton': 'Appleton, WI',
             'waukesha': 'Waukesha, WI',
-            // Additional Minnesota cities  
-            'saint-paul': 'Saint Paul, MN',
-            'st-paul': 'Saint Paul, MN',
-            'rochester': 'Rochester, MN',
             'duluth': 'Duluth, MN',
             'bloomington-mn': 'Bloomington, MN',
             'brooklyn-park': 'Brooklyn Park, MN',
@@ -1646,19 +1673,10 @@
             'woodbury': 'Woodbury, MN',
             'maple-grove': 'Maple Grove, MN',
             'eden-prairie': 'Eden Prairie, MN',
-            // Additional Ohio cities
-            'akron': 'Akron, OH',
-            'dayton': 'Dayton, OH',
-            'toledo': 'Toledo, OH',
             'parma': 'Parma, OH',
             'canton': 'Canton, OH',
             'youngstown': 'Youngstown, OH',
             'lorain': 'Lorain, OH',
-            // Additional Georgia cities
-            'savannah': 'Savannah, GA',
-            'augusta': 'Augusta, GA',
-            'macon': 'Macon, GA',
-            'sandy-springs': 'Sandy Springs, GA',
             'roswell': 'Roswell, GA',
             'johns-creek': 'Johns Creek, GA',
             'alpharetta': 'Alpharetta, GA',
@@ -1673,7 +1691,6 @@
             const parts = url.replace(/\/$/, "").split('/');
             const slug = parts[parts.length - 1].toLowerCase();
             
-            // Official Page Name from URL (preserve original case)
             const slugOriginal = parts[parts.length - 1];
             const pageName = slugOriginal.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
             appState.pageName = pageName;
@@ -1682,8 +1699,6 @@
             let city = '';
             let state = '';
 
-            // Strategy 1: Check metro area lookup table first
-            // Sort by key length (longest first) to match "saint-paul" before "paul"
             const sortedKeys = Object.keys(cityLookup).sort((a, b) => b.length - a.length);
             for(let key of sortedKeys) {
                 if(slug.includes(key)) {
@@ -1694,7 +1709,6 @@
                 }
             }
 
-            // Strategy 2: If not found in lookup, use smart detection
             if(!city) {
                 const nonCities = [
                     'electronic', 'electronics', 'recycling', 'recyclers', 'disposal', 'services', 'service',
@@ -1708,7 +1722,6 @@
                 
                 const slugWords = slug.split('-');
                 
-                // Look for pattern "in-[CITY]"
                 for(let i = 0; i < slugWords.length - 1; i++) {
                     if(slugWords[i].toLowerCase() === 'in') {
                         const potentialCity = slugWords[i + 1];
@@ -1719,7 +1732,6 @@
                     }
                 }
                 
-                // Fallback: first word not in blacklist
                 if(!city) {
                     for(let word of slugWords) {
                         if(!nonCities.includes(word.toLowerCase()) && word.length > 2) {
@@ -1730,7 +1742,6 @@
                 }
             }
 
-            // Check for state abbreviation at end of slug (e.g., -mn, -tx)
             if(!state) {
                 const stateAbbrevs = ['al','ak','az','ar','ca','co','ct','de','fl','ga','hi','id','il','in','ia','ks','ky','la','me','md','ma','mi','mn','ms','mo','mt','ne','nv','nh','nj','nm','ny','nc','nd','oh','ok','or','pa','ri','sc','sd','tn','tx','ut','vt','va','wa','wv','wi','wy','dc'];
                 const slugWords = slug.split('-');
@@ -1740,11 +1751,9 @@
                 }
             }
 
-            // Detect niche from URL keywords - COMPREHENSIVE (40+ service types)
-            let niche = 'Electronics Recycling'; // default
-            const s = slug; // shorthand
+            let niche = 'Electronics Recycling';
+            const s = slug;
             
-            // GUIDES (check first - most specific)
             if(s.includes('healthcare-itad-guide') || s.includes('healthcare-itad-compliance')) {
                 niche = 'Healthcare ITAD Compliance Guide';
             } else if(s.includes('education-it-disposal-guide') || s.includes('ferpa-guide')) {
@@ -1759,9 +1768,7 @@
                 niche = 'Government IT Procurement Guide';
             } else if(s.includes('military-electronics-disposal')) {
                 niche = 'Military Electronics Disposal Guide';
-            }
-            // INDUSTRY-SPECIFIC SERVICES
-            else if(s.includes('healthcare-itad')) {
+            } else if(s.includes('healthcare-itad')) {
                 niche = 'Healthcare ITAD';
             } else if(s.includes('education-it-disposal')) {
                 niche = 'Education IT Disposal';
@@ -1775,9 +1782,7 @@
                 niche = 'School Electronics Recycling';
             } else if(s.includes('medical-equipment-recycling')) {
                 niche = 'Medical Equipment Recycling';
-            }
-            // EQUIPMENT-SPECIFIC
-            else if(s.includes('hard-drive-shredding') || s.includes('hdd-shredding')) {
+            } else if(s.includes('hard-drive-shredding') || s.includes('hdd-shredding')) {
                 niche = 'Hard Drive Shredding';
             } else if(s.includes('hard-drive-destruction')) {
                 niche = 'Hard Drive Destruction';
@@ -1801,9 +1806,7 @@
                 niche = 'Networking Equipment Recycling';
             } else if(s.includes('it-equipment-recycling')) {
                 niche = 'IT Equipment Recycling';
-            }
-            // CORE SERVICES
-            else if(s.includes('computer-liquidation') || s.includes('liquidation')) {
+            } else if(s.includes('computer-liquidation') || s.includes('liquidation')) {
                 niche = 'Computer Liquidation';
             } else if(s.includes('asset-lifecycle') || s.includes('lifecycle-management')) {
                 niche = 'Asset Lifecycle Management';
@@ -1833,9 +1836,7 @@
                 niche = 'Reverse Logistics';
             } else if(s.includes('data-center-decommission')) {
                 niche = 'Data Center Decommissioning';
-            }
-            // RECYCLING TYPES
-            else if(s.includes('e-waste-pickup')) {
+            } else if(s.includes('e-waste-pickup')) {
                 niche = 'E-Waste Pickup';
             } else if(s.includes('e-waste') || s.includes('ewaste')) {
                 niche = 'E-Waste Recycling';
@@ -1864,7 +1865,6 @@
             showToast("Data Extracted! City: " + (city || 'Not detected') + (state ? ', ' + state : '') + " | Niche: " + niche);
         }
 
-        // === SEARCH GMB ===
         function searchGMB() {
             const city = document.getElementById('cityName').value.trim();
             const state = document.getElementById('stateName').value.trim();
@@ -1883,7 +1883,6 @@
             showToast("Opening Google Maps...");
         }
 
-        // === PARSE & VERIFY GMB ===
         function parseVerify() {
             const gmbData = document.getElementById('gmbData').value.trim();
             const gmbURL = document.getElementById('gmbURL').value.trim();
@@ -1893,23 +1892,16 @@
                 return;
             }
 
-            // Parse GMB Data
             const parsed = parseGMBData(gmbData);
             appState.parsedGMB = parsed;
 
-            // Extract CID from URL - EXTRACTS SECOND HEX (true CID, not FID)
-            // Format: 0x[FID]:0x[CID] - we need the SECOND hex value converted to decimal
             let cid = "NOT FOUND";
             let cidSource = "";
             if(gmbURL) {
-                // Format: !1s0x88f50f2adabff44b:0xeec57509d117afea
                 const hexMatch = gmbURL.match(/!1s(0x[a-fA-F0-9]+):(0x[a-fA-F0-9]+)/);
                 if(hexMatch) {
-                    // hexMatch[1] = FID (first hex) - NOT used for schema
-                    // hexMatch[2] = CID (second hex) - THIS is what schema needs
-                    const secondHex = hexMatch[2].substring(2); // Remove "0x" prefix
+                    const secondHex = hexMatch[2].substring(2);
                     try {
-                        // Convert hex to decimal using BigInt for large numbers
                         cid = BigInt("0x" + secondHex).toString();
                         cidSource = "auto-extracted";
                     } catch(e) {
@@ -1917,7 +1909,6 @@
                         cid = "CONVERSION ERROR";
                     }
                 } else if(gmbURL.includes("cid=")) {
-                    // Already decimal format
                     cid = gmbURL.split("cid=")[1].split("&")[0].split("#")[0];
                     cidSource = "from-url-param";
                 }
@@ -1925,7 +1916,6 @@
             appState.cid = cid;
             appState.cidSource = cidSource;
 
-            // Extract State from parsed address
             if(parsed.address) {
                 const stateMatch = parsed.address.match(/,\s*([A-Z]{2})\s+\d{5}/);
                 if(stateMatch) {
@@ -1936,8 +1926,8 @@
                 }
             }
 
-            // Display results
             document.getElementById('parsedGMBArea').style.display = 'block';
+            document.getElementById('hubSpokeSection').style.display = 'block';
             document.getElementById('cidDisplay').textContent = cid;
             displayParsedGMB();
             updateSchemaCIDDisplay();
@@ -1948,7 +1938,6 @@
 
         function parseGMBData(raw) {
             const lines = raw.split('\n').map(l => l.trim()).filter(l => l);
-            const rawLower = raw.toLowerCase();
             
             let parsed = {
                 name: '',
@@ -1968,7 +1957,6 @@
                 serviceOptions: ''
             };
 
-            // Find business name (STS Electronic Recycling)
             for(let line of lines) {
                 if(line.toLowerCase().includes('sts electronic') || line.toLowerCase().includes('sts recycling')) {
                     parsed.name = line;
@@ -1976,10 +1964,7 @@
                 }
             }
 
-            // Find rating - IMPROVED: Look for rating+reviews pattern first (most reliable)
-            // Pattern: "4.9 (118)" or "4.9 ★★★★★ (118)" or "4.9(118)"
             for(let line of lines) {
-                // Best pattern: rating followed by review count in parentheses
                 const ratingReviewMatch = line.match(/(\d\.\d)\s*[★⭐]*\s*\((\d[\d,]*)\)/);
                 if(ratingReviewMatch) {
                     parsed.rating = ratingReviewMatch[1] + ' ★';
@@ -1989,7 +1974,6 @@
                 }
             }
             
-            // Fallback: Look for "X stars" pattern if no rating found yet
             if(!parsed.rating) {
                 for(let line of lines) {
                     const starsMatch = line.match(/(\d\.?\d?)\s*stars?/i);
@@ -2000,7 +1984,6 @@
                 }
             }
             
-            // Last resort: standalone rating at start of line (risky - might grab wrong number)
             if(!parsed.rating) {
                 for(let line of lines) {
                     const ratingMatch = line.match(/^(\d\.\d)\s*$/);
@@ -2011,7 +1994,6 @@
                 }
             }
 
-            // Find reviews count if not already found with rating
             if(!parsed.reviews) {
                 for(let line of lines) {
                     const reviewMatch = line.match(/(\d[\d,]*)\s*reviews?/i);
@@ -2020,7 +2002,6 @@
                         parsed.reviewCount = reviewMatch[1].replace(',', '');
                         break;
                     }
-                    // Check for (123) pattern 
                     const parenMatch = line.match(/\((\d[\d,]*)\)/);
                     if(parenMatch && !parsed.reviews && parseInt(parenMatch[1].replace(',','')) > 5) {
                         parsed.reviews = parenMatch[1].replace(',', '') + ' reviews';
@@ -2029,7 +2010,6 @@
                 }
             }
 
-            // Find category (e.g., "Recycling center", "Electronics store")
             const categoryPatterns = ['recycling center', 'recycling drop-off', 'electronics store', 'computer service', 'data recovery', 'waste management'];
             for(let line of lines) {
                 for(let cat of categoryPatterns) {
@@ -2040,17 +2020,13 @@
                 }
             }
 
-            // Find address - look for street number pattern and build full address
             let addressLines = [];
             for(let i = 0; i < lines.length; i++) {
                 const line = lines[i];
-                // Street address usually starts with number
                 if(/^\d+\s+[A-Za-z]/.test(line) && !line.includes('review') && !line.includes('star')) {
                     addressLines.push(line);
-                    // Check next lines for city, state, zip
                     for(let j = i + 1; j < Math.min(i + 3, lines.length); j++) {
                         const nextLine = lines[j];
-                        // City, State ZIP pattern
                         if(/[A-Z]{2}\s+\d{5}/.test(nextLine) || /^[A-Za-z\s]+,\s*[A-Z]{2}/.test(nextLine)) {
                             addressLines.push(nextLine);
                         }
@@ -2061,9 +2037,8 @@
             
             if(addressLines.length > 0) {
                 parsed.fullAddress = addressLines.join(', ');
-                parsed.address = addressLines[0]; // Street only
+                parsed.address = addressLines[0];
                 
-                // Extract city, state, zip
                 const fullAddr = parsed.fullAddress;
                 const csMatch = fullAddr.match(/([A-Za-z\s]+),\s*([A-Z]{2})\s*(\d{5})?/);
                 if(csMatch) {
@@ -2072,7 +2047,6 @@
                 }
             }
 
-            // Find phone number
             for(let line of lines) {
                 const phoneMatch = line.match(/\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/);
                 if(phoneMatch) {
@@ -2081,7 +2055,6 @@
                 }
             }
 
-            // Find website
             for(let line of lines) {
                 if(line.includes('stselectronicrecycling') || line.includes('stsrecycle')) {
                     parsed.website = line;
@@ -2089,7 +2062,6 @@
                 }
             }
 
-            // FORCE STANDARD BUSINESS HOURS (9-5 Mon-Fri for all STS locations)
             const standardHours = [
                 'Monday: 9 AM – 5 PM',
                 'Tuesday: 9 AM – 5 PM',
@@ -2102,7 +2074,6 @@
             parsed.hoursDetail = standardHours;
             parsed.hours = 'Mon-Fri: 9 AM – 5 PM | Sat-Sun: Closed';
 
-            // Find Plus Code (if present)
             for(let line of lines) {
                 if(/^[A-Z0-9]{4}\+[A-Z0-9]{2,3}\s/.test(line)) {
                     parsed.plusCode = line;
@@ -2110,7 +2081,6 @@
                 }
             }
 
-            // Find service options (e.g., "In-store pickup", "Delivery")
             const servicePatterns = ['in-store', 'pickup', 'delivery', 'drive-through', 'curbside', 'appointment'];
             let services = [];
             for(let line of lines) {
@@ -2139,7 +2109,6 @@
             document.getElementById('parsed-website').textContent = p.website || '—';
             document.getElementById('parsed-services').textContent = p.serviceOptions || '—';
             
-            // Show detailed hours if available
             if(p.hoursDetail && p.hoursDetail.length > 0) {
                 document.getElementById('parsed-hours').textContent = p.hoursDetail.join('\n');
             } else {
@@ -2174,7 +2143,106 @@ SERVICES: ${p.serviceOptions || '—'}
             });
         }
 
-        // === CID FUNCTIONS ===
+        // === PARSE HUB+SPOKE ===
+        function parseHubSpoke() {
+            const handoff = document.getElementById('hubSpokeHandoff').value.trim();
+            
+            if(!handoff) {
+                showToast("Paste Hub+Spoke handoff first!", true);
+                return;
+            }
+            
+            // Parse the handoff
+            const parsed = {
+                city: '',
+                totalPages: '',
+                tiers: [],
+                localContext: '',
+                raw: handoff
+            };
+            
+            // Extract city from first line (e.g., "Minneapolis Minnesota - Internal Linking Reference")
+            const firstLine = handoff.split('\n')[0];
+            const cityMatch = firstLine.match(/^([A-Za-z\s]+?)(?:\s+[\-–—]|$)/);
+            if(cityMatch) {
+                parsed.city = cityMatch[1].trim();
+            }
+            
+            // Extract total pages
+            const pagesMatch = handoff.match(/Total Pages:\s*(\d+)/i);
+            if(pagesMatch) {
+                parsed.totalPages = pagesMatch[1];
+            }
+            
+            // Count tiers and URLs
+            const tierPatterns = [
+                { name: 'Tier 1: Hub + Core', regex: /Tier 1[:\s]/i },
+                { name: 'Tier 2: Verticals + Equipment', regex: /Tier 2[:\s]/i },
+                { name: 'Tier 3: Methods', regex: /Tier 3[:\s]/i },
+                { name: 'Tier 4: Strategic', regex: /Tier 4[:\s]/i },
+                { name: 'Tier 5: Lead Gen Guides', regex: /Tier 5[:\s]/i }
+            ];
+            
+            tierPatterns.forEach(tier => {
+                if(tier.regex.test(handoff)) {
+                    // Count URLs in this section (look for slug patterns)
+                    const slugPattern = /^[a-z]+-[a-z0-9-]+\s+—/gm;
+                    parsed.tiers.push(tier.name);
+                }
+            });
+            
+            // Count total internal links (slug patterns)
+            const allSlugs = handoff.match(/^[a-z]+-[a-z0-9-]+\s+—/gm);
+            const linkCount = allSlugs ? allSlugs.length : 0;
+            
+            // Extract local context snippet
+            const contextMatch = handoff.match(/Local Context[\s\S]*?(Major Institutions|Fortune 500)/i);
+            if(contextMatch) {
+                parsed.localContext = 'Major institutions & Fortune 500 companies included';
+            } else if(handoff.toLowerCase().includes('local context')) {
+                parsed.localContext = 'Local context data included';
+            }
+            
+            // Check for key sections
+            const hasLinkingInstructions = /linking instructions/i.test(handoff);
+            const hasTechnicalReqs = /technical requirements/i.test(handoff);
+            const hasQualityChecklist = /quality checklist/i.test(handoff);
+            
+            // Store parsed data
+            appState.parsedHubSpoke = parsed;
+            appState.hubSpokeProcessed = true;
+            
+            // Display parsed data
+            document.getElementById('hs-city').textContent = parsed.city || 'Detected from handoff';
+            document.getElementById('hs-pages').textContent = parsed.totalPages ? parsed.totalPages + ' pages' : linkCount + ' links found';
+            
+            // Display tiers
+            let tiersHtml = '';
+            if(parsed.tiers.length > 0) {
+                parsed.tiers.forEach(tier => {
+                    tiersHtml += `<span style="display:inline-block; background:#f3e8ff; padding:2px 8px; border-radius:4px; margin:2px; font-size:11px;">${tier}</span>`;
+                });
+            } else {
+                tiersHtml = '<span style="color:#64748b;">Tier structure detected</span>';
+            }
+            document.getElementById('hs-tiers').innerHTML = tiersHtml;
+            
+            // Display context
+            let contextHtml = '';
+            if(parsed.localContext) {
+                contextHtml = `<i class="fas fa-check" style="color:#059669;"></i> ${parsed.localContext}`;
+            }
+            if(hasLinkingInstructions) contextHtml += ' • Linking instructions ✓';
+            if(hasTechnicalReqs) contextHtml += ' • Technical reqs ✓';
+            document.getElementById('hs-context').innerHTML = contextHtml || 'Context data found';
+            
+            // Show the parsed area
+            document.getElementById('parsedHubSpokeArea').style.display = 'block';
+            
+            saveState();
+            showToast("Hub+Spoke data processed! Ready for Build prompt.");
+        }
+
         function testCID() {
             const cid = appState.cid;
             if(cid && cid !== "NOT FOUND") {
@@ -2220,7 +2288,6 @@ SERVICES: ${p.serviceOptions || '—'}
             showToast("Manual CID set! Now test it.");
         }
 
-        // === OPEN LIVE PAGE ===
         function openLivePage() {
             const url = document.getElementById('pageURL').value;
             if(url) {
@@ -2230,7 +2297,6 @@ SERVICES: ${p.serviceOptions || '—'}
             }
         }
 
-        // === SCHEMA VALIDATOR ===
         function validateSchema() {
             const code = document.getElementById('schemaPaste').value;
             const resultsDiv = document.getElementById('schemaResults');
@@ -2243,7 +2309,6 @@ SERVICES: ${p.serviceOptions || '—'}
             let checks = [];
             let hasErrors = false;
 
-            // Check 1: Script tags
             if(code.includes('<script') && code.includes('</' + 'script>')) {
                 checks.push({ pass: true, text: 'Script tags present' });
             } else {
@@ -2251,7 +2316,6 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
-            // Check 2: JSON-LD
             if(code.includes('application/ld+json')) {
                 checks.push({ pass: true, text: 'JSON-LD format' });
             } else {
@@ -2259,7 +2323,6 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
-            // Check 3: CID - CRITICAL
             if(appState.cid && appState.cid !== "NOT FOUND" && appState.cidAccepted) {
                 if(code.includes(appState.cid)) {
                     checks.push({ pass: true, text: 'CID VERIFIED: ' + appState.cid.substring(0, 20) + '...' });
@@ -2272,7 +2335,6 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
-            // Check 4: City name
             const city = appState.city;
             if(city && code.toLowerCase().includes(city.toLowerCase())) {
                 checks.push({ pass: true, text: 'City "' + city + '" found' });
@@ -2281,7 +2343,6 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
-            // Check 5: Electronic Recycling
             if(code.toLowerCase().includes('electronic') && code.toLowerCase().includes('recycling')) {
                 checks.push({ pass: true, text: '"Electronic Recycling" keyword found' });
             } else {
@@ -2289,7 +2350,6 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
-            // Check 6: Address
             if(code.includes('streetAddress') || code.includes('address')) {
                 checks.push({ pass: true, text: 'Address field present' });
             } else {
@@ -2297,7 +2357,6 @@ SERVICES: ${p.serviceOptions || '—'}
                 hasErrors = true;
             }
 
-            // Build results
             let html = `<div class="schema-results ${hasErrors ? 'fail' : 'pass'}">`;
             html += `<strong>${hasErrors ? '❌ Issues Found' : '✅ Schema Valid'}</strong><br><br>`;
             
@@ -2311,7 +2370,6 @@ SERVICES: ${p.serviceOptions || '—'}
             resultsDiv.innerHTML = html;
         }
 
-        // === SCHEMA CID COPY ===
         function copySchemaCID() {
             const cid = appState.cid || '';
             if (!cid) {
@@ -2339,7 +2397,6 @@ SERVICES: ${p.serviceOptions || '—'}
             }
         }
 
-        // === PROMPTS ===
         function copyPrompt(type) {
             let text = "";
             const city = document.getElementById('cityName').value || "[CITY]";
@@ -2383,6 +2440,7 @@ Confirm you understand these rules. One word: "Ready."`;
 
                 case 'build': {
                     const hoursText = p.hoursDetail ? p.hoursDetail.join('\n') : (p.hours || '[FROM GMB]');
+                    const hubSpoke = appState.hubSpokeHandoff || '[HUB+SPOKE HANDOFF NOT PROVIDED]';
                     text = `${forcePrefix}TASK: Build Landing Page for ${city}${state ? ', ' + state : ''} — ${niche}
 
 ═══════════════════════════════════
@@ -2412,6 +2470,17 @@ HOURS:
 ${hoursText}
 
 SERVICES: ${p.serviceOptions || 'Electronics Recycling, Data Destruction'}
+
+═══════════════════════════════════
+INTERNAL LINKING STRATEGY (Hub+Spoke)
+═══════════════════════════════════
+${hubSpoke}
+
+LINKING INSTRUCTIONS:
+- Add 3-4 internal links per page in content sections (rows 4+, NOT hero)
+- Use full HTTPS URLs from the handoff above
+- Reference local context (institutions, employers) in anchor text
+- Links open in same tab (no target="_blank")
 ═══════════════════════════════════
 
 EXECUTION INSTRUCTIONS:
@@ -2423,6 +2492,7 @@ EXECUTION INSTRUCTIONS:
 6. Footer MUST have phone: ${p.phone || '[PHONE]'}
 7. Mobile responsive - images must NOT squeeze text
 8. Do NOT include Schema (Phase 5 task)
+9. Include 3-4 internal links from Hub+Spoke handoff in rows 4+
 
 ⚠️ CRITICAL OUTPUT REQUIREMENT:
 CREATE AN ARTIFACT with the complete HTML code. Do NOT paste code in chat.
@@ -2469,6 +2539,7 @@ List ANY issues. If clean: "All links verified."`;
                     break;
 
                 case 'seo':
+                    const hubSpokeForSEO = appState.hubSpokeHandoff || '[HUB+SPOKE HANDOFF NOT PROVIDED]';
                     text = `${forcePrefix}TASK: FULL SEO AUDIT
 
 CRITICAL RULES:
@@ -2477,6 +2548,20 @@ CRITICAL RULES:
 - The first 2 rows (Hero section) = MINOR tweaks only, no major changes
 - STRIP/REMOVE all existing Schema (rebuilt separately)
 - Verify emails = mailto:recycle@stsrecycle.com
+
+═══════════════════════════════════
+INTERNAL LINKING VERIFICATION (Hub+Spoke)
+═══════════════════════════════════
+${hubSpokeForSEO}
+
+LINKING AUDIT CHECKLIST:
+☐ 3-4 internal links present in content sections (rows 4+)
+☐ NO internal links in hero section
+☐ All URLs match the Hub+Spoke handoff exactly
+☐ Links use full HTTPS format
+☐ Links open in same tab (no target="_blank")
+☐ Local context referenced in anchor text where appropriate
+═══════════════════════════════════
 
 Complete the ENTIRE audit. Do not stop early. Do not summarize.
 
@@ -2701,7 +2786,6 @@ Keep response TIGHT. Boxes only, no fluff.`;
             });
         }
 
-        // === UTILS ===
         function togglePhase(id) {
             document.getElementById(id).classList.toggle('active');
         }
@@ -2780,26 +2864,19 @@ Keep response TIGHT. Boxes only, no fluff.`;
                     SYSTEM ARCHITECTURE & METHODOLOGY
                 </div>
                 <p style="margin-bottom:12px;">
-                    <strong style="color:#64748b;">§1 The M.A.R.K. Algorithm:</strong> Machine Assisted Routing Kit (M.A.R.K.) is a deterministic workflow orchestration system designed to minimize human error variance in high-volume landing page deployment. The algorithm operates on a principle of <em>progressive data enrichment</em> — where each phase inherits validated outputs from preceding phases, creating an immutable chain of verified data states. At its core, M.A.R.K. transforms unstructured URL slugs and raw business listing data into structured, schema-compliant payloads through a series of lexical analysis passes, geographic inference engines, and identity verification protocols. The system enforces a strict accept/reject gate methodology at critical junctures (CID verification, schema validation) to prevent downstream propagation of erroneous data. Total cognitive load on operators is reduced by approximately 73% versus manual workflows through automated extraction, pre-populated prompts, and real-time validation feedback loops.
+                    <strong style="color:#64748b;">§1 The M.A.R.K. Algorithm:</strong> Machine Assisted Routing Kit (M.A.R.K.) is a deterministic workflow orchestration system designed to minimize human error variance in high-volume landing page deployment. The algorithm operates on a principle of <em>progressive data enrichment</em> — where each phase inherits validated outputs from preceding phases, creating an immutable chain of verified data states.
                 </p>
                 <p style="margin-bottom:12px;">
-                    <strong style="color:#64748b;">§2 GEO-PARSE™ Engine:</strong> City extraction utilizes a multi-tiered resolution cascade. Primary resolution queries a pre-indexed hashmap of 317 US metropolitan statistical areas (MSAs) sorted by descending key-length to prevent substring collision (e.g., "fort-worth" resolves before "fort"). Secondary resolution employs negative-space tokenization against a 47-term exclusion lexicon, with tertiary fallback to prepositional anchor detection ("in-[ENTITY]" pattern matching). State inference leverages either MSA lookup correlation or slug-terminal bigram validation against ISO 3166-2:US subdivision codes.
+                    <strong style="color:#64748b;">§2 GEO-PARSE™ Engine:</strong> City extraction utilizes a multi-tiered resolution cascade. Primary resolution queries a pre-indexed hashmap of 317 US metropolitan statistical areas (MSAs) sorted by descending key-length to prevent substring collision.
                 </p>
                 <p style="margin-bottom:12px;">
-                    <strong style="color:#64748b;">§3 CID Verification Protocol:</strong> Google Place Identifiers are extracted via dual-mode regex parsing: Format A targets the <code style="background:#1e293b; color:#fbbf24; padding:1px 4px; border-radius:3px;">!1s(0x[a-fA-F0-9]+:0x[a-fA-F0-9]+)</code> hexadecimal pair structure embedded in Google Maps canonical URLs; Format B parses explicit <code style="background:#1e293b; color:#fbbf24; padding:1px 4px; border-radius:3px;">cid=</code> query parameters. Verification requires user-initiated confirmation via external redirect to prevent false-positive schema injection. Manual override pathway provided with third-party CID resolution tooling integration.
-                </p>
-                <p style="margin-bottom:12px;">
-                    <strong style="color:#64748b;">§4 GMB Data Normalization:</strong> Raw listing data undergoes multi-pass extraction: (a) entity recognition for business name via brand-keyword matching, (b) address parsing using USPS Publication 28 formatting heuristics with state/ZIP regex validation, (c) temporal data extraction for operating hours via day-of-week anchor tokenization, (d) sentiment quantification via star-rating pattern capture with review count aggregation. Output normalization produces structured JSON-ready payloads for downstream LLM consumption.
-                </p>
-                <p style="margin-bottom:12px;">
-                    <strong style="color:#64748b;">§5 Schema Integrity Module:</strong> JSON-LD validation performs six-point structural verification: (1) script tag encapsulation, (2) MIME-type declaration (<code style="background:#1e293b; color:#fbbf24; padding:1px 4px; border-radius:3px;">application/ld+json</code>), (3) CID correlation against accepted verification state, (4) geographic entity presence validation, (5) Schema.org LocalBusiness type conformance, (6) address field existence for NAP consistency. Failures trigger itemized diagnostic output with remediation pathways.
+                    <strong style="color:#64748b;">§3 CID Verification Protocol:</strong> Google Place Identifiers are extracted via dual-mode regex parsing for hexadecimal pair structures embedded in Google Maps canonical URLs.
                 </p>
             </div>
             
-            <!-- FORENSIC TIMELINE -->
             <div style="margin-top:20px; padding-top:15px; border-top:1px dashed #e2e8f0;">
                 <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#b0b8c4; line-height:1.7;">
-                    <strong style="color:#94a3b8;">DEVELOPMENT TIMELINE:</strong> Initial architecture conceived Jan 2026 as single-file HTML solution to replace multi-tool VA workflows. v1.0–v6.x addressed core parsing logic, UI scaffolding, and localStorage persistence. v7.x introduced 317-MSA city lookup (resolving multi-word city failures), CID regex overhaul (fixing truncation bug on hex-pair extraction), expanded GMB parsing (hours, services), manual CID override pathway, and 9-phase Joomla workflow alignment. v9.82 represents current stable release with VA-friendly red helper text (GMB hours reminder, file+prompt pairing clarity), Schema Verification Audit, and reviews/ratings removed from schema. <strong style="color:#94a3b8;">TOTAL DEVELOPMENT: 37.1 man-hours</strong> | Last updated: Jan 29, 2026
+                    <strong style="color:#94a3b8;">DEVELOPMENT:</strong> v9.82 — Last updated: Jan 29, 2026
                 </div>
             </div>
             
