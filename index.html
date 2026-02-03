@@ -4101,25 +4101,22 @@ Keep response focused. No lengthy explanations.`;
                 case 'meta':
                     text = `Generate SEO meta data for: ${pageName}
 
-OUTPUT FORMAT — Copy/paste boxes ONLY, no explanations:
+OUTPUT FORMAT — Each item in its own code block for easy copying:
 
-┌─────────────────────────────────────┐
-│ BROWSER TITLE (max 60 chars)        │
-├─────────────────────────────────────┤
-│ [title here]                        │
-└─────────────────────────────────────┘
+BROWSER TITLE (max 60 chars):
+\`\`\`
+[title here - include ${city} + Electronic Recycling]
+\`\`\`
 
-┌─────────────────────────────────────┐
-│ META DESCRIPTION (max 160 chars)    │
-├─────────────────────────────────────┤
-│ [description here]                  │
-└─────────────────────────────────────┘
+META DESCRIPTION (max 160 chars):
+\`\`\`
+[description here - compelling with CTA]
+\`\`\`
 
-┌─────────────────────────────────────┐
-│ FOCUS KEYWORDS (comma separated)    │
-├─────────────────────────────────────┤
-│ [10 keywords here]                  │
-└─────────────────────────────────────┘
+FOCUS KEYWORDS (comma separated):
+\`\`\`
+[10 keywords focused on ${city} local SEO]
+\`\`\`
 
 Requirements:
 - Title must include "${city}" + "Electronic Recycling"
@@ -4128,7 +4125,7 @@ Requirements:
 
 ALSO: Re-display the HTML artifact and Schema artifact from earlier in this chat (unchanged) so I can easily access them.
 
-Keep response TIGHT. Boxes only. No lengthy explanations.`;
+Keep response TIGHT. Code blocks only. No lengthy explanations.`;
                     break;
             }
 
