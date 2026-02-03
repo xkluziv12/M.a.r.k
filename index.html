@@ -3648,6 +3648,16 @@ SERVICES: ${p.serviceOptions || '—'}
 Click the chat title at the top and rename it to: "${chatName}"
 
 ═══════════════════════════════════
+📁 REQUIRED FILES — UPLOAD THESE NOW
+═══════════════════════════════════
+Before proceeding, upload these files from the Claude Project:
+1. 📄 STS SEO Data 2026
+2. 📄 Master Page Builder  
+3. 📄 Master Design Bible
+
+⚠️ DO NOT PROCEED until all 3 files are uploaded.
+
+═══════════════════════════════════
 SYSTEM INSTRUCTIONS
 ═══════════════════════════════════
 
@@ -3666,7 +3676,7 @@ TARGET: ${city}${state ? ', ' + state : ''}
 NICHE: ${niche}
 URL: ${url}
 
-Confirm you've named the chat "${chatName}" and understand these rules. Reply: "Chat named. Ready."
+Confirm you've named the chat "${chatName}", uploaded all 3 files, and understand these rules. Reply: "Chat named. Files received. Ready."
 
 No lengthy explanations.`;
                     break;
@@ -3730,7 +3740,8 @@ EXECUTION INSTRUCTIONS:
 6. Footer MUST have phone: ${p.phone || '[PHONE]'}
 7. Mobile responsive - images must NOT squeeze text
 8. Do NOT include Schema (Phase 5 task)
-${hubSpoke ? '9. Include 3-4 internal links from Hub+Spoke handoff in rows 4+ (NOT hero)' : ''}
+9. Facility mentions: Say "serving ${city} from our 600,000 sq ft facility" — NOT "our ${city} facility"
+${hubSpoke ? '10. Include 3-4 internal links from Hub+Spoke handoff in rows 4+ (NOT hero)' : ''}
 
 ⚠️ CRITICAL OUTPUT REQUIREMENT:
 CREATE AN ARTIFACT with the complete HTML code. Do NOT paste code in chat.
@@ -3773,7 +3784,11 @@ Scan the HTML and verify:
 4. NO example.com or placeholder links
 5. ALL phone numbers correct
 
-List ANY issues. If clean: "All links verified." No lengthy explanations.`;
+VERDICT:
+If ALL links correct: ✅ LINKS VERIFIED — Proceed to next phase
+If ANY issues found: ❌ LINKS FAILED — List issues above, fix and re-verify
+
+No lengthy explanations.`;
                     break;
 
                 case 'verify-hubspoke':
@@ -3817,15 +3832,26 @@ DO THIS NOW:
 ═══════════════════════════════════
 OUTPUT:
 ═══════════════════════════════════
-Output the corrected HTML sections, then end with:
+Output the corrected HTML sections.
 
-"✅ Hub+Spoke validated. Changes: [brief list]"
+VERDICT:
+✅ HUB+SPOKE VALIDATED — Changes: [brief list] — Proceed to Phase 2
+
+If links could not be added (missing handoff data):
+⚠️ INCOMPLETE — [reason]
 
 Keep response SHORT. No lengthy explanations.`;
                     break;
 
                 case 'seo':
                     text = `${forcePrefix}TASK: FULL SEO AUDIT
+
+═══════════════════════════════════
+📁 REQUIRED FILE — UPLOAD NOW
+═══════════════════════════════════
+Upload: 📄 Master SEO Audit
+⚠️ DO NOT PROCEED until file is uploaded.
+═══════════════════════════════════
 
 CRITICAL RULES:
 - Execute EVERY SINGLE STEP in the SEO Audit file
@@ -3880,6 +3906,30 @@ LOCAL SEO:
 ☐ Phone number clickable (tel: link)
 ☐ Email is mailto:recycle@stsrecycle.com
 
+════════════════════════════════════════════════════════
+🔴 AUTO-FIX: FACILITY LANGUAGE CHECK
+════════════════════════════════════════════════════════
+Search the HTML for any mention of "600,000 sq ft" or facility size claims.
+
+If found, CHECK: Does it imply a LOCAL facility in this city?
+
+WRONG (fix these):
+❌ "from our 600,000 sq ft facility" (implies local)
+❌ "our certified facility" without context
+❌ Any text suggesting the warehouse is IN this city
+
+CORRECT:
+✅ "serving [City] from our 600,000 sq ft facility"
+✅ "backed by our central 600,000 sq ft processing center"
+
+ACTION: If incorrect language found → FIX IT NOW and output:
+🔴 ADJUSTED: [show before/after of the fix]
+
+If no facility language issues → output:
+✅ Facility language: Clean
+
+════════════════════════════════════════════════════════
+
 ${hubSpokeVerifySection}CLEANUP:
 ☐ Schema REMOVED (rebuilt in Phase 5)
 ☐ No broken/placeholder links
@@ -3919,7 +3969,14 @@ FLAG 2 - MODERN COMPLIANCE:
 ════════════════════════════════════════════════════════
 FINAL VERDICT
 ════════════════════════════════════════════════════════
-[One line summary: Ready to proceed / Has warnings]
+
+If ALL checks passed and no issues remain:
+✅ SEO VERIFICATION PASSED — Proceed to Phase 5: Schema
+
+If ANY issues need fixing:
+❌ SEO VERIFICATION FAILED — Issues listed above must be fixed before proceeding
+
+Output the updated HTML artifact if any changes were made.
 
 Keep report SHORT and SCANNABLE. No lengthy explanations.`;
                     break;
@@ -3927,6 +3984,13 @@ Keep report SHORT and SCANNABLE. No lengthy explanations.`;
                 case 'schema': {
                     const schemaHours = p.hoursDetail ? p.hoursDetail.join('\n') : (p.hours || '[HOURS]');
                     text = `${forcePrefix}TASK: GENERATE SCHEMA (JSON-LD)
+
+═══════════════════════════════════
+📁 REQUIRED FILE — UPLOAD NOW
+═══════════════════════════════════
+Upload: 📄 Schema Generator
+⚠️ DO NOT PROCEED until file is uploaded.
+═══════════════════════════════════
 
 City: ${city}
 CID (VERIFIED - Decimal Format): ${cid}
@@ -4017,7 +4081,7 @@ Check for:
 4. Common errors that cause rich results rejection
 
 ════════════════════════════════════════════════════════
-PART 3: RECOMMENDATIONS
+PART 3: FINAL VERDICT
 ════════════════════════════════════════════════════════
 
 Based on your audit:
@@ -4025,7 +4089,11 @@ Based on your audit:
 2. List any WARNINGS (may reduce effectiveness)
 3. List any ENHANCEMENTS (optional improvements)
 
-If schema passes all checks: "✅ SCHEMA VERIFIED — Ready for deployment"
+If ALL checks passed:
+✅ SCHEMA VERIFIED — Proceed to Phase 6: Joomla Meta
+
+If ANY critical issues found:
+❌ SCHEMA FAILED — Fix issues above and regenerate
 
 Keep response focused. No lengthy explanations.`;
                     break;
