@@ -1400,9 +1400,19 @@
                             OPEN SIDE BY SIDE TABS
                         </div>
                         <div class="side-by-side-sub">(to follow along together)</div>
-                        <a href="https://claude.ai/project/019afe23-9854-71e3-896c-4a652a608017" target="_blank" class="side-by-side-btn" style="flex-direction:column; gap:4px;">
-                            <span style="display:flex; align-items:center; gap:10px;"><i class="fas fa-brain"></i> Open Claude Project</span>
-                            <span style="color:#ef4444; font-size:11px; font-weight:700;">(USE SONNET 4.5)</span>
+                        
+                        <!-- SONNET 4.5 WARNING -->
+                        <div style="background:#dc2626; color:white; padding:12px 20px; border-radius:8px; margin:15px 0 10px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; gap:10px; animation: pulse 2s infinite;">
+                            <i class="fas fa-exclamation-triangle" style="font-size:18px;"></i>
+                            ⚠️ MUST USE CLAUDE SONNET 4.5 — NOT OPUS ⚠️
+                        </div>
+                        <div style="color:#fca5a5; font-size:11px; margin-bottom:10px;">
+                            Check model selector in bottom-left of Claude chat
+                        </div>
+                        
+                        <a href="https://claude.ai/project/019afe23-9854-71e3-896c-4a652a608017" target="_blank" class="side-by-side-btn" style="flex-direction:column; gap:6px; background:#dc2626;">
+                            <span style="display:flex; align-items:center; gap:10px; font-size:16px;"><i class="fas fa-brain"></i> Open Claude Project</span>
+                            <span style="color:#fef2f2; font-size:13px; font-weight:800; background:rgba(0,0,0,0.3); padding:4px 12px; border-radius:4px;">⚡ SELECT SONNET 4.5 ⚡</span>
                         </a>
                         <div class="side-by-side-tip">
                             Drag windows side-by-side for easy workflow
@@ -3019,12 +3029,20 @@
 
         // === PARSE HUB+SPOKE HANDOFF ===
         function parseHubSpoke() {
-            const handoff = document.getElementById('hubSpokeHandoff').value.trim();
+            const rawHandoff = document.getElementById('hubSpokeHandoff').value.trim();
             
-            if(!handoff) {
+            if(!rawHandoff) {
                 showToast("Paste Hub+Spoke handoff first!", true);
                 return;
             }
+
+            // Strip markdown formatting for easier parsing
+            const handoff = rawHandoff
+                .replace(/^\s*#+\s*/gm, '')      // Remove # headers
+                .replace(/\*\*/g, '')             // Remove **bold**
+                .replace(/\*/g, '')               // Remove *italic*
+                .replace(/^---+$/gm, '')          // Remove horizontal rules
+                .trim();
 
             // Parse handoff data
             const parsed = {
@@ -3037,12 +3055,12 @@
                 tier4Count: 0,
                 tier5Count: 0,
                 hubPage: '',
-                raw: handoff
+                raw: rawHandoff  // Keep original for prompt injection
             };
 
-            // Extract city from title (e.g., "Minneapolis Minnesota - Internal Linking Reference")
+            // Extract city from title (e.g., "Chicago Illinois - Internal Linking Reference")
             const titleMatch = handoff.match(/^([A-Za-z\s]+?)\s*[-–—]\s*Internal Linking/im) || 
-                               handoff.match(/^([A-Za-z\s]+?)\s*[-–—]/m);
+                               handoff.match(/([A-Za-z]+\s+[A-Za-z]+)\s*[-–—]\s*Internal Linking/i);
             if(titleMatch) {
                 const cityState = titleMatch[1].trim();
                 const parts = cityState.split(/\s+/);
@@ -3060,17 +3078,16 @@
                 }
             }
 
-            // Extract total pages
+            // Extract total pages (handles "Total Pages: 29" or "Total Pages:** 29")
             const totalMatch = handoff.match(/Total\s*Pages[:\s]*(\d+)/i);
             if(totalMatch) {
                 parsed.totalPages = parseInt(totalMatch[1]);
             }
 
-            // Split by tier sections and count URL slugs in each
-            // URL slugs look like: city-slug-name — Description
-            const urlPattern = /^[a-z]+-[a-z0-9-]+\s*[-–—]/gim;
+            // URL slug pattern: city-slug-name — Description (after markdown stripped)
+            const urlPattern = /^([a-z]+-[a-z0-9-]+)\s*[-–—]/gim;
             
-            // Find tier sections
+            // Find tier sections (handles "Tier 1:" or "Tier 1: Hub + Core")
             const sections = handoff.split(/\n(?=Tier\s*\d)/i);
             
             sections.forEach(section => {
@@ -3093,18 +3110,21 @@
             // If no tiers found, count all URLs
             if(parsed.tier1Count + parsed.tier2Count + parsed.tier3Count + parsed.tier4Count + parsed.tier5Count === 0) {
                 const allUrls = handoff.match(urlPattern);
-                parsed.totalPages = allUrls ? allUrls.length : parsed.totalPages;
+                if(allUrls) {
+                    parsed.totalPages = parsed.totalPages || allUrls.length;
+                }
             }
 
-            // Find hub page (usually city-state like "minneapolis-mn" with "Hub" nearby)
-            const hubMatch = handoff.match(/([a-z]+-[a-z]{2})\s*[-–—]\s*Hub/i) ||
-                            handoff.match(/Hub.*?([a-z]+-[a-z]{2})\b/i);
+            // Find hub page (usually city-state like "chicago-il" with "Hub" nearby)
+            const hubMatch = handoff.match(/([a-z]+-[a-z]{2})\s*[-–—].*Hub/i) ||
+                            handoff.match(/Hub.*?([a-z]+-[a-z]{2})\b/i) ||
+                            handoff.match(/([a-z]+-[a-z]{2})\s*[-–—]/i);
             if(hubMatch) {
                 parsed.hubPage = hubMatch[1];
-            } else {
-                // Try to find the main city page (city-state pattern)
+            } else if(parsed.city && parsed.state) {
+                // Auto-generate hub slug from city/state
                 const citySlug = parsed.city.toLowerCase().replace(/\s+/g, '-');
-                const stateAbbr = parsed.state ? getStateAbbr(parsed.state) : '';
+                const stateAbbr = getStateAbbr(parsed.state);
                 if(stateAbbr) {
                     parsed.hubPage = citySlug + '-' + stateAbbr.toLowerCase();
                 }
@@ -3114,9 +3134,13 @@
             appState.parsedHubSpoke = parsed;
             saveState();
 
+            // Calculate total if not specified
+            const calculatedTotal = parsed.tier1Count + parsed.tier2Count + parsed.tier3Count + parsed.tier4Count + parsed.tier5Count;
+            const displayTotal = parsed.totalPages || calculatedTotal;
+
             // Update display
             document.getElementById('hubspoke-city').textContent = parsed.city + (parsed.state ? ', ' + parsed.state : '') || 'Could not detect';
-            document.getElementById('hubspoke-total').textContent = parsed.totalPages || (parsed.tier1Count + parsed.tier2Count + parsed.tier3Count + parsed.tier4Count + parsed.tier5Count) || 'Not specified';
+            document.getElementById('hubspoke-total').textContent = displayTotal || 'Not specified';
             document.getElementById('hubspoke-tier1').textContent = parsed.tier1Count + ' pages';
             document.getElementById('hubspoke-tiers').textContent = 
                 `T2: ${parsed.tier2Count} | T3: ${parsed.tier3Count} | T4: ${parsed.tier4Count} | T5: ${parsed.tier5Count}`;
@@ -3125,7 +3149,7 @@
             // Show parsed area
             document.getElementById('parsedHubSpokeArea').style.display = 'block';
             
-            showToast("Hub+Spoke Strategy Loaded! " + (parsed.tier1Count + parsed.tier2Count + parsed.tier3Count + parsed.tier4Count + parsed.tier5Count) + " URLs detected");
+            showToast("Hub+Spoke Strategy Loaded! " + calculatedTotal + " URLs detected");
         }
         
         // Helper: Get state abbreviation
@@ -3619,7 +3643,9 @@ SERVICES: ${p.serviceOptions || '—'}
                 case 'intro': {
                     const chatName = `${city} ${niche}`;
                     
-                    text = `CHAT NAME: "${chatName}"
+                    text = `FIRST: Name this chat "${chatName}"
+
+Click the chat title at the top and rename it to: "${chatName}"
 
 ═══════════════════════════════════
 SYSTEM INSTRUCTIONS
@@ -3640,7 +3666,7 @@ TARGET: ${city}${state ? ', ' + state : ''}
 NICHE: ${niche}
 URL: ${url}
 
-Confirm you understand these rules. One word: "Ready."`;
+Confirm you've named the chat "${chatName}" and understand these rules. Reply: "Chat named. Ready."`;
                     break;
                 }
 
