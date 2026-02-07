@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.A.R.K. v10.07 | Page Terminal</title>
+    <title>M.A.R.K. v10.11 | Page Terminal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1063,7 +1063,7 @@
             <span>Online</span>
         </div>
         <div class="status-item">
-            <span>M.A.R.K. v10.07</span>
+            <span>M.A.R.K. v10.11</span>
         </div>
         <div class="status-item">
             <span class="status-clock" id="statusClock">00:00:00</span>
@@ -1131,7 +1131,7 @@
                     Machine Assisted Routing Kit
                 </div>
                 <h1 style="font-size:32px; font-weight:300; letter-spacing:1px; margin:0; color:var(--navy);">
-                    M.A.R.K<span style="color:var(--gold);">.</span> <span style="font-weight:500; font-size:18px; color:var(--text-muted);">v10.07</span>
+                    M.A.R.K<span style="color:var(--gold);">.</span> <span style="font-weight:500; font-size:18px; color:var(--text-muted);">v10.11</span>
                 </h1>
             </div>
             <div style="text-align:right;">
@@ -1514,7 +1514,7 @@
                                     <i class="fas fa-file-alt"></i> Page Builder
                                 </a>
                                 <a href="https://docs.google.com/document/d/1vf4Hsk8QAdApstLghPlQAOJWylZ7C_zNz5rcpUs9ojQ/edit?usp=sharing" target="_blank" class="quick-link">
-                                    <i class="fas fa-palette"></i> Master Design
+                                    <i class="fas fa-palette"></i> Master Design (Tier 2)
                                 </a>
                             </div>
                             <div class="step-sub" style="margin-top:10px;">Optional/Reference:</div>
@@ -1523,23 +1523,15 @@
                                     <i class="fas fa-book"></i> Guides Design
                                 </a>
                                 <a href="https://docs.google.com/document/d/1VK-havAC03ZLgyrGPvc4S_FODGz0M4i6UajAq5UwLiM/edit?usp=sharing" target="_blank" class="quick-link secondary">
-                                    <i class="fas fa-star"></i> New Design
+                                    <i class="fas fa-star"></i> New Design (Tier 1)
+                                </a>
+                                <a href="https://docs.google.com/document/d/1m7IW76_m1zK4k8UC5XhbHhUvJrn2QfBIas-BR8LCOPw/edit?usp=sharing" target="_blank" class="quick-link secondary">
+                                    <i class="fas fa-cogs"></i> Service Design (Tier 3/4)
                                 </a>
                                 <a href="https://docs.google.com/document/d/1SEw8RElqBNyyWG-0O8LOgpI5qs8l2nIjqHk0dp66nwE/edit?usp=sharing" target="_blank" class="quick-link secondary">
                                     <i class="fas fa-sitemap"></i> Hub+Spoke
                                 </a>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <input type="checkbox" id="p1-1b" onchange="updateProgress()">
-                        <div>
-                            <div class="step-label">Verify Hub+Spoke Internal Linking</div>
-                            <div class="step-sub">Confirms contextual links + Related Services section</div>
-                            <button class="btn btn-compile" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-hubspoke'); animateButton(this, 'Validating...', 'Links Ready');">
-                                <i class="fas fa-sitemap"></i> Validate Hub+Spoke Links
-                            </button>
                         </div>
                     </div>
 
@@ -1574,7 +1566,7 @@
                         <div>
                             <div class="step-label">Force Rebuild (if needed)</div>
                             <div class="step-sub">Describe the issue below:</div>
-                            <textarea id="rebuildIssue" class="rebuild-input" placeholder="Example: Mobile view has images squeezing text in hero section. OR: LLM ignored Design Bible and made up its own layout."></textarea>
+                            <textarea id="rebuildIssue" class="rebuild-input" placeholder="Example: Mobile view has images squeezing text in hero section. OR: LLM ignored Master Design and made up its own layout."></textarea>
                             <button class="btn btn-danger btn-compile" style="margin-top:5px;" onclick="copyPrompt('rebuild'); animateButton(this, 'Compiling...', 'Protocol Ready');">
                                 <i class="fas fa-redo"></i> Compile Rebuild Protocol
                             </button>
@@ -1583,43 +1575,18 @@
                 </div>
             </div>
 
-            <!-- PHASE 3: VERIFY LINKS -->
+            <!-- PHASE 3: SEO AUDIT -->
             <div class="card phase" id="phase3">
                 <div class="phase-header" onclick="togglePhase('phase3')">
-                    <div class="phase-title"><span class="phase-num">3</span> Verify All Links</div>
-                    <div class="phase-time">2 min</div>
+                    <div class="phase-title"><span class="phase-num">3</span> SEO Audit</div>
+                    <div class="phase-time">5 min</div>
                 </div>
                 <div class="phase-content">
                     <div class="step">
                         <input type="checkbox" id="p3-1" onchange="updateProgress()">
                         <div>
-                            <div class="step-label">Run Link Verification Audit</div>
-                            <div class="step-sub">Checks emails, contact links, and catches LLM-invented URLs</div>
-                            <button class="btn btn-compile" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('verify-links'); animateButton(this, 'Scanning...', 'Audit Ready');">
-                                <i class="fas fa-link"></i> Execute Link Audit
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <input type="checkbox" id="p3-2" onchange="updateProgress()">
-                        <div class="step-label">✅ All Links Verified</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PHASE 4: SEO AUDIT -->
-            <div class="card phase" id="phase4">
-                <div class="phase-header" onclick="togglePhase('phase4')">
-                    <div class="phase-title"><span class="phase-num">4</span> SEO Audit</div>
-                    <div class="phase-time">5 min</div>
-                </div>
-                <div class="phase-content">
-                    <div class="step">
-                        <input type="checkbox" id="p4-1" onchange="updateProgress()">
-                        <div>
                             <div class="step-label">Upload SEO Audit File & Run Audit</div>
-                            <div class="step-sub">This will STRIP Schema (rebuilt in Phase 5)</div>
+                            <div class="step-sub">This will STRIP Schema (rebuilt in Phase 4)</div>
                             <button class="btn btn-accent btn-compile" style="margin-top:5px;" onclick="copyPrompt('seo'); animateButton(this, 'Generating...', 'Protocol Ready');">
                                 <i class="fas fa-search"></i> Generate SEO Protocol
                             </button>
@@ -1636,7 +1603,7 @@
                     </div>
                     
                     <div class="step">
-                        <input type="checkbox" id="p4-2" onchange="updateProgress()">
+                        <input type="checkbox" id="p3-2" onchange="updateProgress()">
                         <div>
                             <div class="step-label">Verify SEO Audit Completion</div>
                             <div class="step-sub">Confirms audit steps followed + checks modern SEO standards</div>
@@ -1647,21 +1614,21 @@
                     </div>
                     
                     <div class="step">
-                        <input type="checkbox" id="p4-3" onchange="updateProgress()">
+                        <input type="checkbox" id="p3-3" onchange="updateProgress()">
                         <div class="step-label">✅ SEO Verification PASSED — Ready for Schema</div>
                     </div>
                 </div>
             </div>
 
-            <!-- PHASE 5: SCHEMA GENERATOR -->
-            <div class="card phase" id="phase5" style="border-left: 4px solid var(--accent);">
-                <div class="phase-header" onclick="togglePhase('phase5')">
-                    <div class="phase-title"><span class="phase-num" style="background:var(--accent);">5</span> Schema Generator</div>
+            <!-- PHASE 4: SCHEMA GENERATOR -->
+            <div class="card phase" id="phase4" style="border-left: 4px solid var(--accent);">
+                <div class="phase-header" onclick="togglePhase('phase4')">
+                    <div class="phase-title"><span class="phase-num" style="background:var(--accent);">4</span> Schema Generator</div>
                     <div class="phase-time">5 min</div>
                 </div>
                 <div class="phase-content">
                     <div class="warning-box" style="margin-bottom:15px;">
-                        <i class="fas fa-exclamation-triangle"></i> <strong>CRITICAL:</strong> Phase 4 stripped the schema. Rebuild it now.
+                        <i class="fas fa-exclamation-triangle"></i> <strong>CRITICAL:</strong> Phase 3 stripped the schema. Rebuild it now.
                     </div>
 
                     <!-- CID QUICK ACCESS -->
@@ -1681,7 +1648,7 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p5-1" onchange="updateProgress()">
+                        <input type="checkbox" id="p4-1" onchange="updateProgress()">
                         <div>
                             <div class="step-label">Upload Schema Generator & Run</div>
                             <button class="btn btn-accent btn-compile" style="margin-top:5px;" onclick="copyPrompt('schema'); animateButton(this, 'Compiling...', 'Schema Ready');">
@@ -1702,18 +1669,6 @@
                         </div>
                     </div>
 
-                    <!-- SCHEMA VERIFICATION AUDIT -->
-                    <div class="step" style="margin-top:15px;">
-                        <input type="checkbox" id="p5-verify" onchange="updateProgress()">
-                        <div>
-                            <div class="step-label">Run Schema Verification Audit</div>
-                            <div class="step-sub">Web search for current best practices</div>
-                            <button class="btn" style="margin-top:8px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color:white;" onclick="copyPrompt('schema-verify')">
-                                <i class="fas fa-search"></i> Copy Schema Verify Prompt
-                            </button>
-                        </div>
-                    </div>
-
                     <!-- SCHEMA VALIDATOR -->
                     <div class="data-box" style="margin-top:20px; border-color: var(--accent);">
                         <h4 style="font-size:14px; margin-bottom:8px; color:var(--accent);">
@@ -1730,16 +1685,16 @@
                     </div>
 
                     <div class="step" style="margin-top:20px;">
-                        <input type="checkbox" id="p5-2" onchange="updateProgress()">
+                        <input type="checkbox" id="p4-2" onchange="updateProgress()">
                         <div class="step-label">Verify: Schema has <span style="color:#ef4444; font-weight:600;">&lt;script&gt;</span> at TOP and <span style="color:#ef4444; font-weight:600;">&lt;/script&gt;</span> at BOTTOM</div>
                     </div>
                 </div>
             </div>
 
-            <!-- PHASE 6: JOOMLA PART 1 - META -->
-            <div class="card phase" id="phase6">
-                <div class="phase-header" onclick="togglePhase('phase6')">
-                    <div class="phase-title"><span class="phase-num">6</span> Joomla Part 1: Meta Setup</div>
+            <!-- PHASE 5: JOOMLA PART 1 - META -->
+            <div class="card phase" id="phase5">
+                <div class="phase-header" onclick="togglePhase('phase5')">
+                    <div class="phase-title"><span class="phase-num">5</span> Joomla Part 1: Meta Setup</div>
                     <div class="phase-time">3 min</div>
                 </div>
                 <div class="phase-content">
@@ -1754,12 +1709,12 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p6-1" onchange="updateProgress()">
+                        <input type="checkbox" id="p5-1" onchange="updateProgress()">
                         <div class="step-label">Open Main Menu → Search for City → Verify ALIAS</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p6-2" onchange="updateProgress()">
+                        <input type="checkbox" id="p5-2" onchange="updateProgress()">
                         <div>
                             <div class="step-label">Click on page → Details tab → Select Template</div>
                             <div class="instruction-box">
@@ -1769,14 +1724,14 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p6-3" onchange="updateProgress()">
+                        <input type="checkbox" id="p5-3" onchange="updateProgress()">
                         <div>
                             <div class="step-label">Options tab → Set "Show Title" to HIDE</div>
                         </div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p6-4" onchange="updateProgress()">
+                        <input type="checkbox" id="p5-4" onchange="updateProgress()">
                         <div>
                             <div class="step-label">Get Meta Data from Claude</div>
                             <button class="btn btn-ghost" style="margin-top:5px;" onclick="copyPrompt('meta')">
@@ -1786,21 +1741,21 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p6-5" onchange="updateProgress()">
+                        <input type="checkbox" id="p5-5" onchange="updateProgress()">
                         <div class="step-label">Page Title tab → Add Page Title</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p6-6" onchange="updateProgress()">
+                        <input type="checkbox" id="p5-6" onchange="updateProgress()">
                         <div class="step-label">Metadata tab → Add Meta Description & Keywords → SAVE</div>
                     </div>
                 </div>
             </div>
 
-            <!-- PHASE 7: PRE-UPLOAD LINK AUDIT -->
-            <div class="card phase" id="phase7">
-                <div class="phase-header" onclick="togglePhase('phase7')">
-                    <div class="phase-title"><span class="phase-num">7</span> Pre-Upload Link Audit</div>
+            <!-- PHASE 6: PRE-UPLOAD LINK AUDIT -->
+            <div class="card phase" id="phase6">
+                <div class="phase-header" onclick="togglePhase('phase6')">
+                    <div class="phase-title"><span class="phase-num">6</span> Pre-Upload Link Audit</div>
                     <div class="phase-time">2 min</div>
                 </div>
                 <div class="phase-content">
@@ -1808,7 +1763,7 @@
                         <i class="fas fa-exclamation-triangle"></i> <strong>LAST CHECK:</strong> Verify all links before uploading to Joomla
                     </div>
                     <div class="step">
-                        <input type="checkbox" id="p7-1" onchange="updateProgress()">
+                        <input type="checkbox" id="p6-1" onchange="updateProgress()">
                         <div>
                             <div class="step-label">Run Final Link Audit Before Upload</div>
                             <div class="step-sub">Catches any issues from SEO/Schema edits</div>
@@ -1818,16 +1773,16 @@
                         </div>
                     </div>
                     <div class="step">
-                        <input type="checkbox" id="p7-2" onchange="updateProgress()">
+                        <input type="checkbox" id="p6-2" onchange="updateProgress()">
                         <div class="step-label">✅ All Links Verified — Ready for Joomla</div>
                     </div>
                 </div>
             </div>
 
-            <!-- PHASE 8: JOOMLA PART 2 - HTML & SCHEMA -->
-            <div class="card phase" id="phase8">
-                <div class="phase-header" onclick="togglePhase('phase8')">
-                    <div class="phase-title"><span class="phase-num">8</span> Joomla Part 2: HTML & Schema</div>
+            <!-- PHASE 7: JOOMLA PART 2 - HTML & SCHEMA -->
+            <div class="card phase" id="phase7">
+                <div class="phase-header" onclick="togglePhase('phase7')">
+                    <div class="phase-title"><span class="phase-num">7</span> Joomla Part 2: HTML & Schema</div>
                     <div class="phase-time">5 min</div>
                 </div>
                 <div class="phase-content">
@@ -1836,46 +1791,46 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-1" onchange="updateProgress()">
+                        <input type="checkbox" id="p7-1" onchange="updateProgress()">
                         <div class="step-label">Back to Details → Click "Edit Article"</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-2" onchange="updateProgress()">
+                        <input type="checkbox" id="p7-2" onchange="updateProgress()">
                         <div class="step-label">Delete old HTML → Paste new HTML (Code View)</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-3" onchange="updateProgress()">
+                        <input type="checkbox" id="p7-3" onchange="updateProgress()">
                         <div class="step-label">Verify: HTML ends with &lt;/body&gt; tag</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-4" onchange="updateProgress()">
+                        <input type="checkbox" id="p7-4" onchange="updateProgress()">
                         <div class="step-label">Options tab → Hide Title: <strong style="color:var(--gold-dark);">Hide</strong></div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-5" onchange="updateProgress()">
+                        <input type="checkbox" id="p7-5" onchange="updateProgress()">
                         <div class="step-label">Google Structured Data tab → Add Custom Code</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-6" onchange="updateProgress()">
+                        <input type="checkbox" id="p7-6" onchange="updateProgress()">
                         <div class="step-label">Paste Schema → Verify <span style="color:#ef4444; font-weight:600;">script tags</span> at top/bottom</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p8-7" onchange="updateProgress()">
+                        <input type="checkbox" id="p7-7" onchange="updateProgress()">
                         <div class="step-label">Save & Close</div>
                     </div>
                 </div>
             </div>
 
-            <!-- PHASE 9: VERIFY & CACHE -->
-            <div class="card phase" id="phase9">
-                <div class="phase-header" onclick="togglePhase('phase9')">
-                    <div class="phase-title"><span class="phase-num">9</span> Part 3: Cache & Verify</div>
+            <!-- PHASE 8: VERIFY & CACHE -->
+            <div class="card phase" id="phase8">
+                <div class="phase-header" onclick="togglePhase('phase8')">
+                    <div class="phase-title"><span class="phase-num">8</span> Part 3: Cache & Verify</div>
                     <div class="phase-time">3 min</div>
                 </div>
                 <div class="phase-content">
@@ -1890,12 +1845,12 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p9-1" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-1" onchange="updateProgress()">
                         <div class="step-label">Open Cache → Click "Delete All"</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p9-2" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-2" onchange="updateProgress()">
                         <div>
                             <div class="step-label">Open Live Page & Hard Refresh</div>
                             <div class="step-sub">Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)</div>
@@ -1906,17 +1861,17 @@
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p9-3" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-3" onchange="updateProgress()">
                         <div class="step-label">Visual Check: Page looks correct</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p9-4" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-4" onchange="updateProgress()">
                         <div class="step-label">Mobile Check: Test on phone or responsive mode</div>
                     </div>
 
                     <div class="step">
-                        <input type="checkbox" id="p9-5" onchange="updateProgress()">
+                        <input type="checkbox" id="p8-5" onchange="updateProgress()">
                         <div class="step-label">Verify: GMB data in footer matches</div>
                     </div>
                 </div>
@@ -1924,7 +1879,7 @@
 
         </div>
         
-        <!-- PHASE 9: COMPLETION -->
+        <!-- COMPLETION -->
         <div class="card" style="text-align: center; padding: 40px; position: relative; overflow: hidden;" id="completionCard">
             <h2 style="color:var(--accent); margin-bottom: 20px;">🎉 Part 4: Completion Report</h2>
             <p style="color:#64748b; margin-bottom:20px;">All phases finished. Generate your completion report.</p>
@@ -3653,9 +3608,13 @@ Click the chat title at the top and rename it to: "${chatName}"
 Before proceeding, upload these files from the Claude Project:
 1. 📄 STS SEO Data 2026
 2. 📄 Master Page Builder  
-3. 📄 Master Design Bible
+3. 📄 Master Design (Tier 2)
 
-⚠️ DO NOT PROCEED until all 3 files are uploaded.
+OPTIONAL (for service-specific pages):
+4. 📄 New Design (Tier 1) — for tier 1 pages
+5. 📄 Service Design (Tier 3/4) — for tier 3/4 pages
+
+⚠️ DO NOT PROCEED until required files are uploaded.
 
 ═══════════════════════════════════
 SYSTEM INSTRUCTIONS
@@ -3676,7 +3635,7 @@ TARGET: ${city}${state ? ', ' + state : ''}
 NICHE: ${niche}
 URL: ${url}
 
-Confirm you've named the chat "${chatName}", uploaded all 3 files, and understand these rules. Reply: "Chat named. Files received. Ready."
+Confirm you've named the chat "${chatName}", uploaded the files, and understand these rules. Reply: "Chat named. Files received. Ready."
 
 No lengthy explanations.`;
                     break;
@@ -3733,13 +3692,13 @@ SERVICES: ${p.serviceOptions || 'Electronics Recycling, Data Destruction'}
 ${hubSpokeSection}
 EXECUTION INSTRUCTIONS:
 1. Use Master Page Builder logic - follow EVERY step
-2. Apply Master Design Bible strictly - NO deviations
+2. Apply Master Design (Tier 2) strictly - NO deviations
 3. Include ALL GMB data exactly as shown above
 4. Hero section MUST have city "${city}" + niche "${niche}" in H1, form on RIGHT
 5. Footer MUST have exact address: ${p.fullAddress || '[ADDRESS]'}
 6. Footer MUST have phone: ${p.phone || '[PHONE]'}
 7. Mobile responsive - images must NOT squeeze text
-8. Do NOT include Schema (Phase 5 task)
+8. Do NOT include Schema (Phase 4 task)
 9. Facility mentions: Say "serving ${city} from our 600,000 sq ft facility" — NOT "our ${city} facility"
 ${hubSpoke ? '10. Include 3-4 internal links from Hub+Spoke handoff in rows 4+ (NOT hero)' : ''}
 
@@ -3752,14 +3711,14 @@ BEGIN BUILD NOW. No lengthy explanations.`;
                 }
 
                 case 'rebuild': {
-                    const issue = document.getElementById('rebuildIssue')?.value || 'Design Bible not followed';
+                    const issue = document.getElementById('rebuildIssue')?.value || 'Master Design not followed';
                     text = `${forcePrefix}TASK: COMPLETE REBUILD REQUIRED
 
 THE ISSUE: ${issue}
 
 INSTRUCTIONS:
 1. DELETE your previous output completely
-2. Re-read the Master Design Bible file
+2. Re-read the Master Design (Tier 2) file
 3. Rebuild the ENTIRE page from scratch
 4. Fix the specific issue mentioned above
 5. Ensure Hero has city in H1, form on RIGHT
@@ -3789,58 +3748,6 @@ If ALL links correct: ✅ LINKS VERIFIED — Proceed to next phase
 If ANY issues found: ❌ LINKS FAILED — List issues above, fix and re-verify
 
 No lengthy explanations.`;
-                    break;
-
-                case 'verify-hubspoke':
-                    if(!hubSpoke) {
-                        showToast("No Hub+Spoke handoff loaded! Load it in Mission Control first.", true);
-                        return;
-                    }
-                    // Use Hub+Spoke city, fallback to URL city
-                    const hsCity = appState.parsedHubSpoke?.city || city;
-                    const hsState = appState.parsedHubSpoke?.state || state;
-                    
-                    text = `${forcePrefix}TASK: VALIDATE & ADD HUB+SPOKE LINKS
-
-TARGET: ${hsCity}${hsState ? ', ' + hsState : ''} | ${url}
-
-═══════════════════════════════════
-LINKING REFERENCE (use these):
-═══════════════════════════════════
-${hubSpoke}
-
-═══════════════════════════════════
-DO THIS NOW:
-═══════════════════════════════════
-
-1) BODY CONTENT (rows 4+, NOT hero):
-   • Ensure 3-4 contextual internal links exist
-   • Add links from handoff where appropriate
-   • All links must be full HTTPS: https://www.stselectronicrecyclinginc.com/{slug}
-
-2) "RELATED ${hsCity.toUpperCase()} SERVICES" 3-COLUMN SECTION:
-   This section is ABOVE the final CTA ("Ready to Get Started?")
-   
-   Populate with tiered links:
-   • Column 1 "Core ITAD" → Tier 1 links
-   • Column 2 "Support Services" → Tier 2 + 3 links
-   • Column 3 "Industry Solutions" → Tier 4 links
-
-3) GUIDE CTA BOX:
-   • Link to a Tier 5 guide from handoff
-
-═══════════════════════════════════
-OUTPUT:
-═══════════════════════════════════
-Output the corrected HTML sections.
-
-VERDICT:
-✅ HUB+SPOKE VALIDATED — Changes: [brief list] — Proceed to Phase 2
-
-If links could not be added (missing handoff data):
-⚠️ INCOMPLETE — [reason]
-
-Keep response SHORT. No lengthy explanations.`;
                     break;
 
                 case 'seo':
@@ -3931,7 +3838,7 @@ If no facility language issues → output:
 ════════════════════════════════════════════════════════
 
 ${hubSpokeVerifySection}CLEANUP:
-☐ Schema REMOVED (rebuilt in Phase 5)
+☐ Schema REMOVED (rebuilt in Phase 4)
 ☐ No broken/placeholder links
 ☐ No lorem ipsum or [PLACEHOLDER] text
 
@@ -3971,7 +3878,7 @@ FINAL VERDICT
 ════════════════════════════════════════════════════════
 
 If ALL checks passed and no issues remain:
-✅ SEO VERIFICATION PASSED — Proceed to Phase 5: Schema
+✅ SEO VERIFICATION PASSED — Proceed to Phase 4: Schema
 
 If ANY issues need fixing:
 ❌ SEO VERIFICATION FAILED — Issues listed above must be fixed before proceeding
@@ -4024,79 +3931,6 @@ REQUIREMENTS:
 Output the complete schema script block. No lengthy explanations.`;
                     break;
                 }
-
-                case 'schema-verify':
-                    text = `${forcePrefix}TASK: SCHEMA VERIFICATION AUDIT
-
-This schema was just generated. Verify it against current best practices.
-
-════════════════════════════════════════════════════════
-PART 1: STRUCTURAL COMPLIANCE CHECK
-════════════════════════════════════════════════════════
-
-Verify these required elements:
-
-REQUIRED FIELDS:
-☐ @context: "https://schema.org"
-☐ @type: LocalBusiness (or valid subtype)
-☐ name: Present and accurate
-☐ address: Complete PostalAddress object
-☐ telephone: Present with proper format
-☐ url: Present and valid
-☐ openingHoursSpecification: All days included
-
-ADDRESS OBJECT:
-☐ @type: "PostalAddress"
-☐ streetAddress: Present
-☐ addressLocality: City present
-☐ addressRegion: State present
-☐ postalCode: ZIP present
-☐ addressCountry: "US"
-
-RECOMMENDED:
-☐ sameAs: Array with Google Maps CID link
-☐ geo: GeoCoordinates (if available)
-☐ areaServed: Defined service area
-☐ priceRange: Present
-☐ image: Business image URL
-
-MUST NOT HAVE:
-☐ NO aggregateRating (removed per policy)
-☐ NO review data
-☐ NO fake/placeholder data
-
-════════════════════════════════════════════════════════
-PART 2: WEB SEARCH — CURRENT BEST PRACTICES
-════════════════════════════════════════════════════════
-
-Search the web for:
-• "LocalBusiness schema best practices 2025"
-• "Google structured data requirements local business"
-• "JSON-LD local business schema updates"
-
-Check for:
-1. Any NEW required fields added recently
-2. Deprecated properties to avoid
-3. Google's current validation requirements
-4. Common errors that cause rich results rejection
-
-════════════════════════════════════════════════════════
-PART 3: FINAL VERDICT
-════════════════════════════════════════════════════════
-
-Based on your audit:
-1. List any CRITICAL issues (will fail validation)
-2. List any WARNINGS (may reduce effectiveness)
-3. List any ENHANCEMENTS (optional improvements)
-
-If ALL checks passed:
-✅ SCHEMA VERIFIED — Proceed to Phase 6: Joomla Meta
-
-If ANY critical issues found:
-❌ SCHEMA FAILED — Fix issues above and regenerate
-
-Keep response focused. No lengthy explanations.`;
-                    break;
 
                 case 'meta':
                     text = `Generate SEO meta data for: ${pageName}
@@ -4309,7 +4143,7 @@ Keep response TIGHT. Code blocks only. No lengthy explanations.`;
             <!-- FORENSIC TIMELINE -->
             <div style="margin-top:25px; padding-top:20px; border-top:1px solid var(--border-light);">
                 <div style="font-family:'Inter', sans-serif; font-size:10px; color:var(--text-muted); line-height:1.8;">
-                    <strong style="color:var(--text-secondary);">Development:</strong> v1.0–v6.x core parsing & UI scaffolding. v7.x 317-MSA city lookup, CID regex overhaul, 9-phase workflow. v10.07 Luxury UI with 7-layer AI animation engine + intelligent button micro-animations.
+                    <strong style="color:var(--text-secondary);">Development:</strong> v1.0–v6.x core parsing & UI scaffolding. v7.x 317-MSA city lookup, CID regex overhaul, 9-phase workflow. v10.11 Luxury UI with 7-layer AI animation engine + intelligent button micro-animations.
                 </div>
                 <div style="font-family:'Inter', sans-serif; font-size:10px; color:var(--text-muted); margin-top:8px;">
                     <strong style="color:var(--text-secondary);">Build Time:</strong> 44.5 hrs (AI-assisted) · <span style="color:var(--gold-dark);">Est. ~345 hrs traditional</span> — UX architecture, algorithm development, visual design, testing & documentation would typically require a small team over 8-10 weeks.
@@ -4318,7 +4152,7 @@ Keep response TIGHT. Code blocks only. No lengthy explanations.`;
             
             <div style="margin-top:25px; padding-top:20px; border-top:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
                 <div style="font-size:11px; color:var(--text-muted);">
-                    M.A.R.K<span style="color:var(--gold);">.</span> v10.07
+                    M.A.R.K<span style="color:var(--gold);">.</span> v10.11
                 </div>
                 <div style="font-size:10px; color:var(--text-muted);">
                     Page Terminal System
