@@ -98,70 +98,6 @@
             to { opacity: 1; }
         }
 
-        /* ===== STATUS BAR ===== */
-        .status-bar {
-            background: linear-gradient(90deg, var(--navy-dark), var(--navy), var(--navy-dark));
-            background-size: 200% 100%;
-            animation: statusGradient 8s ease infinite;
-            border-bottom: 1px solid var(--gold);
-            padding: 12px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-        }
-        .status-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(201,169,98,0.1), transparent);
-            animation: statusSweep 4s ease-in-out infinite;
-        }
-        @keyframes statusGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        @keyframes statusSweep {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-        .status-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255,255,255,0.6);
-        }
-        .status-item.online {
-            color: var(--white);
-        }
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--gold);
-            animation: statusPulse 2s ease-in-out infinite;
-            box-shadow: 0 0 8px var(--gold);
-        }
-        @keyframes statusPulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--gold); }
-            50% { opacity: 0.6; box-shadow: 0 0 4px var(--gold); }
-        }
-        .status-clock {
-            color: var(--gold);
-            font-weight: 600;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-        }
-
         /* ===== HEADER ===== */
         .ai-header {
             background: linear-gradient(135deg, var(--white) 0%, var(--cream) 100%);
@@ -1056,23 +992,6 @@
         <div class="boot-text" id="bootText"></div>
     </div>
 
-    <!-- STATUS BAR -->
-    <div class="status-bar">
-        <div class="status-item online">
-            <div class="status-dot"></div>
-            <span>Online</span>
-        </div>
-        <div class="status-item">
-            <span>M.A.R.K. v10.11</span>
-        </div>
-        <div class="status-item">
-            <span class="status-clock" id="statusClock">00:00:00</span>
-        </div>
-        <div class="status-item" id="phaseStatus">
-            <span>Phase <span id="currentPhaseNum">1</span> of 9</span>
-        </div>
-    </div>
-
     <header class="ai-header">
         <!-- EFFECT 1: Neural Network Nodes + Connections -->
         <div class="neural-network">
@@ -1956,11 +1875,13 @@
 
         // === STATUS BAR CLOCK ===
         function updateStatusClock() {
+            const clockEl = document.getElementById('statusClock');
+            if (!clockEl) return;
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('statusClock').textContent = `${hours}:${minutes}:${seconds}`;
+            clockEl.textContent = `${hours}:${minutes}:${seconds}`;
         }
 
         // === PHASE COMPLETION DETECTION ===
