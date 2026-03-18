@@ -1634,7 +1634,7 @@ async function callChatAPI(model, msg) {
         body: JSON.stringify({
             tool: 'chat',
             action: action,
-            company: 'STS',
+            company: S.company,
             vaName: S.vaName || 'VA',
             context: msg,
             messages: S.chatHistory.slice(-10)
