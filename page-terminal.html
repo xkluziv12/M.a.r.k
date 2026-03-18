@@ -755,7 +755,6 @@
         
         /* AI Processing Animation */
         .btn.processing {
-            pointer-events: none;
             opacity: 0.9;
         }
         .btn.processing::after {
@@ -1158,13 +1157,13 @@
                             <div class="cid-display" id="cidDisplay">CID will appear here...</div>
                             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
                                 <button class="btn btn-primary" onclick="testCID()">
-                                    <i class="fas fa-external-link-alt"></i> Authenticate CID
+                                    <i class="fas fa-external-link-alt"></i> #1 Authenticate CID
                                 </button>
-                                <button class="btn btn-accent" onclick="acceptCID()">
-                                    <i class="fas fa-lock"></i> Lock CID
+                                <button class="btn" onclick="acceptCID()" style="background:#059669; color:white;">
+                                    <i class="fas fa-lock"></i> #2 Lock CID
                                 </button>
                                 <button class="btn btn-danger" onclick="rejectCID()">
-                                    <i class="fas fa-times"></i> Reject & Retry
+                                    <i class="fas fa-times"></i> #3 Reject CID
                                 </button>
                             </div>
                             
@@ -1259,15 +1258,21 @@
 
                         <!-- DUAL BUTTONS -->
                         <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-                            <button onclick="copyPrompt('intro'); animateButton(this, 'Copying...', 'Copied ✓');" class="side-by-side-btn" style="background:var(--gold); margin-top:0; cursor:pointer; border:none; font-family:'Inter',sans-serif;">
-                                <span style="display:flex; align-items:center; gap:10px; font-size:15px;"><i class="fas fa-clipboard"></i> Copy Intro Sequence</span>
+                            <button onclick="copyPrompt('intro'); animateButton(this, 'Copying...', 'Copied ✓');" class="btn side-by-side-btn" style="background:var(--gold); margin-top:0; cursor:pointer; border:none; font-family:'Inter',sans-serif;">
+                                <i class="fas fa-clipboard"></i> Copy Intro Sequence
                             </button>
-                            <a href="https://claude.ai/project/019afe23-9854-71e3-896c-4a652a608017" target="_blank" class="side-by-side-btn" style="background:#dc2626; margin-top:0;">
-                                <span style="display:flex; align-items:center; gap:10px; font-size:15px;"><i class="fas fa-brain"></i> Open Claude</span>
+                            <a href="https://claude.ai/project/019afe23-9854-71e3-896c-4a652a608017" target="_blank" class="side-by-side-btn" style="background:#dc2626; margin-top:0; flex-direction:column; gap:4px;">
+                                <span style="display:flex; align-items:center; gap:10px;"><i class="fas fa-brain"></i> Open Claude</span>
+                                <span style="font-size:9px; opacity:0.7; font-weight:400;">(right click → open side view)</span>
                             </a>
                         </div>
                         <div style="color:rgba(255,255,255,0.6); font-size:11px; margin-top:10px;">
                             Step 1: Copy → Step 2: Open Claude → Paste
+                        </div>
+                        <div style="margin-top:6px;">
+                            <a href="#" onclick="openClaudeThird(); return false;" style="color:var(--gold-light); font-size:10px; text-decoration:underline; opacity:0.7;">
+                                Open ⅓ Claude (side panel)
+                            </a>
                         </div>
 
                         <div style="margin-top:12px; font-size:12px; color:rgba(255,255,255,0.7);">
@@ -1911,23 +1916,31 @@
         
         // === BUTTON PROCESSING ANIMATION ===
         function animateButton(btn, processingText, successText, callback) {
-            const originalText = btn.innerHTML;
+            // Store original text only on first click — never overwrite with animation text
+            if (!btn.dataset.originalHtml) {
+                btn.dataset.originalHtml = btn.innerHTML;
+            }
+            
+            // Clear any existing animation timers
+            if (btn._animTimer1) clearTimeout(btn._animTimer1);
+            if (btn._animTimer2) clearTimeout(btn._animTimer2);
             
             // Phase 1: Processing
             btn.classList.add('processing');
             btn.innerHTML = `<span style="opacity:0.8">◐</span> ${processingText}`;
             
-            // Phase 2: Execute callback and show success
-            setTimeout(() => {
+            // Phase 2: Show success
+            btn._animTimer1 = setTimeout(() => {
                 if (callback) callback();
                 btn.classList.remove('processing');
                 btn.classList.add('success');
                 btn.innerHTML = `<span>✓</span> ${successText}`;
                 
                 // Phase 3: Return to original
-                setTimeout(() => {
+                btn._animTimer2 = setTimeout(() => {
                     btn.classList.remove('success');
-                    btn.innerHTML = originalText;
+                    btn.innerHTML = btn.dataset.originalHtml;
+                    delete btn.dataset.originalHtml;
                 }, 1200);
             }, 600);
         }
@@ -3288,13 +3301,12 @@ SERVICES: ${p.serviceOptions || '—'}
 
         function rejectCID() {
             appState.cidAccepted = false;
-            document.getElementById('cidStatus').innerHTML = `<span style="color:#dc2626;">✗ CID REJECTED</span><br>
-                <span style="font-size:12px; color:#64748b; margin-top:5px; display:block;">
-                    Use this tool to find the correct CID: 
-                    <a href="https://daltonluka.com/blog/cid-converter" target="_blank" style="color:var(--primary); font-weight:600;">
-                        CID Converter Tool →
+            document.getElementById('cidStatus').innerHTML = `<span style="color:#dc2626; font-size:14px;">✗ CID REJECTED</span><br>
+                <div style="margin-top:8px; padding:12px; background:#fef2f2; border:2px solid #dc2626; border-radius:8px;">
+                    <a href="https://daltonluka.com/blog/cid-converter" target="_blank" style="color:#dc2626; font-weight:800; font-size:14px; text-decoration:none; display:flex; align-items:center; gap:8px;">
+                        <i class="fas fa-tools"></i> Open CID Converter Tool →
                     </a>
-                </span>`;
+                </div>`;
             saveState();
             showToast("CID Rejected - Use converter tool to find correct CID", true);
         }
@@ -3322,6 +3334,21 @@ SERVICES: ${p.serviceOptions || '—'}
             } else {
                 showToast("No URL set!", true);
             }
+        }
+
+        // === OPEN CLAUDE IN RIGHT 1/3 OF SCREEN ===
+        function openClaudeThird() {
+            const screenW = window.screen.availWidth;
+            const screenH = window.screen.availHeight;
+            const w = Math.floor(screenW / 3);
+            const h = screenH;
+            const left = screenW - w;
+            const top = 0;
+            window.open(
+                'https://claude.ai/project/019afe23-9854-71e3-896c-4a652a608017',
+                'claude_side',
+                `width=${w},height=${h},left=${left},top=${top},menubar=no,toolbar=yes,location=yes,status=no,scrollbars=yes,resizable=yes`
+            );
         }
 
         // === SCHEMA VALIDATOR ===
