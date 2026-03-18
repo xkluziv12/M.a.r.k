@@ -27,7 +27,6 @@
             --border-light: #e8e4dc;
             --shadow-soft: rgba(30, 58, 95, 0.08);
             --shadow-medium: rgba(30, 58, 95, 0.12);
-            --dcd-teal: #0d9488;
             
             /* Legacy compatibility */
             --primary: var(--navy);
@@ -374,7 +373,7 @@
         }
 
         .header-content {
-            position: relative; z-index: 1; max-width: 1200px; margin: 0 auto;
+            position: relative; z-index: 1; max-width: 900px; margin: 0 auto;
             display: flex; justify-content: space-between; align-items: center;
         }
 
@@ -391,7 +390,7 @@
         }
 
         .progress-wrapper {
-            max-width: 1200px; margin: 0 auto; padding: 0 30px;
+            max-width: 900px; margin: 0 auto; padding: 0 20px;
             display: flex; align-items: center; justify-content: space-between;
         }
 
@@ -414,12 +413,12 @@
         }
 
         /* ===== CONTAINER ===== */
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 30px; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
 
         /* ===== LUXURY CARDS ===== */
         .card {
             background: var(--white);
-            border-radius: 14px;
+            border-radius: 12px;
             border: 1px solid var(--border-light);
             box-shadow: 0 2px 8px var(--shadow-soft);
             margin-bottom: 20px; 
@@ -615,7 +614,7 @@
 
         /* ===== SETUP SECTION ===== */
         .setup-section { 
-            padding: 40px; 
+            padding: 30px; 
             border-left: 3px solid var(--gold);
             background: var(--white);
         }
@@ -636,7 +635,7 @@
             border: 1px solid var(--border-light); 
             border-radius: 6px;
             font-family: 'Inter', sans-serif; 
-            font-size: 15px;
+            font-size: 14px;
             background: var(--white);
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
@@ -655,7 +654,7 @@
 
         /* ===== PHASE HEADERS ===== */
         .phase-header {
-            padding: 24px 30px; 
+            padding: 20px 25px; 
             background: var(--white);
             border-bottom: 1px solid var(--border-light); 
             cursor: pointer;
@@ -666,7 +665,7 @@
         }
         .phase-header:hover { background: var(--cream); }
         .phase-title { 
-            font-size: 16px; 
+            font-size: 15px; 
             font-weight: 600; 
             color: var(--navy);
             display: flex; 
@@ -694,7 +693,7 @@
             font-weight: 500;
         }
 
-        .phase-content { padding: 30px; display: none; background: var(--white); }
+        .phase-content { padding: 25px; display: none; background: var(--white); }
         .phase.active .phase-content { display: block; }
         .phase.active .phase-header { 
             background: var(--cream); 
@@ -703,8 +702,8 @@
 
         /* ===== STEPS ===== */
         .step {
-            display: flex; gap: 18px; padding: 18px 20px;
-            border-radius: 8px; margin-bottom: 18px;
+            display: flex; gap: 15px; padding: 14px 16px;
+            border-radius: 8px; margin-bottom: 10px;
             border: 1px solid transparent; 
             transition: all 0.2s ease;
             align-items: flex-start;
@@ -735,7 +734,7 @@
         /* ===== BUTTONS ===== */
         .btn {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 12px 22px; border-radius: 6px;
+            padding: 10px 18px; border-radius: 6px;
             font-size: 13px; font-weight: 600; border: none; cursor: pointer;
             transition: all 0.2s ease;
             text-transform: uppercase;
@@ -993,6 +992,77 @@
         <div class="boot-text" id="bootText"></div>
     </div>
 
+    <header class="ai-header">
+        <!-- EFFECT 1: Neural Network Nodes + Connections -->
+        <div class="neural-network">
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <div class="neural-node"></div>
+            <svg class="neural-connections" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line class="neural-line" x1="10" y1="20" x2="40" y2="30"/>
+                <line class="neural-line" x1="25" y1="60" x2="55" y2="70"/>
+                <line class="neural-line" x1="40" y1="30" x2="70" y2="25"/>
+                <line class="neural-line" x1="55" y1="70" x2="85" y2="65"/>
+            </svg>
+        </div>
+        
+        <!-- EFFECT 5: Constellation Drift -->
+        <div class="constellation">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
+        
+        <!-- EFFECT 8: Circuit Traces -->
+        <div class="circuit-traces">
+            <div class="circuit-path"></div>
+            <div class="circuit-path"></div>
+            <div class="circuit-path"></div>
+            <div class="circuit-path"></div>
+            <div class="circuit-path"></div>
+            <div class="circuit-node"></div>
+            <div class="circuit-node"></div>
+            <div class="circuit-node"></div>
+            <div class="circuit-node"></div>
+        </div>
+        
+        <!-- Soft Glowing Orbs -->
+        <div class="header-glow glow-1"></div>
+        <div class="header-glow glow-2"></div>
+        <div class="header-glow glow-3"></div>
+        
+        <!-- EFFECT 6: Status Line -->
+        <div class="ai-status-line">
+            <span class="status-text" id="aiStatusText">● Neural Engine Active</span>
+        </div>
+        
+        <div class="header-content" style="align-items: center;">
+            <div>
+                <div style="font-size:10px; font-weight:500; color:var(--gold-dark); letter-spacing:3px; margin-bottom:8px; text-transform:uppercase;">
+                    Machine Assisted Routing Kit
+                </div>
+                <h1 style="font-size:32px; font-weight:300; letter-spacing:1px; margin:0; color:var(--navy);">
+                    M.A.R.K<span style="color:var(--gold);">.</span> <span style="font-weight:500; font-size:18px; color:var(--text-muted);">v10.11</span>
+                </h1>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-size:11px; font-weight:600; color:var(--gold-dark); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Page Terminal</div>
+                <div style="font-size:10px; color:var(--text-muted); line-height:1.6;">
+                    <div>GEO-PARSE Engine</div>
+                    <div>CID Protocol • Schema Module</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <div class="progress-sticky">
         <div class="progress-wrapper">
             <div class="progress-stats" id="timerDisplay">00:00</div>
@@ -1008,7 +1078,7 @@
         <!-- MISSION CONTROL -->
         <div class="card setup-section">
             <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                <h2 style="color:var(--primary); font-size:18px;">⚙️ Mission Control (Page Builder)</h2>
+                <h2 style="color:var(--primary); font-size:18px;">⚙️ Mission Control</h2>
                 <button class="btn btn-ghost" onclick="resetAll()" style="border-color: #ef4444;"><span style="color:#ef4444;">⚠️</span> Reset System</button>
             </div>
 
@@ -1854,7 +1924,7 @@
             // Update status bar phase indicator
             const phaseNumEl = document.getElementById('currentPhaseNum');
             if (phaseNumEl) {
-                phaseNumEl.textContent = Math.min(currentActivePhase, 8);
+                phaseNumEl.textContent = Math.min(currentActivePhase, 9);
             }
             
             // Check for 100% completion
@@ -2166,8 +2236,7 @@
                 });
                 
                 // Reset phase status display
-                const phaseNumReset = document.getElementById('currentPhaseNum');
-                if (phaseNumReset) phaseNumReset.textContent = '1';
+                document.getElementById('currentPhaseNum').textContent = '1';
                 
                 showToast("System Reset Complete!");
             }
@@ -3975,7 +4044,7 @@ Keep response TIGHT. Code blocks only. No lengthy explanations.`;
     </script>
 
     <!-- TECHNICAL DOCUMENTATION FOOTER -->
-    <footer style="max-width:1200px; margin:60px auto 40px; padding:0 30px;">
+    <footer style="max-width:900px; margin:60px auto 40px; padding:0 20px;">
         <div style="border-top:1px solid var(--border-light); padding-top:30px;">
             <div style="font-family:'Inter', sans-serif; font-size:11px; color:var(--text-secondary); line-height:1.9;">
                 <div style="margin-bottom:15px; font-size:10px; color:var(--gold); font-weight:600; letter-spacing:2px; text-transform:uppercase;">
@@ -4020,7 +4089,7 @@ Keep response TIGHT. Code blocks only. No lengthy explanations.`;
             <div class="completion-stats">
                 <div>Page: <span id="completionPage">—</span></div>
                 <div>Time: <span id="completionTime">—</span></div>
-                <div>Phases: <span>8/8</span></div>
+                <div>Phases: <span>9/9</span></div>
                 <div>Status: <span style="color: var(--gold);">Ready for Deployment</span></div>
             </div>
             <button class="completion-close" onclick="closeCompletion()">Continue</button>
