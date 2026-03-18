@@ -181,7 +181,7 @@
         .btn-ghost:hover { background:var(--white); border-color:var(--navy); }
         .btn-ghost.sm { padding:6px 12px; font-size:12px; }
         .btn-danger { background:#dc2626; color:white; }
-        .btn-compile { min-width:180px; justify-content:center; }
+        .btn-compile { min-width:180px; justify-content:center; box-shadow:0 4px 14px rgba(30,58,95,.25); font-size:14px; padding:14px 24px; }
         .btn.processing { pointer-events:none; opacity:.9; }
         .btn.processing::after { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent); animation:btnSweep .6s ease-out forwards; }
         @keyframes btnSweep { 0%{left:-100%}100%{left:100%} }
@@ -425,7 +425,7 @@
 
             <div style="background:var(--cream);border:1px dashed var(--border-light);border-radius:8px;padding:14px;margin-top:5px;font-size:13px;color:var(--text-secondary);">
                 <i class="fas fa-info-circle" style="color:var(--gold);"></i>
-                <strong>While the blog builds</strong> — use the meta fields above to set up your Joomla / Shogun page. Then paste the HTML and schema once Claude delivers them.
+                <strong>While the blog builds</strong> — use the meta fields above to set up your Joomla / Shogun page. Then paste the HTML once Claude delivers it.
             </div>
         </div>
     </div>
@@ -473,7 +473,7 @@
                 </div>
 
                 <div id="dcdResearchDoc" style="display:none;margin-bottom:12px;">
-                    <div class="info-box teal"><strong>DCD:</strong> Upload the DCD Design Bible to Claude before pasting the build prompt.</div>
+                    <div class="info-box teal"><strong>DCD:</strong> Upload the DCD Blog Creation Prompt + Design Bible to Claude before pasting the build prompt.</div>
                 </div>
 
                 <!-- Build prompt buttons -->
@@ -488,8 +488,9 @@
                     </button>
                 </div>
                 <div id="buildInstructDCD" class="data-box" style="border-color:var(--dcd-teal);display:none;">
-                    <div style="color:#ef4444;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-arrow-down"></i> UPLOAD DESIGN BIBLE TO CLAUDE FIRST</div>
+                    <div style="color:#ef4444;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-arrow-down"></i> UPLOAD BOTH FILES TO CLAUDE FIRST</div>
                     <div class="quick-links" style="margin-bottom:12px;">
+                        <a href="https://docs.google.com/document/d/148QH1BGJ2JIsVBC5Vq61-Ja-eo175ycOM9OrC3aIzBI/edit?usp=sharing" target="_blank" class="quick-link teal"><i class="fas fa-file-alt"></i> DCD Blog Prompt v1.0</a>
                         <a href="https://docs.google.com/document/d/1SfzlHhsowhTQIHIdOUpBSne7vxDvH5NTWD3j7cdOdF0/edit?usp=sharing" target="_blank" class="quick-link teal"><i class="fas fa-palette"></i> DCD Design Bible</a>
                     </div>
                     <button class="btn btn-compile" style="width:100%;background:linear-gradient(135deg,var(--dcd-teal),#0891b2);color:white;" onclick="copyPrompt('build'); animateButton(this,'Generating...','Ready to Paste')">
@@ -508,18 +509,18 @@
                         <a href="https://www.stselectronicrecyclinginc.com/administrator/index.php?option=com_menus&view=items&menutype=blog" target="_blank" class="quick-link"><i class="fas fa-bars"></i> Open Blog Menu</a>
                     </div>
 
-                    <!-- Copy boxes: Page Title + Slug -->
-                    <div class="copy-strip">
-                        <div class="copy-strip-row">
-                            <div><div class="copy-strip-label">Page Title</div><div class="copy-strip-value" id="cs-menu-title">—</div></div>
-                            <button class="copy-strip-btn" onclick="copyMeta('title')"><i class="fas fa-copy"></i></button>
-                            <div><div class="copy-strip-label">URL Slug / Alias</div><div class="copy-strip-value" id="cs-menu-slug">—</div></div>
-                            <button class="copy-strip-btn" onclick="copyMeta('slug')"><i class="fas fa-copy"></i></button>
-                        </div>
-                    </div>
-
                     <div style="font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;margin-top:16px;">Menu Item</div>
-                    <div class="step"><input type="checkbox" id="p1-2" onchange="updateProgress()"><div class="step-label">Click <strong>New</strong> → paste Page Title + URL Alias</div></div>
+                    <div class="step"><input type="checkbox" id="p1-2" onchange="updateProgress()"><div>
+                        <div class="step-label">Click <strong>New</strong> → paste Page Title + URL Alias</div>
+                        <div class="copy-strip" style="margin-top:6px;">
+                            <div class="copy-strip-row">
+                                <div><div class="copy-strip-label">Page Title</div><div class="copy-strip-value" id="cs-menu-title">—</div></div>
+                                <button class="copy-strip-btn" onclick="copyMeta('title')"><i class="fas fa-copy"></i></button>
+                                <div><div class="copy-strip-label">URL Slug / Alias</div><div class="copy-strip-value" id="cs-menu-slug">—</div></div>
+                                <button class="copy-strip-btn" onclick="copyMeta('slug')"><i class="fas fa-copy"></i></button>
+                            </div>
+                        </div>
+                    </div></div>
                     <div class="step"><input type="checkbox" id="p1-3" onchange="updateProgress()"><div class="step-label">Menu Item Type → <strong>Articles</strong> → <strong>Single Article</strong></div></div>
                     <div class="step"><input type="checkbox" id="p1-4" onchange="updateProgress()"><div><div class="step-label">Template Style: <code style="background:#f1f5f9;padding:1px 5px;border-radius:3px;">Clean Top 2026</code></div></div></div>
 
@@ -573,31 +574,30 @@
                     <div class="quick-links" style="margin-bottom:12px;">
                         <a href="https://store-w5trgcbv.mybigcommerce.com/manage/app/11680" target="_blank" class="quick-link teal"><i class="fas fa-external-link-alt"></i> Open Shogun</a>
                     </div>
+
+                    <div style="font-size:12px;font-weight:700;color:var(--dcd-teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;margin-top:16px;">Create Blog Post</div>
                     <div class="step"><input type="checkbox" id="p1-d1" onchange="updateProgress()"><div>
-                        <div class="step-label">Create new Blog page → paste page name + slug</div>
+                        <div class="step-label">Click <strong>Build a Page</strong> → <strong>Blog Post</strong> → paste page name</div>
                         <div class="copy-strip" style="margin-top:6px;">
                             <div class="copy-strip-row">
-                                <div><div class="copy-strip-label">Page Title</div><div class="copy-strip-value" id="cs-dcd-title">—</div></div>
+                                <div style="flex:1;"><div class="copy-strip-label">Page Name</div><div class="copy-strip-value" id="cs-dcd-title">—</div></div>
                                 <button class="copy-strip-btn" onclick="copyMeta('title')"><i class="fas fa-copy"></i></button>
-                                <div><div class="copy-strip-label">Slug</div><div class="copy-strip-value" id="cs-dcd-slug">—</div></div>
-                                <button class="copy-strip-btn" onclick="copyMeta('slug')"><i class="fas fa-copy"></i></button>
                             </div>
                         </div>
                     </div></div>
-                    <div class="step"><input type="checkbox" id="p1-d2" onchange="updateProgress()"><div>
-                        <div class="step-label">Add meta fields</div>
+
+                    <div style="font-size:12px;font-weight:700;color:var(--dcd-teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;margin-top:20px;">Page Settings (⋮ top right → Page Settings)</div>
+                    <div class="step"><input type="checkbox" id="p1-d2" onchange="updateProgress()"><div class="step-label">Author Name: <strong>Mark Domnenko</strong></div></div>
+                    <div class="step"><input type="checkbox" id="p1-d3" onchange="updateProgress()"><div>
+                        <div class="step-label">Meta Description</div>
                         <div class="copy-strip" style="margin-top:6px;">
                             <div class="copy-strip-row">
-                                <div style="flex:1;"><div class="copy-strip-label">Meta Description</div><div class="copy-strip-value" id="cs-dcd-desc">—</div></div>
+                                <div style="flex:1;"><div class="copy-strip-value" id="cs-dcd-desc">—</div></div>
                                 <button class="copy-strip-btn" onclick="copyMeta('desc')"><i class="fas fa-copy"></i></button>
                             </div>
-                            <div class="copy-strip-row">
-                                <div style="flex:1;"><div class="copy-strip-label">Meta Keywords</div><div class="copy-strip-value" id="cs-dcd-keywords">—</div></div>
-                                <button class="copy-strip-btn" onclick="copyMeta('keywords')"><i class="fas fa-copy"></i></button>
-                            </div>
                         </div>
                     </div></div>
-                    <div class="step"><input type="checkbox" id="p1-d3" onchange="updateProgress()"><div class="step-label"><strong>Save</strong> page (we'll add HTML elements after Claude finishes)</div></div>
+                    <div class="step"><input type="checkbox" id="p1-d4" onchange="updateProgress()"><div class="step-label"><strong>Save</strong> page settings (we'll add HTML elements after Claude finishes)</div></div>
                 </div>
 
             </div>
@@ -624,10 +624,25 @@
             </div>
         </div>
 
-        <!-- ═══════ PHASE 3: LINK AUDIT ═══════ -->
+        <!-- ═══════ PHASE 3 STS: SCHEMA CREATION ═══════ -->
+        <div class="card phase" id="phase3-schema" data-company="STS">
+            <div class="phase-header" onclick="togglePhase('phase3-schema')">
+                <div class="phase-title"><span class="phase-num">3</span> Schema Creation</div>
+                <div class="phase-time">3 min</div>
+            </div>
+            <div class="phase-content">
+                <div class="info-box" style="margin-bottom:15px;"><i class="fas fa-code" style="color:var(--gold);"></i> SEO audit may have changed FAQs, keyword density, and content structure. Schema is built now from the <strong>final</strong> HTML.</div>
+                <button class="btn btn-accent btn-compile" style="width:100%;margin-bottom:15px;" onclick="copyPrompt('schema'); animateButton(this,'Generating...','Ready')"><i class="fas fa-code"></i> Copy Schema Prompt</button>
+                <div class="step"><input type="checkbox" id="p3s-1" onchange="updateProgress()"><div class="step-label">Schema prompt pasted — Claude generating</div></div>
+                <div class="step"><input type="checkbox" id="p3s-2" onchange="updateProgress()"><div><div class="step-label">Verify: Schema wrapped in <code>&lt;script type="application/ld+json"&gt;</code> tags</div></div></div>
+                <div class="step"><input type="checkbox" id="p3s-3" onchange="updateProgress()"><div class="step-label">✅ Schema ready — proceed to link audit</div></div>
+            </div>
+        </div>
+
+        <!-- ═══════ PHASE 4: LINK AUDIT ═══════ -->
         <div class="card phase" id="phase3">
             <div class="phase-header" onclick="togglePhase('phase3')">
-                <div class="phase-title"><span class="phase-num">3</span> Link Audit</div>
+                <div class="phase-title"><span class="phase-num" id="linkAuditNum">3</span> Link Audit</div>
                 <div class="phase-time">2 min</div>
             </div>
             <div class="phase-content">
@@ -641,7 +656,7 @@
         <!-- ═══════ PHASE 4 STS: PUBLISH TO JOOMLA ═══════ -->
         <div class="card phase" id="phase4-sts" data-company="STS">
             <div class="phase-header" onclick="togglePhase('phase4-sts')">
-                <div class="phase-title"><span class="phase-num">4</span> Publish to Joomla</div>
+                <div class="phase-title"><span class="phase-num" id="stsPublishNum">5</span> Publish to Joomla</div>
                 <div class="phase-time">8 min</div>
             </div>
             <div class="phase-content">
@@ -656,19 +671,16 @@
                 <div class="divider"></div>
                 <div class="part-header"><i class="fas fa-link"></i> SEF URL</div>
 
-                <!-- Slug copy box FIRST -->
-                <div style="background:var(--cream);border:1px solid var(--border-light);border-radius:8px;padding:16px;margin:10px 0;">
-                    <div style="font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">URL Slug — paste into SEF URL filter below</div>
-                    <div style="display:flex;gap:8px;align-items:center;">
+                <!-- SEF URL box: slug + manager together -->
+                <div style="background:var(--cream);border:2px solid var(--gold);border-radius:10px;padding:18px;margin:10px 0;">
+                    <div style="font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">1. Copy slug → 2. Open SEF Manager → 3. Filter + shorten</div>
+                    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
                         <div id="slugCopyBox" style="flex:1;font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--white);border:2px solid var(--gold);border-radius:6px;padding:10px 14px;color:var(--text-primary);cursor:pointer;" onclick="copySlug()">—</div>
-                        <button class="btn btn-accent" onclick="copySlug()" style="white-space:nowrap;"><i class="fas fa-copy"></i> Copy</button>
+                        <button class="btn btn-accent" onclick="copySlug()" style="white-space:nowrap;"><i class="fas fa-copy"></i> Copy Slug</button>
                     </div>
+                    <a href="https://www.stselectronicrecyclinginc.com/administrator/index.php?option=com_sef&controller=sefurls&viewmode=3" target="_blank" class="quick-link" style="width:100%;justify-content:center;"><i class="fas fa-link"></i> Open SEF URL Manager</a>
                 </div>
 
-                <!-- SEF URL Manager link -->
-                <div class="quick-links" style="margin-bottom:12px;">
-                    <a href="https://www.stselectronicrecyclinginc.com/administrator/index.php?option=com_sef&controller=sefurls&viewmode=3" target="_blank" class="quick-link"><i class="fas fa-link"></i> Open SEF URL Manager</a>
-                </div>
                 <div class="step"><input type="checkbox" id="p4s-5" onchange="updateProgress()"><div class="step-label">Paste slug into filter → find the SEF URL → shorten to essential keywords</div></div>
                 <div class="step"><input type="checkbox" id="p4s-6" onchange="updateProgress()"><div><div class="step-label">Save shortened SEF URL</div><div class="instruction-box" style="margin-top:6px;">Before: <code>/single-article/sts-electronic-recycling/electronics-recycling-news/critical-materials-recovery-boosting-value-electronics-recycling</code><br>After: <code>/critical-materials-recovery-itad-sts</code></div></div></div>
 
@@ -680,27 +692,26 @@
                 </div>
                 <div class="step"><input type="checkbox" id="p4s-7" onchange="updateProgress()"><div class="step-label">System → Clear Cache → <strong>Delete All</strong></div></div>
 
-                <!-- Test URL button -->
                 <div style="display:flex;gap:8px;align-items:center;margin:12px 0;">
                     <button class="btn btn-primary" onclick="testLiveUrl()" style="white-space:nowrap;"><i class="fas fa-external-link-alt"></i> Test Live URL</button>
-                    <span style="font-size:11px;color:var(--text-muted);">Opens stselectronicrecyclinginc.com/<em>your-slug</em></span>
+                    <span style="font-size:11px;color:var(--text-muted);">Opens your blog's live URL</span>
                 </div>
                 <div class="step"><input type="checkbox" id="p4s-8" onchange="updateProgress()"><div class="step-label">Live URL loads correctly — no 404</div></div>
 
                 <div class="divider"></div>
                 <div class="part-header" style="background:linear-gradient(90deg,#dc2626,#b91c1c);"><i class="fas fa-clipboard-list"></i> LOG TO TRACKER</div>
 
-                <!-- Copy box: Title + URL for sheets -->
                 <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:16px;margin:10px 0;">
                     <div style="font-size:12px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Copy for Google Sheets</div>
                     <div class="copy-strip-row" style="margin-bottom:6px;">
                         <div style="flex:1;"><div class="copy-strip-label">Blog Title</div><div class="copy-strip-value" id="cs-tracker-title">—</div></div>
                         <button class="copy-strip-btn" onclick="copyMeta('title')"><i class="fas fa-copy"></i></button>
                     </div>
-                    <div class="copy-strip-row">
+                    <div class="copy-strip-row" style="margin-bottom:12px;">
                         <div style="flex:1;"><div class="copy-strip-label">Live URL</div><div class="copy-strip-value" id="cs-tracker-url">—</div></div>
                         <button class="copy-strip-btn" onclick="copyTrackerUrl()"><i class="fas fa-copy"></i></button>
                     </div>
+                    <a href="https://docs.google.com/spreadsheets/d/1GD45icQKkbfJyt5NvxpgGvMfm35GLoqG5QP5GDfSvBY/edit?gid=774290803" target="_blank" class="quick-link" style="width:100%;justify-content:center;background:#dc2626;color:white;border-color:#dc2626;font-size:13px;padding:12px 16px;"><i class="fas fa-table"></i> Open STS Blog Tracker</a>
                 </div>
                 <div class="step"><input type="checkbox" id="p4s-9" onchange="updateProgress()"><div class="step-label">✅ Logged to STS Tracker — title · URL · date · VA name</div></div>
             </div>
@@ -709,25 +720,34 @@
         <!-- ═══════ PHASE 4 DCD: PUBLISH TO SHOGUN ═══════ -->
         <div class="card phase dcd-phase" id="phase4-dcd" data-company="DCD" style="display:none;">
             <div class="phase-header" onclick="togglePhase('phase4-dcd')">
-                <div class="phase-title"><span class="phase-num" style="background:var(--dcd-teal);">4</span> Publish to Shogun</div>
+                <div class="phase-title"><span class="phase-num" id="dcdPublishNum" style="background:var(--dcd-teal);">4</span> Publish to Shogun</div>
                 <div class="phase-time">8 min</div>
             </div>
             <div class="phase-content">
                 <div class="cms-indicator shogun"><i class="fas fa-store"></i> Shogun — BigCommerce</div>
 
-                <div class="quick-links" style="margin-bottom:12px;">
-                    <a href="https://store-w5trgcbv.mybigcommerce.com/manage/app/11680" target="_blank" class="quick-link teal"><i class="fas fa-external-link-alt"></i> Open Shogun</a>
-                </div>
-
                 <div class="part-header teal"><i class="fas fa-code"></i> PASTE CONTENT</div>
-                <div class="step"><input type="checkbox" id="p4d-1" onchange="updateProgress()"><div class="step-label">Drag HTML element → paste <code>blog-content.html</code> → click X</div></div>
+                <div class="step"><input type="checkbox" id="p4d-1" onchange="updateProgress()"><div class="step-label">Drag HTML element → paste <code>blog-content.html</code> (includes schema) → click X</div></div>
                 <div class="step"><input type="checkbox" id="p4d-2" onchange="updateProgress()"><div class="step-label">Visual check — page renders correctly in preview</div></div>
-                <div class="step"><input type="checkbox" id="p4d-3" onchange="updateProgress()"><div><div class="step-label">Add second HTML element below → paste schema</div><div class="warning-box" style="margin-top:6px;">Must be: <code>&lt;script type="application/ld+json"&gt;</code> … <code>&lt;/script&gt;</code></div></div></div>
                 <div class="step"><input type="checkbox" id="p4d-4" onchange="updateProgress()"><div class="step-label">Click <strong>Publish</strong> in Shogun</div></div>
                 <div class="step"><input type="checkbox" id="p4d-5" onchange="updateProgress()"><div class="step-label">Open live URL → confirm page loads correctly</div></div>
 
                 <div class="divider"></div>
-                <div class="step"><input type="checkbox" id="p4d-6" onchange="updateProgress()"><div class="step-label">✅ Log to DCD Tracker — title · URL · date · VA name</div></div>
+                <div class="part-header teal" style="background:linear-gradient(90deg,#dc2626,#b91c1c);"><i class="fas fa-clipboard-list"></i> LOG TO TRACKER</div>
+
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:16px;margin:10px 0;">
+                    <div style="font-size:12px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Copy for Google Sheets</div>
+                    <div class="copy-strip-row" style="margin-bottom:6px;">
+                        <div style="flex:1;"><div class="copy-strip-label">Blog Title</div><div class="copy-strip-value" id="cs-dcd-tracker-title">—</div></div>
+                        <button class="copy-strip-btn" onclick="copyMeta('title')"><i class="fas fa-copy"></i></button>
+                    </div>
+                    <div class="copy-strip-row" style="margin-bottom:12px;">
+                        <div style="flex:1;"><div class="copy-strip-label">Live URL</div><div class="copy-strip-value" id="cs-dcd-tracker-url">—</div></div>
+                        <button class="copy-strip-btn" onclick="copyTrackerUrl()"><i class="fas fa-copy"></i></button>
+                    </div>
+                    <a href="https://docs.google.com/spreadsheets/d/1GD45icQKkbfJyt5NvxpgGvMfm35GLoqG5QP5GDfSvBY/edit?gid=1625373374" target="_blank" class="quick-link teal" style="width:100%;justify-content:center;background:#dc2626;color:white;border-color:#dc2626;font-size:13px;padding:12px 16px;"><i class="fas fa-table"></i> Open DCD Blog Tracker</a>
+                </div>
+                <div class="step"><input type="checkbox" id="p4d-6" onchange="updateProgress()"><div class="step-label">✅ Logged to DCD Tracker — title · URL · date · VA name</div></div>
             </div>
         </div>
 
@@ -832,6 +852,7 @@ const CFG = {
         projectLabel:'STS Blog Research Project',
         designBibleUrl:'https://docs.google.com/document/d/1gmZMWbIHt408yf6RgyrnwMsewGqWQSXKDuC7MJZZX1o/edit?usp=sharing',
         designBibleLabel:'STS Design Bible',
+        siteUrl:'https://www.stselectronicrecyclinginc.com',
         color:'#c9a962',
         researchContext:`Company: STS Electronic Recycling Inc
 Industry: Electronics recycling, IT Asset Disposition (ITAD), data destruction
@@ -860,6 +881,7 @@ Approved internal link targets (ONLY these 14 URLs):
         projectLabel:'DCD Blog Research Project',
         designBibleUrl:'https://docs.google.com/document/d/1SfzlHhsowhTQIHIdOUpBSne7vxDvH5NTWD3j7cdOdF0/edit?usp=sharing',
         designBibleLabel:'DCD Design Bible',
+        siteUrl:'https://www.discountcomputerdepot.com',
         color:'#0d9488',
         researchContext:`Company: DCD
 Platform: BigCommerce with Shogun page builder
@@ -932,6 +954,13 @@ function setCompany(c) {
     document.querySelectorAll('[data-company]').forEach(el => {
         el.style.display = el.dataset.company===c?'':'none';
     });
+    // Dynamic phase numbering
+    const lan = document.getElementById('linkAuditNum');
+    if(lan) lan.textContent = c==='STS' ? '4' : '3';
+    const spn = document.getElementById('stsPublishNum');
+    if(spn) spn.textContent = '5';
+    const dpn = document.getElementById('dcdPublishNum');
+    if(dpn) dpn.textContent = '4';
     if(S.meta) {
         document.getElementById('metaPanel').className = 'meta-panel visible'+(c==='DCD'?' dcd':'');
     }
@@ -1149,10 +1178,12 @@ function copyPrompt(type) {
             if(!t){ showToast('Select a topic first!',true); return; }
 
             if(S.company === 'STS') {
-                // Option 2: Short override — Claude project has v4.3 + Design Bible loaded
+                // STS: Short override — Claude project has v4.3 + Design Bible loaded
                 text = `⛔ MODEL CHECK: If you are Claude Opus, STOP NOW. Tell the user: "Switch to Sonnet 4.6 in the model selector (bottom-left of chat). This prompt is optimized for Sonnet and must not run on Opus." Do NOT proceed on Opus under any circumstances.
 
-RESEARCH COMPLETE — SKIP GATES 0A–0G
+FIRST: Name this chat "${S.chatName}"
+
+RESEARCH COMPLETE — SKIP GATES 0A–0G (Grok already ran research, topic selected, meta fields generated).
 
 Topic brief pre-loaded by M.A.R.K. Research Engine:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1169,14 +1200,34 @@ Slug: ${t.slug}
 BLOG TITLE GUIDANCE:
 The title above is a research-generated starting point. During Gate 1, evaluate whether a stronger title exists. If you can improve it for SEO + click-through, propose your improved title in Gate 4 delivery alongside the original. The final Page Title in Joomla meta should be ≤60 chars with primary keyword + "| STS Electronic Recycling".
 
-Execute Gates 1–3 silently. Deliver Gate 4.`;
+Execute Gates 1–3 silently. Deliver Gate 4.
+⚠️ SKIP SCHEMA GENERATION — schema will be created in a separate prompt after SEO audit.`;
             } else {
-                // DCD: Full self-contained prompt (gate system in progress)
+                // DCD: Full self-contained prompt (gate system)
                 text = `⛔ MODEL CHECK: If you are Claude Opus, STOP NOW. Tell the user: "Switch to Sonnet 4.6 in the model selector (bottom-left of chat). This prompt is optimized for Sonnet and must not run on Opus." Do NOT proceed on Opus under any circumstances.
+
+FIRST: Name this chat "${S.chatName}"
 
 ${forcePrefix}TASK: Build Blog Article for ${cfg.label}
 
-TOPIC BRIEF (research already complete — do NOT re-run research):
+RESEARCH COMPLETE — Grok already executed research. SKIP these gates entirely:
+• GATE 0A (Internal Blog Audit) — done
+• GATE 0B (External Trend Analysis) — done
+• GATE 0C (Search Intent Classification) — done
+• GATE 0C.5 (Competitor Blog Analysis) — done
+• GATE 0E (Topical Authority Mapping) — done
+• GATE 0G (Topic Recommendations) — done, topic selected below
+
+DO execute these gates from the uploaded Blog Creation Prompt:
+• GATE 0F (Design Reference Extraction) — read the uploaded Design Bible
+• GATES 1A–1H (Content Strategy Engine) — full execution
+• GATE 2 (Schema Generation) — 8 types EMBEDDED at bottom of content HTML (NOT a separate file)
+• GATE 3 (HTML Construction + QA) — build + 6 hard quality gates
+• GATE 4 (File Delivery + Checklist) — full delivery with proof of work
+
+⚠️ OVERRIDE: The Blog Creation Prompt says schema goes in a separate file. IGNORE THAT for this build. Embed schema at the bottom of blog-content.html inside a <script type="application/ld+json"> block. Output ONE file only.
+
+TOPIC BRIEF (from M.A.R.K. Research Engine):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Title: ${t.title}
 Targets: ${t.targets}
@@ -1188,27 +1239,17 @@ Meta Description: ${t.metaDescription}
 Slug: ${t.slug}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-FILE TO UPLOAD FIRST:
-• DCD Design Bible (upload before pasting this prompt)
-
-EXECUTION — skip research gates (done). Execute Gates 1–3 silently:
-1. Content Strategy (keyword research, outline, dual-brand links, answer blocks, CSS scoping plan)
-2. Schema Generation (8 schema types including Person author + FAQPage — embedded in HTML)
-3. HTML Construction (full scoped blog per DCD Design Bible — ALL CSS scoped to .blog-${t.slug}-container)
+FILES TO UPLOAD FIRST (both required):
+• DCD Blog Creation Prompt v1.0 (master gate system — your execution reference)
+• DCD Design Bible (design reference + component library for Gate 0F)
 
 BLOG TITLE GUIDANCE:
 The title above is a research-generated starting point. If you can craft a stronger title for SEO + click-through during Gate 1, propose your improved title in Gate 4 delivery alongside the original. Page Title for Shogun should be ≤60 chars with primary keyword + "| DCD".
 
-GATE 4 DELIVERY — create TWO artifacts:
-→ "blog-content.html" — complete blog HTML, ALL CSS scoped to .blog-${t.slug}-container, NO global selectors
-→ "blog-schema.html" — 8 schema types in one <script type="application/ld+json"> block
+GATE 4 DELIVERY — create ONE artifact:
+→ "blog-content.html" — complete blog HTML with schema embedded at bottom, ALL CSS scoped to .blog-${t.slug}-container, NO global selectors
 
-Gate 4 output must include:
-• 21-row mandatory execution checklist (all ✅ with evidence)
-• 6 proof-of-work verbatim quotes from final HTML
-• CSS scoping verification (confirm zero global selectors)
-
-⚠️ DO NOT re-run research. Build from brief above.
+⚠️ DO NOT re-run research gates. Build from the brief above.
 ⚠️ ALL CSS must be scoped — global selectors break site navigation.
 ⚠️ CREATE ARTIFACTS only — do NOT paste code in chat.
 
@@ -1226,6 +1267,34 @@ UPLOAD the Universal Blog SEO Audit document to this chat first, then execute ev
 Execute EVERY step in the uploaded audit document. Do not skip. Do not summarize.
 Output updated HTML as new artifact: "blog-final-seo.html"
 Preserve ALL design elements. No lengthy explanations.`;
+            break;
+        }
+        case 'schema': {
+            text = `${forcePrefix}TASK: Generate Schema (JSON-LD) for this blog
+
+Read the final blog HTML carefully. Based on the content, FAQs, topic, and keywords in the HTML, generate a complete JSON-LD schema block.
+
+SCHEMA REQUIREMENTS:
+1. Wrap in <script type="application/ld+json"> ... </script>
+2. Include these schema types:
+   • Organization (STS Electronic Recycling — full NAP, certifications, sameAs)
+   • Person/Author (STS Editorial Team)
+   • LocalBusiness (address, geo, hours, CID in hasMap)
+   • WebPage (URL, dates, breadcrumb ref)
+   • BreadcrumbList (Home → Blog → [Article Title])
+   • BlogPosting (headline, author @id ref, publisher @id ref, wordCount, keywords, about, mentions)
+   • FAQPage (extract ALL FAQ questions + answers from the visible HTML — must match exactly)
+   • HowTo (if applicable — 5-step process from blog content)
+
+3. Use @id references for author/publisher (no duplicate blocks)
+4. FAQ answers MUST match visible content on page (Google requirement)
+5. Do NOT include aggregateRating/reviews
+6. Include speakable specification
+
+CID: Use the Google Maps CID from the STS Blog Prompt project knowledge.
+
+Output as a single artifact: "blog-schema.txt"
+No lengthy explanations.`;
             break;
         }
         case 'links': {
@@ -1270,21 +1339,22 @@ function copyMeta(field) {
 function copyTrackerUrl() {
     const slug = S.meta?.slug || '';
     if(!slug) { showToast('No slug — select a topic first',true); return; }
-    const url = 'https://www.stselectronicrecyclinginc.com/'+slug;
+    const url = CFG[S.company].siteUrl+'/'+slug;
     navigator.clipboard.writeText(url).then(()=>showToast('URL copied!')).catch(()=>showToast('Copy failed',true));
 }
 
 function populateCopyStrips() {
     const t = S.meta || {};
-    const liveUrl = t.slug ? 'https://www.stselectronicrecyclinginc.com/'+t.slug : '—';
+    const liveUrl = t.slug ? CFG[S.company].siteUrl+'/'+t.slug : '—';
     const ids = {
         'cs-menu-title': t.title, 'cs-menu-slug': t.slug,
         'cs-pagedisplay-title': t.title,
         'cs-meta-desc': t.desc, 'cs-meta-keywords': t.keywords,
         'cs-article-title': t.title,
-        'cs-dcd-title': t.title, 'cs-dcd-slug': t.slug,
-        'cs-dcd-desc': t.desc, 'cs-dcd-keywords': t.keywords,
+        'cs-dcd-title': t.title,
+        'cs-dcd-desc': t.desc,
         'cs-tracker-title': t.title, 'cs-tracker-url': liveUrl,
+        'cs-dcd-tracker-title': t.title, 'cs-dcd-tracker-url': liveUrl,
         'slugCopyBox': t.slug
     };
     for(const [id, val] of Object.entries(ids)) {
@@ -1296,7 +1366,7 @@ function populateCopyStrips() {
 function testLiveUrl() {
     const slug = S.meta?.slug || '';
     if(!slug) { showToast('No slug — select a topic first',true); return; }
-    window.open('https://www.stselectronicrecyclinginc.com/'+slug, '_blank');
+    window.open(CFG[S.company].siteUrl+'/'+slug, '_blank');
 }
 
 function updateProgress() {
